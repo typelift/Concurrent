@@ -1,0 +1,4 @@
+Parallel
+========
+
+Functional Concurrency Primitives
