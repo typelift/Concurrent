@@ -6,11 +6,7 @@
 //  Copyright (c) 2014 Robert Widmann. All rights reserved.
 //
 
-#if os(OSX)
 import Basis
-#else
-import MobileBasis
-#endif
 
 /// QSem is a simple quanitity semaphore (read: counting semaphore) that aquires and releases
 /// resources in increments of 1.  The semaphore keeps track of blocked threads with MVar<()>'s.

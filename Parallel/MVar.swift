@@ -6,11 +6,7 @@
 //  Copyright (c) 2014 Robert Widmann. All rights reserved.
 //
 
-#if os(OSX)
 import Basis
-#else
-import MobileBasis
-#endif
 
 /// MVars (literally "Mutable Variables") are mutable references that are either empty or contain a
 /// value of type A.  An MVar is often compared to a box, or to a diner in that if there is no value

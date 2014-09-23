@@ -15,13 +15,13 @@
 		8406F65419CE972F0007BDAD /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64D19CE972F0007BDAD /* IVar.swift */; };
 		8406F65519CE972F0007BDAD /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64E19CE972F0007BDAD /* MVar.swift */; };
 		8406F65619CE972F0007BDAD /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64F19CE972F0007BDAD /* QSem.swift */; };
-		8406F66719CE975A0007BDAD /* Basis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8406F66019CE97390007BDAD /* Basis.framework */; };
+		84922DA619D23C7E00AE9A7C /* Basis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84922DA119D23C6B00AE9A7C /* Basis.framework */; };
+		84922DA919D23C8700AE9A7C /* Basis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84922D9B19D23C6B00AE9A7C /* Basis.framework */; };
 		84F6C3A119CE97AB004A7276 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64B19CE972F0007BDAD /* Chan.swift */; };
 		84F6C3A219CE97AB004A7276 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64C19CE972F0007BDAD /* Concurrent.swift */; };
 		84F6C3A319CE97AB004A7276 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64D19CE972F0007BDAD /* IVar.swift */; };
 		84F6C3A419CE97AB004A7276 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64E19CE972F0007BDAD /* MVar.swift */; };
 		84F6C3A519CE97AB004A7276 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64F19CE972F0007BDAD /* QSem.swift */; };
-		84F6C3AA19CE97CD004A7276 /* MobileBasis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8406F66419CE97390007BDAD /* MobileBasis.framework */; };
 		84F6C3AF19CE9C02004A7276 /* PARRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 84F6C3AD19CE9C02004A7276 /* PARRealWorld.h */; };
 		84F6C3B019CE9C02004A7276 /* PARRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 84F6C3AD19CE9C02004A7276 /* PARRealWorld.h */; };
 		84F6C3B119CE9C02004A7276 /* PARRealWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F6C3AE19CE9C02004A7276 /* PARRealWorld.m */; };
@@ -36,40 +36,47 @@
 			remoteGlobalIDString = 8406F62E19CE96FB0007BDAD;
 			remoteInfo = Parallel;
 		};
-		8406F65F19CE97390007BDAD /* PBXContainerItemProxy */ = {
+		84922D9A19D23C6B00AE9A7C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8406F65919CE97390007BDAD /* Basis.xcodeproj */;
+			containerPortal = 84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 84922C8419D2375F00AE9A7C;
+			remoteInfo = Basis;
+		};
+		84922D9C19D23C6B00AE9A7C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 84922C8F19D2375F00AE9A7C;
+			remoteInfo = BasisTests;
+		};
+		84922DA019D23C6B00AE9A7C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84922D9519D23C6B00AE9A7C /* Basis.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 84C9967119CE89F30046906D;
 			remoteInfo = Basis;
 		};
-		8406F66119CE97390007BDAD /* PBXContainerItemProxy */ = {
+		84922DA219D23C6B00AE9A7C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8406F65919CE97390007BDAD /* Basis.xcodeproj */;
+			containerPortal = 84922D9519D23C6B00AE9A7C /* Basis.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 84C9967C19CE89F40046906D;
 			remoteInfo = BasisTests;
 		};
-		8406F66319CE97390007BDAD /* PBXContainerItemProxy */ = {
+		84922DA419D23C7400AE9A7C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8406F65919CE97390007BDAD /* Basis.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 84ACC19319CE8E9C0093F7FA;
-			remoteInfo = MobileBasis;
-		};
-		8406F66519CE97420007BDAD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8406F65919CE97390007BDAD /* Basis.xcodeproj */;
+			containerPortal = 84922D9519D23C6B00AE9A7C /* Basis.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 84C9967019CE89F30046906D;
 			remoteInfo = Basis;
 		};
-		84F6C3A819CE97C7004A7276 /* PBXContainerItemProxy */ = {
+		84922DA719D23C8300AE9A7C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8406F65919CE97390007BDAD /* Basis.xcodeproj */;
+			containerPortal = 84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 84ACC19219CE8E9C0093F7FA;
-			remoteInfo = MobileBasis;
+			remoteGlobalIDString = 84922C8319D2375F00AE9A7C;
+			remoteInfo = Basis;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -85,7 +92,8 @@
 		8406F64D19CE972F0007BDAD /* IVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVar.swift; sourceTree = "<group>"; };
 		8406F64E19CE972F0007BDAD /* MVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MVar.swift; sourceTree = "<group>"; };
 		8406F64F19CE972F0007BDAD /* QSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QSem.swift; sourceTree = "<group>"; };
-		8406F65919CE97390007BDAD /* Basis.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Basis.xcodeproj; path = External/Basis/Basis.xcodeproj; sourceTree = "<group>"; };
+		84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Basis-iOS.xcodeproj"; path = "External/Basis/Basis-iOS.xcodeproj"; sourceTree = "<group>"; };
+		84922D9519D23C6B00AE9A7C /* Basis.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Basis.xcodeproj; path = External/Basis/Basis.xcodeproj; sourceTree = "<group>"; };
 		84F6C38919CE979A004A7276 /* MobileParallel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MobileParallel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F6C3AD19CE9C02004A7276 /* PARRealWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PARRealWorld.h; path = Parallel/PARRealWorld.h; sourceTree = SOURCE_ROOT; };
 		84F6C3AE19CE9C02004A7276 /* PARRealWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PARRealWorld.m; path = Parallel/PARRealWorld.m; sourceTree = SOURCE_ROOT; };
@@ -97,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8406F66719CE975A0007BDAD /* Basis.framework in Frameworks */,
+				84922DA619D23C7E00AE9A7C /* Basis.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,7 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84F6C3AA19CE97CD004A7276 /* MobileBasis.framework in Frameworks */,
+				84922DA919D23C8700AE9A7C /* Basis.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,7 +131,8 @@
 		8406F62519CE96FB0007BDAD = {
 			isa = PBXGroup;
 			children = (
-				8406F65919CE97390007BDAD /* Basis.xcodeproj */,
+				84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */,
+				84922D9519D23C6B00AE9A7C /* Basis.xcodeproj */,
 				8406F63119CE96FB0007BDAD /* Parallel */,
 				8406F63E19CE96FB0007BDAD /* ParallelTests */,
 				8406F63019CE96FB0007BDAD /* Products */,
@@ -182,12 +191,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8406F65A19CE97390007BDAD /* Products */ = {
+		84922D9319D23C6B00AE9A7C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8406F66019CE97390007BDAD /* Basis.framework */,
-				8406F66219CE97390007BDAD /* BasisTests.xctest */,
-				8406F66419CE97390007BDAD /* MobileBasis.framework */,
+				84922D9B19D23C6B00AE9A7C /* Basis.framework */,
+				84922D9D19D23C6B00AE9A7C /* BasisTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84922D9619D23C6B00AE9A7C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84922DA119D23C6B00AE9A7C /* Basis.framework */,
+				84922DA319D23C6B00AE9A7C /* BasisTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -227,7 +244,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				8406F66619CE97420007BDAD /* PBXTargetDependency */,
+				84922DA519D23C7400AE9A7C /* PBXTargetDependency */,
 			);
 			name = Parallel;
 			productName = Parallel;
@@ -264,7 +281,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				84F6C3A919CE97C7004A7276 /* PBXTargetDependency */,
+				84922DA819D23C8300AE9A7C /* PBXTargetDependency */,
 			);
 			name = MobileParallel;
 			productName = MobileParallel;
@@ -304,8 +321,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 8406F65A19CE97390007BDAD /* Products */;
-					ProjectRef = 8406F65919CE97390007BDAD /* Basis.xcodeproj */;
+					ProductGroup = 84922D9319D23C6B00AE9A7C /* Products */;
+					ProjectRef = 84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */;
+				},
+				{
+					ProductGroup = 84922D9619D23C6B00AE9A7C /* Products */;
+					ProjectRef = 84922D9519D23C6B00AE9A7C /* Basis.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -318,25 +339,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		8406F66019CE97390007BDAD /* Basis.framework */ = {
+		84922D9B19D23C6B00AE9A7C /* Basis.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Basis.framework;
-			remoteRef = 8406F65F19CE97390007BDAD /* PBXContainerItemProxy */;
+			remoteRef = 84922D9A19D23C6B00AE9A7C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8406F66219CE97390007BDAD /* BasisTests.xctest */ = {
+		84922D9D19D23C6B00AE9A7C /* BasisTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = BasisTests.xctest;
-			remoteRef = 8406F66119CE97390007BDAD /* PBXContainerItemProxy */;
+			remoteRef = 84922D9C19D23C6B00AE9A7C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8406F66419CE97390007BDAD /* MobileBasis.framework */ = {
+		84922DA119D23C6B00AE9A7C /* Basis.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = MobileBasis.framework;
-			remoteRef = 8406F66319CE97390007BDAD /* PBXContainerItemProxy */;
+			path = Basis.framework;
+			remoteRef = 84922DA019D23C6B00AE9A7C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84922DA319D23C6B00AE9A7C /* BasisTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BasisTests.xctest;
+			remoteRef = 84922DA219D23C6B00AE9A7C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -408,15 +436,15 @@
 			target = 8406F62E19CE96FB0007BDAD /* Parallel */;
 			targetProxy = 8406F63C19CE96FB0007BDAD /* PBXContainerItemProxy */;
 		};
-		8406F66619CE97420007BDAD /* PBXTargetDependency */ = {
+		84922DA519D23C7400AE9A7C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Basis;
-			targetProxy = 8406F66519CE97420007BDAD /* PBXContainerItemProxy */;
+			targetProxy = 84922DA419D23C7400AE9A7C /* PBXContainerItemProxy */;
 		};
-		84F6C3A919CE97C7004A7276 /* PBXTargetDependency */ = {
+		84922DA819D23C8300AE9A7C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = MobileBasis;
-			targetProxy = 84F6C3A819CE97C7004A7276 /* PBXContainerItemProxy */;
+			name = Basis;
+			targetProxy = 84922DA719D23C8300AE9A7C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

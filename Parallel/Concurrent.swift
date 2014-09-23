@@ -6,11 +6,7 @@
 //  Copyright (c) 2014 Robert Widmann. All rights reserved.
 //
 
-#if os(OSX)
 import Basis
-#else
-import MobileBasis
-#endif
 
 public typealias ThreadID = pthread_t
 

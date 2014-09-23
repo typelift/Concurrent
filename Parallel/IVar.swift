@@ -6,11 +6,7 @@
 //  Copyright (c) 2014 Robert Widmann. All rights reserved.
 //
 
-#if os(OSX)
 import Basis
-#else
-import MobileBasis
-#endif
 
 /// IVars are write-once mutable references.  Attempting to write into an already full IVar throws
 /// an exception because the thread will be blocked indefinitely.
