@@ -3,7 +3,7 @@
 //  Basis
 //
 //  Created by Robert Widmann on 9/12/14.
-//  Copyright (c) 2014 Robert Widmann. All rights reserved.
+//  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
 import Basis
@@ -97,7 +97,7 @@ public func putMVar<A>(m : MVar<A>)(x: A) -> IO<()> {
 			pthread_cond_wait(m.putCond, m.lock)
 		}
 		m.val = x
-		pthread_cond_signal(m.putCond)
+		pthread_cond_signal(m.takeCond)
 		pthread_mutex_unlock(m.lock)
 		return ()
 	}
@@ -132,7 +132,7 @@ public func tryPutMVar<A>(m : MVar<A>)(x: A) -> IO<Bool> {
 			return false
 		}
 		m.val = x
-		pthread_cond_signal(m.putCond)
+		pthread_cond_signal(m.takeCond)
 		pthread_mutex_unlock(m.lock)
 		return true
 	}

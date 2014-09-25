@@ -3,7 +3,7 @@
 //  Parallel
 //
 //  Created by Robert Widmann on 9/20/14.
-//  Copyright (c) 2014 Robert Widmann. All rights reserved.
+//  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
 #import "PARRealWorld.h"
@@ -17,7 +17,7 @@
 
 @implementation PARRealWorld
 
-+ (pthread_t)forkWithStart:(void(^)(void))block {
++ (pthread_t)forkWithStart:(PARWorkBlock)block {
 	int r;
 	pthread_t thrID;
 	pthread_attr_t attr;
@@ -25,12 +25,12 @@
 	pthread_attr_init (&attr);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 
-	r = pthread_create(&thrID, &attr, CFIStartFork, (__bridge void *)(block));
+	r = pthread_create(&thrID, &attr, PARStartFork, (__bridge_retained void *)[block copy]);
 	NSCAssert(r == 0, @"Could not fork thread.");
 	return thrID;
 }
 
-+ (pthread_t)forkOnto:(unsigned int)processor withStart:(void (^)(void))block {
++ (pthread_t)forkOnto:(unsigned int)processor withStart:(PARWorkBlock)block {
 	NSInteger num_cores = sysconf(_SC_NPROCESSORS_ONLN);
 	NSCAssert(processor >= num_cores, @"Could not fork thread.");
 
@@ -67,11 +67,12 @@
 	return result;
 }
 
-void *CFIStartFork(void *context) {
+static void *PARStartFork(void *context) {
 	NSCAssert(context != NULL, @"Cannot execute NULL context block.");
 
-	void (^block)(void) = (__bridge void (^)(void))(context);
-	block();
+	void (^asBlock)() = (__bridge PARWorkBlock)context;
+
+	asBlock();
 
 	return NULL;
 }

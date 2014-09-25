@@ -3,7 +3,7 @@
 //  Basis
 //
 //  Created by Robert Widmann on 9/14/14.
-//  Copyright (c) 2014 Robert Widmann. All rights reserved.
+//  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
 import Basis
@@ -33,7 +33,7 @@ public func newEmptyIVar<A>() -> IO<IVar<A>> {
 		trans <- newEmptyMVar()
 		return IVar(lock, trans, do_ { () -> A in
 			var val : A!
-			val <- takeMVar(trans)
+			val <- readMVar(trans)
 			return val
 		})
 	}
@@ -96,18 +96,20 @@ public func tryReadIVar<A>(v : IVar<A>) -> IO<Optional<A>> {
 /// If the IVar is empty, this will immediately return true wrapped in an IO computation.  If the
 /// IVar is full, nothing happens and it will return false wrapped in an IO computation.
 public func tryPutIVar<A>(v : IVar<A>)(x : A) -> IO<Bool> {
-	return do_ { () -> IO<Bool> in
-		var a : Optional<()>!
-		
+	return do_ { () -> Bool in
+		var a : Optional<Void>!
+
 		a <- tryTakeMVar(v.lock)
-		switch a! {
-			case .None:
-				return IO.pure(false)
-			case .Some(_):
-				var val : A!
-				val <- v.val
-				return putMVar(v.trans)(x: val) >> IO.pure(true)
+		if isSome(a!) {
+			var val : A!
+			var exec : ()
+
+			exec <- putMVar(v.trans)(x: x)
+			val <- v.val
+			return true
 		}
+
+		return false
 	}
 }
 

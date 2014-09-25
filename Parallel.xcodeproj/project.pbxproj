@@ -16,16 +16,9 @@
 		8406F65519CE972F0007BDAD /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64E19CE972F0007BDAD /* MVar.swift */; };
 		8406F65619CE972F0007BDAD /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64F19CE972F0007BDAD /* QSem.swift */; };
 		84922DA619D23C7E00AE9A7C /* Basis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84922DA119D23C6B00AE9A7C /* Basis.framework */; };
-		84922DA919D23C8700AE9A7C /* Basis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84922D9B19D23C6B00AE9A7C /* Basis.framework */; };
-		84F6C3A119CE97AB004A7276 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64B19CE972F0007BDAD /* Chan.swift */; };
-		84F6C3A219CE97AB004A7276 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64C19CE972F0007BDAD /* Concurrent.swift */; };
-		84F6C3A319CE97AB004A7276 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64D19CE972F0007BDAD /* IVar.swift */; };
-		84F6C3A419CE97AB004A7276 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64E19CE972F0007BDAD /* MVar.swift */; };
-		84F6C3A519CE97AB004A7276 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406F64F19CE972F0007BDAD /* QSem.swift */; };
+		84922EB819D3896100AE9A7C /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84922EB719D3896100AE9A7C /* Future.swift */; };
 		84F6C3AF19CE9C02004A7276 /* PARRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 84F6C3AD19CE9C02004A7276 /* PARRealWorld.h */; };
-		84F6C3B019CE9C02004A7276 /* PARRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 84F6C3AD19CE9C02004A7276 /* PARRealWorld.h */; };
 		84F6C3B119CE9C02004A7276 /* PARRealWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F6C3AE19CE9C02004A7276 /* PARRealWorld.m */; };
-		84F6C3B219CE9C02004A7276 /* PARRealWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F6C3AE19CE9C02004A7276 /* PARRealWorld.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,20 +28,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8406F62E19CE96FB0007BDAD;
 			remoteInfo = Parallel;
-		};
-		84922D9A19D23C6B00AE9A7C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 84922C8419D2375F00AE9A7C;
-			remoteInfo = Basis;
-		};
-		84922D9C19D23C6B00AE9A7C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 84922C8F19D2375F00AE9A7C;
-			remoteInfo = BasisTests;
 		};
 		84922DA019D23C6B00AE9A7C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -71,13 +50,6 @@
 			remoteGlobalIDString = 84C9967019CE89F30046906D;
 			remoteInfo = Basis;
 		};
-		84922DA719D23C8300AE9A7C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 84922C8319D2375F00AE9A7C;
-			remoteInfo = Basis;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -92,9 +64,8 @@
 		8406F64D19CE972F0007BDAD /* IVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVar.swift; sourceTree = "<group>"; };
 		8406F64E19CE972F0007BDAD /* MVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MVar.swift; sourceTree = "<group>"; };
 		8406F64F19CE972F0007BDAD /* QSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QSem.swift; sourceTree = "<group>"; };
-		84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Basis-iOS.xcodeproj"; path = "External/Basis/Basis-iOS.xcodeproj"; sourceTree = "<group>"; };
 		84922D9519D23C6B00AE9A7C /* Basis.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Basis.xcodeproj; path = External/Basis/Basis.xcodeproj; sourceTree = "<group>"; };
-		84F6C38919CE979A004A7276 /* MobileParallel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MobileParallel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84922EB719D3896100AE9A7C /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
 		84F6C3AD19CE9C02004A7276 /* PARRealWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PARRealWorld.h; path = Parallel/PARRealWorld.h; sourceTree = SOURCE_ROOT; };
 		84F6C3AE19CE9C02004A7276 /* PARRealWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PARRealWorld.m; path = Parallel/PARRealWorld.m; sourceTree = SOURCE_ROOT; };
 		84F6C3B319CE9C65004A7276 /* Parallel-ObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Parallel-ObjCBridge.h"; path = "Parallel/Parallel-ObjCBridge.h"; sourceTree = SOURCE_ROOT; };
@@ -117,21 +88,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		84F6C38519CE979A004A7276 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				84922DA919D23C8700AE9A7C /* Basis.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		8406F62519CE96FB0007BDAD = {
 			isa = PBXGroup;
 			children = (
-				84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */,
 				84922D9519D23C6B00AE9A7C /* Basis.xcodeproj */,
 				8406F63119CE96FB0007BDAD /* Parallel */,
 				8406F63E19CE96FB0007BDAD /* ParallelTests */,
@@ -144,7 +106,6 @@
 			children = (
 				8406F62F19CE96FB0007BDAD /* Parallel.framework */,
 				8406F63A19CE96FB0007BDAD /* ParallelTests.xctest */,
-				84F6C38919CE979A004A7276 /* MobileParallel.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +116,7 @@
 				8406F63419CE96FB0007BDAD /* Parallel.h */,
 				8406F64B19CE972F0007BDAD /* Chan.swift */,
 				8406F64C19CE972F0007BDAD /* Concurrent.swift */,
+				84922EB719D3896100AE9A7C /* Future.swift */,
 				8406F64D19CE972F0007BDAD /* IVar.swift */,
 				8406F64E19CE972F0007BDAD /* MVar.swift */,
 				8406F64F19CE972F0007BDAD /* QSem.swift */,
@@ -191,15 +153,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		84922D9319D23C6B00AE9A7C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				84922D9B19D23C6B00AE9A7C /* Basis.framework */,
-				84922D9D19D23C6B00AE9A7C /* BasisTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		84922D9619D23C6B00AE9A7C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,14 +171,6 @@
 			files = (
 				8406F63519CE96FB0007BDAD /* Parallel.h in Headers */,
 				84F6C3AF19CE9C02004A7276 /* PARRealWorld.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		84F6C38619CE979A004A7276 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				84F6C3B019CE9C02004A7276 /* PARRealWorld.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,25 +214,6 @@
 			productReference = 8406F63A19CE96FB0007BDAD /* ParallelTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		84F6C38819CE979A004A7276 /* MobileParallel */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 84F6C39F19CE979B004A7276 /* Build configuration list for PBXNativeTarget "MobileParallel" */;
-			buildPhases = (
-				84F6C38419CE979A004A7276 /* Sources */,
-				84F6C38519CE979A004A7276 /* Frameworks */,
-				84F6C38619CE979A004A7276 /* Headers */,
-				84F6C38719CE979A004A7276 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				84922DA819D23C8300AE9A7C /* PBXTargetDependency */,
-			);
-			name = MobileParallel;
-			productName = MobileParallel;
-			productReference = 84F6C38919CE979A004A7276 /* MobileParallel.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -304,9 +230,6 @@
 					8406F63919CE96FB0007BDAD = {
 						CreatedOnToolsVersion = 6.1;
 					};
-					84F6C38819CE979A004A7276 = {
-						CreatedOnToolsVersion = 6.0.1;
-					};
 				};
 			};
 			buildConfigurationList = 8406F62919CE96FB0007BDAD /* Build configuration list for PBXProject "Parallel" */;
@@ -321,10 +244,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 84922D9319D23C6B00AE9A7C /* Products */;
-					ProjectRef = 84922D9219D23C6B00AE9A7C /* Basis-iOS.xcodeproj */;
-				},
-				{
 					ProductGroup = 84922D9619D23C6B00AE9A7C /* Products */;
 					ProjectRef = 84922D9519D23C6B00AE9A7C /* Basis.xcodeproj */;
 				},
@@ -333,26 +252,11 @@
 			targets = (
 				8406F62E19CE96FB0007BDAD /* Parallel */,
 				8406F63919CE96FB0007BDAD /* ParallelTests */,
-				84F6C38819CE979A004A7276 /* MobileParallel */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		84922D9B19D23C6B00AE9A7C /* Basis.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Basis.framework;
-			remoteRef = 84922D9A19D23C6B00AE9A7C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		84922D9D19D23C6B00AE9A7C /* BasisTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BasisTests.xctest;
-			remoteRef = 84922D9C19D23C6B00AE9A7C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		84922DA119D23C6B00AE9A7C /* Basis.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -384,13 +288,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		84F6C38719CE979A004A7276 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -399,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8406F65419CE972F0007BDAD /* IVar.swift in Sources */,
+				84922EB819D3896100AE9A7C /* Future.swift in Sources */,
 				8406F65319CE972F0007BDAD /* Concurrent.swift in Sources */,
 				84F6C3B119CE9C02004A7276 /* PARRealWorld.m in Sources */,
 				8406F65219CE972F0007BDAD /* Chan.swift in Sources */,
@@ -415,19 +313,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		84F6C38419CE979A004A7276 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				84F6C3A119CE97AB004A7276 /* Chan.swift in Sources */,
-				84F6C3A219CE97AB004A7276 /* Concurrent.swift in Sources */,
-				84F6C3B219CE9C02004A7276 /* PARRealWorld.m in Sources */,
-				84F6C3A319CE97AB004A7276 /* IVar.swift in Sources */,
-				84F6C3A419CE97AB004A7276 /* MVar.swift in Sources */,
-				84F6C3A519CE97AB004A7276 /* QSem.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -440,11 +325,6 @@
 			isa = PBXTargetDependency;
 			name = Basis;
 			targetProxy = 84922DA419D23C7400AE9A7C /* PBXContainerItemProxy */;
-		};
-		84922DA819D23C8300AE9A7C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Basis;
-			targetProxy = 84922DA719D23C8300AE9A7C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -601,62 +481,6 @@
 			};
 			name = Release;
 		};
-		84F6C39919CE979B004A7276 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Parallel/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Parallel/Parallel-ObjCBridge.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		84F6C39A19CE979B004A7276 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Parallel/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Parallel/Parallel-ObjCBridge.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -683,15 +507,6 @@
 			buildConfigurations = (
 				8406F64919CE96FB0007BDAD /* Debug */,
 				8406F64A19CE96FB0007BDAD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		84F6C39F19CE979B004A7276 /* Build configuration list for PBXNativeTarget "MobileParallel" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				84F6C39919CE979B004A7276 /* Debug */,
-				84F6C39A19CE979B004A7276 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

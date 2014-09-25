@@ -3,10 +3,11 @@
 //  Parallel
 //
 //  Created by Robert Widmann on 9/20/14.
-//  Copyright (c) 2014 Robert Widmann. All rights reserved.
+//  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#import "PARRealWorld.h"
 
 //! Project version number for Parallel.
 FOUNDATION_EXPORT double ParallelVersionNumber;

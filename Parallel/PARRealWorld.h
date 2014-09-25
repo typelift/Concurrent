@@ -3,16 +3,18 @@
 //  Parallel
 //
 //  Created by Robert Widmann on 9/20/14.
-//  Copyright (c) 2014 Robert Widmann. All rights reserved.
+//  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #include <pthread.h>
 
+typedef void(^PARWorkBlock)(void);
+
 @interface PARRealWorld : NSObject
 
-+ (pthread_t)forkWithStart:(void(^)(void))block;
-+ (pthread_t)forkOnto:(unsigned int)processor withStart:(void(^)(void))block;
++ (pthread_t)forkWithStart:(PARWorkBlock)block;
++ (pthread_t)forkOnto:(unsigned int)processor withStart:(PARWorkBlock)block;
 
 + (void)labelThreadWithName:(const char *)name;
 + (void)yieldThread;
