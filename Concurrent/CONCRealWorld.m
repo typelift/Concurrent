@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-#import "PARRealWorld.h"
+#import "CONCRealWorld.h"
 
 #include <unistd.h>
 #include <sys/errno.h>
@@ -14,6 +14,8 @@
 #include <sched.h>
 #include <mach/thread_act.h>
 #include <mach/mach_host.h>
+
+#include <pthread.h>
 
 @implementation PARRealWorld
 

@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Parallel-iOS.xcodeproj">
+      location = "group:Concurrent-iOS.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Parallel.xcodeproj">
+      location = "group:Concurrent.xcodeproj">
    </FileRef>
 </Workspace>

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#include <pthread.h>
 
 typedef void(^PARWorkBlock)(void);
 

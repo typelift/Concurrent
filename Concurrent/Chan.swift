@@ -8,16 +8,6 @@
 
 import Basis
 
-public class ChItem<A> : K1<A> {
-	let val : A
-	let stream : MVar<ChItem<A>>
-
-	init(_ val : A, _ stream : MVar<ChItem<A>>) {
-		self.val = val
-		self.stream = stream
-	}
-}
-
 /// Channels are unbounded FIFO streams of values with a read and write terminals comprised of
 /// MVars.
 public final class Chan<A> : K1<A> {
@@ -34,9 +24,9 @@ public final class Chan<A> : K1<A> {
 /// Creates and returns a new empty channel.
 public func newChan<A>() -> IO<Chan<A>> {
 	return do_ { () -> Chan<A> in
-		let hole : MVar<ChItem<A>> = newEmptyMVar().unsafePerformIO()
-		let readVar : MVar<MVar<ChItem<A>>> = newMVar(hole).unsafePerformIO()
-		let writeVar : MVar<MVar<ChItem<A>>> = newMVar(hole).unsafePerformIO()
+		let hole : MVar<ChItem<A>> = !newEmptyMVar()
+		let readVar = !newMVar(hole)
+		let writeVar : MVar<MVar<ChItem<A>>> = !newMVar(hole)
 
 		return Chan(read: readVar, write: writeVar)
 	}
@@ -46,11 +36,8 @@ public func newChan<A>() -> IO<Chan<A>> {
 public func writeChan<A>(c : Chan<A>)(x : A) -> IO<()> {
 	return modifyMVar_(c.writeEnd)({ (let old_hole) in
 		return do_ { () -> MVar<ChItem<A>> in
-			var new_hole : MVar<ChItem<A>>!
-			var exec : ()
-
-			new_hole <- newEmptyMVar()
-			exec <- putMVar(old_hole)(x: ChItem(x, new_hole))
+			let new_hole : MVar<ChItem<A>> = !newEmptyMVar()
+			!putMVar(old_hole)(ChItem(x, new_hole))
 			return new_hole
 		}
 	})
@@ -61,10 +48,19 @@ public func readChan<A>(c : Chan<A>) -> IO<A> {
 	return do_ { () -> IO<A> in
 		return modifyMVar(c.readEnd)({ (let readEnd) in
 			return do_ { () -> (MVar<ChItem<A>>, A) in
-				var item : ChItem<A>! = nil
-				
-				item <- readMVar(readEnd)
+				let item : ChItem<A> = !readMVar(readEnd)
 				return (item.stream, item.val)
+			}
+		})
+	}
+}
+
+public func isEmptyChan<A>(c : Chan<A>) -> IO<Bool> {
+	return do_ {
+		return withMVar(c.readEnd)({ r in
+			do_ { () -> Bool in
+				let w = !tryReadMVar(r)
+				return w == nil
 			}
 		})
 	}
@@ -77,23 +73,34 @@ public func readChan<A>(c : Chan<A>) -> IO<A> {
 /// channel may be read by both channels.
 public func dupChan<A>(c : Chan<A>) -> IO<Chan<A>> {
 	return do_({ () -> Chan<A> in
-		var hole : MVar<ChItem<A>>!
-		var newReadVar : MVar<MVar<ChItem<A>>>!
-		
-		hole <- readMVar(c.writeEnd)
-		newReadVar <- newMVar(hole)
+		let hole = !readMVar(c.writeEnd)
+		let newReadVar = !newMVar(hole)
 		return Chan(read: newReadVar, write: c.writeEnd)
 	})
 }
 
 public func getChanContents<A>(c : Chan<A>) -> IO<[A]> {
 	return do_ { () -> [A] in
-		var x : A!
-		var xs : [A]!
-
-		x <- readChan(c)
-		xs <- getChanContents(c)
+		if !isEmptyChan(c) {
+			return []
+		}
+		let x = !readChan(c)
+		let xs = !getChanContents(c)
 		return [x] + xs
+	}
+}
+
+public func writeListToChan<A>(c : Chan<A>) -> [A] -> IO<()> {
+	return { xs in sequence_(xs.map(writeChan(c))) }
+}
+
+internal class ChItem<A> : K1<A> {
+	let val : A
+	let stream : MVar<ChItem<A>>
+
+	init(_ val : A, _ stream : MVar<ChItem<A>>) {
+		self.val = val
+		self.stream = stream
 	}
 }
 

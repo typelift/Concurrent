@@ -47,8 +47,9 @@ public func newEmptyMVar<A>() -> IO<MVar<A>> {
 
 /// Creates a new MVar containing the supplied value.
 public func newMVar<A>(x : A) -> IO<MVar<A>> {
-	return newEmptyMVar() >>- {
-		putMVar($0)(x: x) >> IO.pure($0)
+	return newEmptyMVar() >>- { (let m : MVar<A>) in
+		!putMVar(m)(x)
+		return IO.pure(m)
 	}
 }
 
@@ -73,7 +74,7 @@ public func takeMVar<A>(m : MVar<A>) -> IO<A> {
 /// Atomically reads the contents of an MVar.
 ///
 /// If the MVar is currently empty, this will block until a value is put into it.  If the MVar is
-/// ful, the value is wrapped up in an IO computation, but the MVar remains full.
+/// full, the value is wrapped up in an IO computation, but the MVar remains full.
 public func readMVar<A>(m : MVar<A>) -> IO<A> {
 	return do_ { () -> A in
 		pthread_mutex_lock(m.lock)
@@ -90,16 +91,18 @@ public func readMVar<A>(m : MVar<A>) -> IO<A> {
 /// Puts a value into an MVar.
 ///
 /// If the MVar is currently full, the function will block until it becomes empty again.
-public func putMVar<A>(m : MVar<A>)(x: A) -> IO<()> {
-	return do_ { () -> () in
-		pthread_mutex_lock(m.lock)
-		while m.val != nil {
-			pthread_cond_wait(m.putCond, m.lock)
+public func putMVar<A>(m : MVar<A>) -> A -> IO<()> {
+	return { x in
+		return do_ { () -> () in
+			pthread_mutex_lock(m.lock)
+			while m.val != nil {
+				pthread_cond_wait(m.putCond, m.lock)
+			}
+			m.val = x
+			pthread_cond_signal(m.takeCond)
+			pthread_mutex_unlock(m.lock)
+			return ()
 		}
-		m.val = x
-		pthread_cond_signal(m.takeCond)
-		pthread_mutex_unlock(m.lock)
-		return ()
 	}
 }
 
@@ -125,16 +128,18 @@ public func tryTakeMVar<A>(m : MVar<A>) -> IO<Optional<A>> {
 ///
 /// If the MVar is empty, this will immediately returns a true wrapped in an IO computation.  If the
 /// MVar is full, nothing occurs and a false is returned in an IO computation.
-public func tryPutMVar<A>(m : MVar<A>)(x: A) -> IO<Bool> {
-	return do_ { () -> Bool in
-		pthread_mutex_lock(m.lock)
-		if m.val != nil {
-			return false
+public func tryPutMVar<A>(m : MVar<A>) -> A -> IO<Bool> {
+	return { x in
+		return do_ { () -> Bool in
+			pthread_mutex_lock(m.lock)
+			if m.val != nil {
+				return false
+			}
+			m.val = x
+			pthread_cond_signal(m.takeCond)
+			pthread_mutex_unlock(m.lock)
+			return true
 		}
-		m.val = x
-		pthread_cond_signal(m.takeCond)
-		pthread_mutex_unlock(m.lock)
-		return true
 	}
 }
 
@@ -168,12 +173,13 @@ public func isEmptyMVar<A>(m : MVar<A>) -> IO<Bool> {
 
 /// Atomically, take a value from the MVar, put a new value in the MVar, then return the old value 
 /// in an IO computation.
-public func swapMVar<A>(m : MVar<A>)(x : A) -> IO<A> {
-	return do_ { () -> A in
-		var old : A! = nil
-		old <- takeMVar(m)
-		putMVar(m)(x: x)
-		return old!
+public func swapMVar<A>(m : MVar<A>) -> A -> IO<A> {
+	return { x in
+		return do_ { () -> A in
+			let old = !takeMVar(m)
+			!putMVar(m)(x)
+			return old
+		}
 	}
 }
 
@@ -181,17 +187,14 @@ public func swapMVar<A>(m : MVar<A>)(x : A) -> IO<A> {
 public func withMVar<A, B>(m : MVar<A>)(f : A -> IO<B>) -> IO<B> {
 	return mask({ (let restore : (IO<B> -> IO<B>)) -> IO<B> in
 		return do_ { () -> B in
-			var a : A!
-			var b : B!
-			
-			a <- takeMVar(m)
-			b <- catchException(restore(f(a)))({ (let e) in
+			let a = !takeMVar(m)
+			let b = !catchException(restore(f(a)))({ (let e) in
 				return do_ { () -> IO<B> in
-					return putMVar(m)(x: a) >> throwIO(e)
+					return putMVar(m)(a) >> throwIO(e)
 				}
 			})
-			putMVar(m)(x: a)
-			return b!
+			!putMVar(m)(a)
+			return b
 		}	
 	})
 }
@@ -203,16 +206,14 @@ public func withMVar<A, B>(m : MVar<A>)(f : A -> IO<B>) -> IO<B> {
 public func modifyMVar_<A>(m : MVar<A>)(f : A -> IO<A>) -> IO<()> {
 	return mask({ (let restore : IO<A> -> IO<A>) -> IO<()> in
 		return do_ { () -> () in
-			var a : A! = nil
-			var a1 : A! = nil
-
-			a <- takeMVar(m)
-			a1 <- catchException(restore(f(a)))({ (let e) in
-				return do_ { () -> IO<A> in
-					return putMVar(m)(x: a) >> throwIO(e)
-				}
-			})
-			putMVar(m)(x : a1)
+			let a = !takeMVar(m)
+//			let a1 = !catchException(restore(f(a)))({ (let e) in
+//				return do_ { () -> IO<A> in
+//					return putMVar(m)(a) >> throwIO(e)
+//				}
+//			})
+			let a1 = !f(a)
+			!putMVar(m)(a1)
 		}
 	})
 }
@@ -225,19 +226,25 @@ public func modifyMVar_<A>(m : MVar<A>)(f : A -> IO<A>) -> IO<()> {
 public func modifyMVar<A, B>(m : MVar<A>)(f : A -> IO<(A, B)>) -> IO<B> {
 	return mask({ (let restore : IO<(A, B)> -> IO<(A, B)>) -> IO<B> in
 		return do_ { () -> B in
-			var a : A! = nil
-			var t : (A, B)! = nil
-			
-			a <- takeMVar(m)
-			t <- catchException(restore(f(a)))({ (let e) in
-				return do_ { () -> IO<(A, B)> in
-					return putMVar(m)(x: a) >> throwIO(e)
-				}
-			})
-			putMVar(m)(x: fst(t))
+			let a = !takeMVar(m)
+//			let t = !catchException(restore(f(a)))({ (let e) in
+//				return do_ { () -> IO<(A, B)> in
+//					return putMVar(m)(a) >> throwIO(e)
+//				}
+//			})
+			let t = !f(a)
+			!putMVar(m)(fst(t))
 			return snd(t)
 		}
 	})
 }
 
-
+public func ==<A : Equatable>(lhs : MVar<A>, rhs : MVar<A>) -> Bool {
+	if !isEmptyMVar(lhs) && !isEmptyMVar(rhs) {
+		return true
+	}
+	if !isEmptyMVar(lhs) ^ !isEmptyMVar(rhs) {
+		return false
+	}
+	return !readMVar(lhs) == !readMVar(rhs)
+}

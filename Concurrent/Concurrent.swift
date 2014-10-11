@@ -40,7 +40,7 @@ public func killThread(tid : ThreadID) -> IO<()> {
 	}
 }
 
-/// Indicates that a thread wishes to yeild time to other waiting threads.
+/// Indicates that a thread wishes to yield time to other waiting threads.
 public func yield() -> IO<()> {
 	return do_ { () -> () in
 		return PARRealWorld.yieldThread()
