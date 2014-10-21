@@ -13,7 +13,7 @@ typedef void(^PARWorkBlock)(void);
 @interface PARRealWorld : NSObject
 
 + (pthread_t)forkWithStart:(PARWorkBlock)block;
-+ (pthread_t)forkOnto:(unsigned int)processor withStart:(PARWorkBlock)block;
++ (pthread_t)forkOnto:(unsigned int)processor withStart:(PARWorkBlock)block DEPRECATED_ATTRIBUTE;
 
 + (void)labelThreadWithName:(const char *)name;
 + (void)yieldThread;

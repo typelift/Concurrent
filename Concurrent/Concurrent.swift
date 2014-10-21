@@ -23,6 +23,26 @@ public func forkIO(io : IO<()>) -> IO<ThreadID> {
 	}
 }
 
+public func forkOnto(queue : dispatch_queue_t) -> IO<()> -> IO<()> {
+	return { io in
+		do_ { () -> () in
+			return dispatch_async(queue) {
+				return io.unsafePerformIO()
+			}
+		}
+	}
+}
+
+public func forkFinally<A>(io : IO<A>) -> (Either<Exception, A> -> IO<()>) -> IO<ThreadID> {
+	return { finally in
+		do_ { () -> IO<ThreadID> in
+			return mask({ (let restore : (IO<A> -> IO<A>)) -> IO<ThreadID> in
+				return forkIO(try(restore(io)) >>- finally)
+			})
+		}
+	}
+}
+
 /// Returns the number of processor the host has.
 public func getNumProcessors() -> IO<UInt> {
 	return do_ { () -> UInt in
