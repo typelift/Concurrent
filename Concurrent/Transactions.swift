@@ -30,20 +30,6 @@ internal func nextCounter() -> IO<TVarId> {
 	}
 }
 
-public enum ArrayD<A> {
-	case Empty
-	case Destructure(A, [A])
-}
-
-internal func destruct<T>(arr : Array<T>) -> ArrayD<T> {
-	if arr.count == 0 {
-		return .Empty
-	} else if arr.count == 1 {
-		return .Destructure(head(arr), [])
-	}
-	return .Destructure(head(arr), tail(arr))
-}
-
 struct TransactionLog<A> {
 	let readTVars : Set<TVar<A>>
 	let tripleStack : [(Set<TVar<A>>, Set<TVar<A>>, Set<TVar<A>>)]
