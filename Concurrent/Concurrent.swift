@@ -23,6 +23,7 @@ public func forkIO(io : IO<()>) -> IO<ThreadID> {
 	}
 }
 
+/// Forks a computation onto a given dispatch queue and executes it.
 public func forkOnto(queue : dispatch_queue_t) -> IO<()> -> IO<()> {
 	return { io in
 		do_ { () -> () in
@@ -33,6 +34,8 @@ public func forkOnto(queue : dispatch_queue_t) -> IO<()> -> IO<()> {
 	}
 }
 
+/// Forks a thread and calls the given function when the thread is about to terminate with either
+/// a value or an exception.
 public func forkFinally<A>(io : IO<A>) -> (Either<Exception, A> -> IO<()>) -> IO<ThreadID> {
 	return { finally in
 		do_ { () -> IO<ThreadID> in
