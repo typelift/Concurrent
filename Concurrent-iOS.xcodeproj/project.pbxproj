@@ -31,6 +31,8 @@
 		8434FA4919E9CE9F008D9909 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434FA3519E9CE9F008D9909 /* TSem.swift */; };
 		8434FA4A19E9CE9F008D9909 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434FA3619E9CE9F008D9909 /* TVar.swift */; };
 		8434FA5D19E9D1E1008D9909 /* Basis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434FA5219E9CF2B008D9909 /* Basis.framework */; };
+		849AA3AE1A0984FD00472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434FA0719E9CE73008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		849AA3B11A09858C00472F08 /* Basis.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434FA5219E9CF2B008D9909 /* Basis.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,20 @@
 			remoteInfo = Basis;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		849AA3AB1A0984E300472F08 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				849AA3B11A09858C00472F08 /* Basis.framework in CopyFiles */,
+				849AA3AE1A0984FD00472F08 /* Concurrent.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8434F9EA19E9CE41008D9909 /* Concurrent-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +235,7 @@
 				8434F9E619E9CE41008D9909 /* Sources */,
 				8434F9E719E9CE41008D9909 /* Frameworks */,
 				8434F9E819E9CE41008D9909 /* Resources */,
+				849AA3AB1A0984E300472F08 /* CopyFiles */,
 			);
 			buildRules = (
 			);
