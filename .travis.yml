@@ -1,6 +1,8 @@
 language: objective-c
 osx_image: xcode61
 
+install: git submodule update -i --recursive
+
 script:
 - xctool -project Concurrent.xcodeproj -scheme Concurrent -sdk macosx ONLY_ACTIVE_ARCH=NO clean build test
 - xctool -project Concurrent-iOS.xcodeproj -scheme Concurrent -sdk iphonesimulator8.1 ONLY_ACTIVE_ARCH=NO clean build test
