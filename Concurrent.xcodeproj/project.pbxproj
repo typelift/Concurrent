@@ -31,6 +31,8 @@
 		8434F9CE19E9CDFE008D9909 /* Basis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434F9C919E9CDF2008D9909 /* Basis.framework */; };
 		8434F9D019E9CE1D008D9909 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9CF19E9CE1D008D9909 /* PiCalculus.swift */; };
 		8434F9D419E9CE28008D9909 /* ConcurrentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9D319E9CE28008D9909 /* ConcurrentTests.swift */; };
+		849AA3AF1A09850400472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434F98019E9CD76008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		849AA3B01A09858700472F08 /* Basis.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434F9C919E9CDF2008D9909 /* Basis.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,20 @@
 			remoteInfo = Basis;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		849AA3A91A0984D800472F08 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				849AA3B01A09858700472F08 /* Basis.framework in CopyFiles */,
+				849AA3AF1A09850400472F08 /* Concurrent.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8434F98019E9CD76008D9909 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,6 +262,7 @@
 				8434F98719E9CD76008D9909 /* Sources */,
 				8434F98819E9CD76008D9909 /* Frameworks */,
 				8434F98919E9CD76008D9909 /* Resources */,
+				849AA3A91A0984D800472F08 /* CopyFiles */,
 			);
 			buildRules = (
 			);
