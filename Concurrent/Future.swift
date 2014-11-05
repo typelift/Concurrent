@@ -34,8 +34,11 @@ public func forkFuture<A>(io : IO<A>) -> IO<Future<A>> {
 
 		let p = Future(msTid, result, msTodo)
 		let act : IO<()> = do_ { () -> () in
-			!putMVar(p.threadID)(Optional.Some(myTheadID().unsafePerformIO()))
-			let val = !completeFuture(p)(Result<A>.value(io.unsafePerformIO()))
+			!putMVar(p.threadID)(Optional.Some(!myTheadID()))
+			let val = !(try(io).bind { (let r : Either<Exception, A>) -> IO<Result<A>> in
+				let res : Result<A> = asResult(r)({ e in return NSError(domain: "", code: 0, userInfo: [ NSLocalizedDescriptionKey : e.description ]) })
+				return completeFuture(p)(res)
+			})
 			switch val.destruct() {
 				case .Error(let err):
 					return error("")
