@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Basis
+import Swiftx
 
 public class TQueue<A> : K1<A> {
 	let readEnd : TVar<[A]>

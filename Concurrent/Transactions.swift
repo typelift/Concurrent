@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Basis
+import Swiftx
 
 /// Software Transaction Memory is a terribly tricky thing to do in a profoundly impure language,
 /// but that never stopped me before...

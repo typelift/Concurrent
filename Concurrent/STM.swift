@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Robert Widmann. All rights reserved.
 //
 
-import Basis
+import Swiftx
 
 public class STM<A> : K1<A> {
 	typealias B = Any
