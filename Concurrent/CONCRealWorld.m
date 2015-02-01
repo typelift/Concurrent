@@ -67,7 +67,7 @@
 }
 
 + (NSUInteger)CPUCount {
-	uint64_t result = 1;
+	NSUInteger result = 1;
 	struct host_basic_info info;
 	mach_msg_type_number_t infocnt = 12;
 

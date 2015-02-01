@@ -51,6 +51,7 @@ public struct Chan<A> {
 		xs.map({ self.write($0) })
 	}
 	
+	
 	public var isEmpty : Bool {
 		return self.readEnd.withMVar { r in
 			let w = r.tryRead()

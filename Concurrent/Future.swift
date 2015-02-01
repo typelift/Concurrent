@@ -23,14 +23,6 @@ public struct Future<A> {
 		return self.cResult.read()
 	}
 	
-	private func complete(r : Result<A>) -> Result<A> {
-		return self.cResult.tryPut(r) ? r : self.cResult.read()
-	}
-	
-	private func runFinalizerWithResult<A>(val : Result<A>) -> (Result<A> -> ()) -> ThreadID {
-		return { todo in forkIO(todo(val)) }
-	}
-	
 	public func then(finalize : Result<A> -> ()) -> Future<A> {
 		let ma : Optional<Result<A>> = self.finalizers.modify { sTodo in
 			let res = self.cResult.tryRead()
@@ -47,6 +39,14 @@ public struct Future<A> {
 			self.runFinalizerWithResult(val)(finalize)
 			return self
 		}
+	}
+	
+	private func complete(r : Result<A>) -> Result<A> {
+		return self.cResult.tryPut(r) ? r : self.cResult.read()
+	}
+	
+	private func runFinalizerWithResult<A>(val : Result<A>) -> (Result<A> -> ()) -> ThreadID {
+		return { todo in forkIO(todo(val)) }
 	}
 }
 

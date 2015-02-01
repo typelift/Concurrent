@@ -23,6 +23,7 @@
 		8434FA4219E9CE9F008D9909 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434FA2E19E9CE9F008D9909 /* QSem.swift */; };
 		847520551A7EBA3F00975C8B /* Swiftx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847520501A7EBA3200975C8B /* Swiftx.framework */; };
 		8475205C1A7EC55F00975C8B /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475205B1A7EC55F00975C8B /* Exception.swift */; };
+		8475205D1A7EDD2D00975C8B /* Swiftx.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 847520501A7EBA3200975C8B /* Swiftx.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		849AA3AE1A0984FD00472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434FA0719E9CE73008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8475205D1A7EDD2D00975C8B /* Swiftx.framework in CopyFiles */,
 				849AA3AE1A0984FD00472F08 /* Concurrent.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

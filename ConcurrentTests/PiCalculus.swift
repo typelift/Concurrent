@@ -63,7 +63,7 @@ func runπ(var env : Environment, pi : π) -> () {
 			let mu = Mu(c)
 			env[bind] = mu
 			return runπ(env, bp.value)
-		case .Send(let dest, let msg, let bp):
+		case .Send(let msg, let dest, let bp):
 			let w = env[dest]
 			w?.c.write(env[msg]!)
 			return runπ(env, bp.value)
