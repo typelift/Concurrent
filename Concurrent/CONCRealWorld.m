@@ -1,5 +1,5 @@
 //
-//  PARRealWorld.m
+//  CONCRealWorld.m
 //  Parallel
 //
 //  Created by Robert Widmann on 9/20/14.
@@ -17,7 +17,15 @@
 
 #include <pthread.h>
 
-@implementation PARRealWorld
+@implementation CONCRealWorld
+
++ (void)catch:(void(^)(void))block to:(void(^)(NSException *))toBlock {
+	@try {
+		block();
+	} @catch(NSException *e) {
+		toBlock(e);
+	}
+}
 
 + (pthread_t)forkWithStart:(PARWorkBlock)block {
 	int r;
@@ -36,7 +44,7 @@
 	NSInteger num_cores = sysconf(_SC_NPROCESSORS_ONLN);
 	NSCAssert(processor >= num_cores, @"Could not fork thread.");
 
-	pthread_t thrID = [PARRealWorld forkWithStart:block];
+	pthread_t thrID = [CONCRealWorld forkWithStart:block];
 
 	thread_affinity_policy_data_t policy;
 	policy.affinity_tag = processor;
