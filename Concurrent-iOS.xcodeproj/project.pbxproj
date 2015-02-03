@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84152B7D1A818C9E006387D5 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152B7C1A818C9E006387D5 /* SVar.swift */; };
 		8434F9FF19E9CE5F008D9909 /* ConcurrentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9FC19E9CE5F008D9909 /* ConcurrentTests.swift */; };
 		8434FA0119E9CE5F008D9909 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9FE19E9CE5F008D9909 /* PiCalculus.swift */; };
 		8434FA2219E9CE92008D9909 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434FA0719E9CE73008D9909 /* Concurrent.framework */; };
@@ -73,6 +74,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		84152B7C1A818C9E006387D5 /* SVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVar.swift; sourceTree = "<group>"; };
 		8434F9EA19E9CE41008D9909 /* Concurrent-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434F9FC19E9CE5F008D9909 /* ConcurrentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentTests.swift; sourceTree = "<group>"; };
 		8434F9FD19E9CE5F008D9909 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				8434FA2B19E9CE9F008D9909 /* IChan.swift */,
 				8434FA2C19E9CE9F008D9909 /* IVar.swift */,
 				8434FA2D19E9CE9F008D9909 /* MVar.swift */,
+				84152B7C1A818C9E006387D5 /* SVar.swift */,
 				8434FA2E19E9CE9F008D9909 /* QSem.swift */,
 				8434FA0919E9CE73008D9909 /* Supporting Files */,
 			);
@@ -332,6 +335,7 @@
 				8434FA3E19E9CE9F008D9909 /* Future.swift in Sources */,
 				8434FA4019E9CE9F008D9909 /* IVar.swift in Sources */,
 				8434FA3819E9CE9F008D9909 /* Chan.swift in Sources */,
+				84152B7D1A818C9E006387D5 /* SVar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
