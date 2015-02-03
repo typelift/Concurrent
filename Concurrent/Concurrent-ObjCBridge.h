@@ -9,6 +9,6 @@
 #ifndef Parallel_Parallel_ObjCBridge_h
 #define Parallel_Parallel_ObjCBridge_h
 
-#import "PARRealWorld.h"
+#import "CONCRealWorld.h"
 
 #endif

@@ -7,7 +7,7 @@
 //
 
 import Concurrent
-import Basis
+import Swiftx
 import XCTest
 
 class ParallelTests: XCTestCase {
@@ -15,82 +15,82 @@ class ParallelTests: XCTestCase {
 	func testConcurrentFuture() {
 		var e : NSError?
 
-		let x = !forkFuture(do_ { () -> Int in
+		let x : Future<Int> = forkFuture {
 			usleep(1)
 			return 4
-		})
-		let res = !readFuture(x)
-		//		XCTAssert(res == res, "future")
-		//		XCTAssert(x.map({ $0.description }).result() == "4", "future map")
-		//		XCTAssert(x.flatMap({ (x: Int) -> Future<Int> in
-		//			return forkPromise(do_ { usleep(1); return x + 1 })
-		//		}).result() == 5, "future flatMap")
-
-		//    let x: Future<Int> = Future(exec: gcdExecutionContext, {
-		//      return NSString.stringWithContentsOfURL(NSURL.URLWithString("http://github.com"), encoding: 0, error: nil)
-		//    })
-		//    let x1 = (x.result().lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
-		//    let x2 = (x.result().lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
-		//    XCTAssert(x1 == x2)
+		}
+		 
+		let res = x.read()
+		XCTAssert(res == res, "future")
+		XCTAssert({ "\($0)" } <^> res == Result.value("4"), "future map")
 	}
 
 	func testConcurrentChan() {
-		let chan : Chan<Int> = !newChan()
-		let ft = !forkFuture(do_ { () -> Int in
-			var exec : ()
+		let chan : Chan<Int> = Chan()
+		let ft : Future<Int> = forkFuture {
 			usleep(1)
-			!writeChan(chan)(x: 2)
+			chan.write(2)
 			return 2
-		})
+		}
 
-		let res = !readFuture(ft)
-		let contents = !readChan(chan)
-		switch res.destruct() {
+		let res = ft.read()
+		let contents = chan.read()
+		switch res {
 			case .Error(_):
 				XCTAssert(false, "")
 			case .Value(let r):
-				XCTAssert(contents == r.unBox(), "simple read chan")
+				XCTAssert(contents == r.value, "simple read chan")
 		}
 	}
 
 	func testConcurrentMVar() {
-		let pingvar : MVar<String> = !newEmptyMVar()
-		let pongvar : MVar<String> = !newEmptyMVar()
-		let done : MVar<()> = !newEmptyMVar()
+		let pingvar : MVar<String> = MVar()
+		let pongvar : MVar<String> = MVar()
+		let done = MVar<Void>()
 
-		let ping = !forkFuture(do_ { () -> () in
-			!putMVar(pingvar)("hello")
-			let contents = !takeMVar(pongvar)
+		let ping : Future<()> = forkFuture {
+			pingvar.put("hello")
+			let contents = pongvar.take()
 			XCTAssert(contents == "max", "mvar read");
-			!putMVar(done)(())
-		})
-		let pong = !forkFuture(do_ { () -> () in
-			let contents =  !takeMVar(pingvar)
+			done.put(())
+		}
+		let pong : Future<()> = forkFuture {
+			let contents = pingvar.take()
 			XCTAssert(contents == "hello", "mvar read");
-			!putMVar(pongvar)("max")
-		})
-
-		!takeMVar(done)
-		XCTAssertTrue(!isEmptyMVar(pingvar) && !isEmptyMVar(pongvar), "mvar empty")
-	}
-
-	func testPerformanceExample() {
-		// concurrent pi
-		let pi:Int -> Float = {
-			(n:Int) -> Float in
-
-			var ar : [IO<Float>] = []
-			for k in (0..<n) {
-				ar.append(do_ { () -> Float in
-					return (4 * pow(-1, Float(k)) / (2.0 * Float(k) + 1.0))
-					})
-			}
-
-			let ch = !forkFutures(ar)
-			let results = !getChanContents(ch)
-			return foldr(+)(0)(values(results))
+			pongvar.put("max")
 		}
 
+		done.take()
+		XCTAssertTrue(pingvar.isEmpty && pongvar.isEmpty, "mvar empty")
+	}
+
+	/// Extracts all eithers that have values in order.
+	func values<A>(l : [Result<A>]) -> [A] {
+		return l.map({
+			switch $0 {
+				case .Value(let b):
+					return [b.value]
+				default:
+					return []
+			}
+		}).reduce([], combine: +)
+	}
+
+	
+	func testPerformanceExample() {
+		// concurrent pi
+		let pi : Int -> Float = { n in
+			var ar : [() -> Float] = []
+			for k in (0..<n) {
+				ar.append({ () -> Float in
+					return (4 * pow(-1, Float(k)) / (2.0 * Float(k) + 1.0))
+				})
+			}
+
+			let ch = forkFutures(ar)
+			let results = ch.contents()
+			return self.values(results).reduce(0, combine: +)
+		}
 
 		self.measureBlock() {
 			pi(200)

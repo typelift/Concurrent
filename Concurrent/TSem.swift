@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Basis
+import Swiftx
 
 public final class TSem : K0 {
 	let tvar : TVar<Int>

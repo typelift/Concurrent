@@ -1,5 +1,5 @@
 //
-//  PARRealWorld.h
+//  CONCRealWorld.h
 //  Parallel
 //
 //  Created by Robert Widmann on 9/20/14.
@@ -10,7 +10,9 @@
 
 typedef void(^PARWorkBlock)(void);
 
-@interface PARRealWorld : NSObject
+@interface CONCRealWorld : NSObject
+
++ (void)catch:(void(^)(void))block to:(void(^)(NSException *))toBlock;
 
 + (pthread_t)forkWithStart:(PARWorkBlock)block;
 + (pthread_t)forkOnto:(unsigned int)processor withStart:(PARWorkBlock)block DEPRECATED_ATTRIBUTE;

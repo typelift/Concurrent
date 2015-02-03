@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Basis
+import Swiftx
 
-public class Actor<M> : K1<M> {
+public struct Actor<M> {
 	let pid : ThreadID
 	let mbox : TChan<M>
 
