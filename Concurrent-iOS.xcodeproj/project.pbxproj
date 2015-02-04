@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		84152B7D1A818C9E006387D5 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152B7C1A818C9E006387D5 /* SVar.swift */; };
+		84152C0A1A819F0B006387D5 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152C021A819F0B006387D5 /* STM.swift */; };
+		84152C0B1A819F0B006387D5 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152C031A819F0B006387D5 /* TBQueue.swift */; };
+		84152C0C1A819F0B006387D5 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152C041A819F0B006387D5 /* TChan.swift */; };
+		84152C0D1A819F0B006387D5 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152C051A819F0B006387D5 /* TMVar.swift */; };
+		84152C0E1A819F0B006387D5 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152C061A819F0B006387D5 /* TQueue.swift */; };
+		84152C0F1A819F0B006387D5 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152C071A819F0B006387D5 /* Transactions.swift */; };
+		84152C101A819F0B006387D5 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152C081A819F0B006387D5 /* TSem.swift */; };
+		84152C111A819F0B006387D5 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152C091A819F0B006387D5 /* TVar.swift */; };
 		8434F9FF19E9CE5F008D9909 /* ConcurrentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9FC19E9CE5F008D9909 /* ConcurrentTests.swift */; };
 		8434FA0119E9CE5F008D9909 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9FE19E9CE5F008D9909 /* PiCalculus.swift */; };
 		8434FA2219E9CE92008D9909 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434FA0719E9CE73008D9909 /* Concurrent.framework */; };
@@ -75,6 +83,14 @@
 
 /* Begin PBXFileReference section */
 		84152B7C1A818C9E006387D5 /* SVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVar.swift; sourceTree = "<group>"; };
+		84152C021A819F0B006387D5 /* STM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STM.swift; sourceTree = "<group>"; };
+		84152C031A819F0B006387D5 /* TBQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBQueue.swift; sourceTree = "<group>"; };
+		84152C041A819F0B006387D5 /* TChan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TChan.swift; sourceTree = "<group>"; };
+		84152C051A819F0B006387D5 /* TMVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMVar.swift; sourceTree = "<group>"; };
+		84152C061A819F0B006387D5 /* TQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TQueue.swift; sourceTree = "<group>"; };
+		84152C071A819F0B006387D5 /* Transactions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transactions.swift; sourceTree = "<group>"; };
+		84152C081A819F0B006387D5 /* TSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSem.swift; sourceTree = "<group>"; };
+		84152C091A819F0B006387D5 /* TVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVar.swift; sourceTree = "<group>"; };
 		8434F9EA19E9CE41008D9909 /* Concurrent-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434F9FC19E9CE5F008D9909 /* ConcurrentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentTests.swift; sourceTree = "<group>"; };
 		8434F9FD19E9CE5F008D9909 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,6 +132,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84152C131A819F0E006387D5 /* STM */ = {
+			isa = PBXGroup;
+			children = (
+				84152C021A819F0B006387D5 /* STM.swift */,
+				84152C031A819F0B006387D5 /* TBQueue.swift */,
+				84152C041A819F0B006387D5 /* TChan.swift */,
+				84152C051A819F0B006387D5 /* TMVar.swift */,
+				84152C061A819F0B006387D5 /* TQueue.swift */,
+				84152C071A819F0B006387D5 /* Transactions.swift */,
+				84152C081A819F0B006387D5 /* TSem.swift */,
+				84152C091A819F0B006387D5 /* TVar.swift */,
+			);
+			name = STM;
+			sourceTree = "<group>";
+		};
 		8434F9D519E9CE41008D9909 = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +189,7 @@
 				8434FA2D19E9CE9F008D9909 /* MVar.swift */,
 				84152B7C1A818C9E006387D5 /* SVar.swift */,
 				8434FA2E19E9CE9F008D9909 /* QSem.swift */,
+				84152C131A819F0E006387D5 /* STM */,
 				8434FA0919E9CE73008D9909 /* Supporting Files */,
 			);
 			path = Concurrent;
@@ -330,12 +362,20 @@
 				8434FA3F19E9CE9F008D9909 /* IChan.swift in Sources */,
 				8434FA3A19E9CE9F008D9909 /* CONCRealWorld.m in Sources */,
 				8475205C1A7EC55F00975C8B /* Exception.swift in Sources */,
+				84152C0E1A819F0B006387D5 /* TQueue.swift in Sources */,
 				8434FA4119E9CE9F008D9909 /* MVar.swift in Sources */,
+				84152C101A819F0B006387D5 /* TSem.swift in Sources */,
+				84152C0F1A819F0B006387D5 /* Transactions.swift in Sources */,
+				84152C0C1A819F0B006387D5 /* TChan.swift in Sources */,
+				84152C0D1A819F0B006387D5 /* TMVar.swift in Sources */,
 				8434FA3D19E9CE9F008D9909 /* Concurrent.swift in Sources */,
 				8434FA3E19E9CE9F008D9909 /* Future.swift in Sources */,
 				8434FA4019E9CE9F008D9909 /* IVar.swift in Sources */,
+				84152C0A1A819F0B006387D5 /* STM.swift in Sources */,
+				84152C111A819F0B006387D5 /* TVar.swift in Sources */,
 				8434FA3819E9CE9F008D9909 /* Chan.swift in Sources */,
 				84152B7D1A818C9E006387D5 /* SVar.swift in Sources */,
+				84152C0B1A819F0B006387D5 /* TBQueue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
