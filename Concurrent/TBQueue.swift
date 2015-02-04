@@ -8,7 +8,7 @@
 
 import Swiftx
 
-public class TBQueue<A> : K1<A> {
+public struct TBQueue<A> {
 	let readNum : TVar<Int>
 	let readHead : TVar<[A]>
 	let writeNum : TVar<Int>

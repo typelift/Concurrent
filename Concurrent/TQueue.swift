@@ -8,7 +8,7 @@
 
 import Swiftx
 
-public class TQueue<A> : K1<A> {
+public struct TQueue<A> {
 	let readEnd : TVar<[A]>
 	let writeEnd : TVar<[A]>
 

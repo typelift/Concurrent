@@ -8,7 +8,7 @@
 
 import Swiftx
 
-public final class TSem : K0 {
+public struct TSem {
 	let tvar : TVar<Int>
 
 	init(_ tvar : TVar<Int>) {
