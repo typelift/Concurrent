@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
-
 /// Multicast unbounded FIFO streams.  IChans differ from regular chans because you are only given
 /// access to a write-once head.  Any attempts to write multiple times to an IChan head will fail
 /// catastrophically.  However, every write operation to an IChan spawns a new write head that you

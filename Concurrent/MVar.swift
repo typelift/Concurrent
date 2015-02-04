@@ -6,16 +6,22 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
-
-/// MVars (literally "Mutable Variables") are mutable references that are either empty or contain a
-/// value of type A. In this way, they are "Synchronization Primitives" that can be used to make
-/// threads wait on a value before proceeding with a computation.
+/// `MVar`s (literally "Mutable Variables") are mutable references that are either empty or contain
+/// a value of type A. In this way, they are a form of synchronization primitive that can be used to
+/// make threads wait on a value before proceeding with a computation.
+///
+/// - Reading an empty `MVar` causes the reader to block.
+///
+/// - Reading a filled 'MVar' empties it, returns a value, and potentially wakes up a blocked writer.
+///
+/// - Writing to an empty 'MVar' fills it with a value and potentially wakes up a blocked reader.
+///
+/// - Writing to a filled 'MVar' causes the writer to block.
 public final class MVar<A> {
 	private var val : A?
-	private let lock: UnsafeMutablePointer<pthread_mutex_t>
-	private let takeCond: UnsafeMutablePointer<pthread_cond_t>
-	private let putCond: UnsafeMutablePointer<pthread_cond_t>
+	private let lock : UnsafeMutablePointer<pthread_mutex_t>
+	private let takeCond : UnsafeMutablePointer<pthread_cond_t>
+	private let putCond : UnsafeMutablePointer<pthread_cond_t>
 	
 	/// Creates a new empty MVar.
 	public init() {
@@ -35,7 +41,7 @@ public final class MVar<A> {
 		self.put(initial)
 	}
 	
-	/// Returns the contents of the MVar.
+	/// Returns the contents of the receiver.
 	///
 	/// If the MVar is empty, this will block until a value is put into the MVar.  If the MVar is full,
 	/// the value is wrapped up in an IO computation and the MVar is emptied.
@@ -51,7 +57,7 @@ public final class MVar<A> {
 		return value
 	}
 	
-	/// Atomically reads the contents of an MVar.
+	/// Atomically reads the contents of the receiver.
 	///
 	/// If the MVar is currently empty, this will block until a value is put into it.  If the MVar is
 	/// full, the value is wrapped up in an IO computation, but the MVar remains full.
@@ -66,7 +72,7 @@ public final class MVar<A> {
 		return value
 	}
 
-	/// Puts a value into an MVar.
+	/// Puts a value into the receiver.
 	///
 	/// If the MVar is currently full, the function will block until it becomes empty again.
 	public func put(x : A) {
@@ -80,7 +86,7 @@ public final class MVar<A> {
 		return ()
 	}
 
-	/// Attempts to return the contents of the MVar without blocking.
+	/// Attempts to return the contents of the receiver without blocking.
 	///
 	/// If the MVar is empty, this will immediately returns a None wrapped in an IO computation.  If the
 	/// MVar is full, the value is wrapped up in an IO computation and the MVar is emptied.
@@ -96,7 +102,7 @@ public final class MVar<A> {
 		return value
 	}
 	
-	/// Attempts to put a value into an MVar without blocking.
+	/// Attempts to put a value into the receiver without blocking.
 	///
 	/// If the MVar is empty, this will immediately returns a true wrapped in an IO computation.  If the
 	/// MVar is full, nothing occurs and a false is returned in an IO computation.
@@ -111,7 +117,7 @@ public final class MVar<A> {
 		return true
 	}
 	
-	/// Attempts to read the contents of an MVar without blocking.
+	/// Attempts to read the contents of the receiver without blocking.
 	///
 	/// If the MVar is empty, this function returns a None in an IO computation.  If the MVar is full,
 	/// this function wraps the value in a Some and an IO computation and returns immediately.
@@ -126,7 +132,7 @@ public final class MVar<A> {
 		return value
 	}
 
-	/// Checks whether a given MVar is empty.
+	/// Returns whether the receiver is empty.
 	///
 	/// This function is just a snapshot of the state of the MVar at that point in time.  In heavily 
 	/// concurrent computations, this may change out from under you without warning, or even by the time
@@ -143,7 +149,7 @@ public final class MVar<A> {
 		return old
 	}
 	
-	/// An exception-safe way of using the value in an MVar in a computation.
+	/// An exception-safe way of using the value in the receiver in a computation.
 	///
 	/// On exception, the value previously stored in the MVar is put back into it, and the exception is
 	/// rethrown.
@@ -159,7 +165,7 @@ public final class MVar<A> {
 		}
 	}
 	
-	/// An exception-safe way to modify the contents of an MVar.  On successful modification, the new
+	/// An exception-safe way to modify the contents of the receiver.  On successful modification, the new
 	/// value of the MVar is returned in an IO computation.
 	///
 	/// On exception, the value previously stored in the MVar is put back into it, and the exception is
@@ -176,7 +182,7 @@ public final class MVar<A> {
 		}
 	}
 	
-	/// An exception-safe way to modify the contents of an MVar.
+	/// An exception-safe way to modify the contents of the receiver.
 	///
 	/// On exception, the value previously stored in the MVar is put back into it, and the exception is
 	/// rethrown.
