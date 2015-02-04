@@ -13,13 +13,20 @@ internal enum TList<A> {
 	case TCons(A, TVar<TList<A>>)
 }
 
-public class TChan<A> : K1<A> {
+public struct TChan<A> {
 	let readHead : TVar<TVar<TList<A>>>
 	let writeHead : TVar<TVar<TList<A>>>
 
-	init(_ readHead : TVar<TVar<TList<A>>>, _ writeHead : TVar<TVar<TList<A>>>) {
+	private init(_ readHead : TVar<TVar<TList<A>>>, _ writeHead : TVar<TVar<TList<A>>>) {
 		self.readHead = readHead
 		self.writeHead = writeHead
+	}
+	
+	public init() {
+		let hole : TVar<TList<A>> = TVar(TList.TNil)
+		let read = TVar(hole)
+		let write = TVar(hole)
+		self = TChan(read, write)
 	}
 }
 
@@ -28,15 +35,6 @@ public func newTChan<A>() -> STM<TChan<A>> {
 		let hole : TVar<TList<A>> = !newTVar(TList.TNil)
 		let read = !newTVar(hole)
 		let write = !newTVar(hole)
-		return TChan(read, write)
-	}
-}
-
-public func newTChanIO<A>() -> STM<TChan<A>> {
-	return do_ { () -> TChan<A> in
-		let hole : TVar<TList<A>> = !newTVarIO(TList.TNil)
-		let read = !newTVarIO(hole)
-		let write = !newTVarIO(hole)
 		return TChan(read, write)
 	}
 }
@@ -50,13 +48,11 @@ public func newBroadcastTChan<A>() -> STM<TChan<A>> {
 	}
 }
 
-public func newBroadcastTChanIO<A>() -> STM<TChan<A>> {
-	return do_ { () -> TChan<A> in
-		let hole : TVar<TList<A>> = !newTVarIO(TList.TNil)
-		let read : TVar<TVar<TList<A>>> = !newTVarIO(error(""))
-		let write = !newTVarIO(hole)
-		return TChan(read, write)
-	}
+public func newBroadcastTChanIO<A>() -> TChan<A> {
+	let hole : TVar<TList<A>> = TVar(TList.TNil)
+	let read : TVar<TVar<TList<A>>> = TVar(error(""))
+	let write = TVar(hole)
+	return TChan(read, write)
 }
 
 public func writeTChan<A>(c : TChan<A>) -> A -> STM<()> {

@@ -20,13 +20,27 @@ import Swiftx
 /// matches the one described in the paper as much as possible with the exception of the existential
 /// types hiding a lot of the plumbing.  While we don't get the proper benefits the paper outlines,
 /// there is a bit of efficiency gained by de-duplicating all of the extra TVars it had lying around.
-private let globalCounter : MVar<TVarId> = !newMVar(0)
+private let globalCounter : MVar<TVarId> = MVar(initial: 0)
 
-internal func nextCounter() -> IO<TVarId> {
-	return do_ { () -> TVarId in
-		let i : Int = !takeMVar(globalCounter)
-		putMVar(globalCounter)(i + 1)
-		return i
+enum ArrayMatcher<A> {
+	case Nil
+	case Cons(A, [A])
+}
+
+func match<T>(l : [T]) -> ArrayMatcher<T> {
+	if l.count == 0 {
+		return .Nil
+	} else if l.count == 1 {
+		return .Cons(l[0], [])
+	}
+	let hd = l[0]
+	let tl = Array<T>(l[1..<l.count])
+	return .Cons(hd, tl)
+}
+
+internal func nextCounter() -> TVarId {
+	return globalCounter.modify { i in
+		return (i + 1, i)
 	}
 }
 
@@ -42,31 +56,25 @@ struct TransactionLog<A> {
 	}
 }
 
-func emptyTLOG<A>() -> IO<IORef<TransactionLog<A>>> {
-	return do_ { () -> IORef<TransactionLog<A>> in
-		let p : IORef<TransactionLog<A>> = !newIORef(TransactionLog<A>(empty(), [(empty(), empty(), empty())], empty()))
-		return p
-	}
+func emptyTLOG<A>() -> MVar<TransactionLog<A>> {
+	return MVar(initial: TransactionLog<A>(empty(), [(empty(), empty(), empty())], empty()))
 }
 
-func newTVarWithLog<A>(log : IORef<TransactionLog<A>>)(tvar : TVar<A>) -> IO<TVar<A>> {
-	return do_ { () -> TVar<A> in
-		let lg = !readIORef(log)
+func newTVarWithLog<A>(log : MVar<TransactionLog<A>>)(tvar : TVar<A>) -> TVar<A> {
+	let lg = log.read()
 
-		switch destruct(lg.tripleStack) {
-			case .Empty:
-				assert(false, "")
-			case .Destructure(let (la, ln, lw), let xs):
-
-				let lg2 = TransactionLog(lg.readTVars, [(insert(tvar)(la), insert(tvar)(ln), lw)], lg.lockingSet)
-				!writeIORef(log)(v: lg2)
-				return tvar
-		}
-
+	if lg.tripleStack.isEmpty {
+		error("")
 	}
+	
+	let (la, ln, lw) = lg.tripleStack.first!
+	
+	let lg2 = TransactionLog(lg.readTVars, [(insert(tvar)(la), insert(tvar)(ln), lw)], lg.lockingSet)
+	!writeMVar(log)(v: lg2)
+	return tvar
 }
 
-func readTVarWithLog<A>(log : IORef<TransactionLog<A>>)(v : TVar<A>) -> IO<A> {
+func readTVarWithLog<A>(log : MVar<TransactionLog<A>>)(v : TVar<A>) -> IO<A> {
 	return do_ { () -> IO<A> in
 		let res : Either<MVar<()>, A> = !tryReadTvarWithLog(log)(ptvar: v)
 		switch res.destruct() {
@@ -82,76 +90,69 @@ func readTVarWithLog<A>(log : IORef<TransactionLog<A>>)(v : TVar<A>) -> IO<A> {
 }
 
 
-func tryReadTvarWithLog<A>(log : IORef<TransactionLog<A>>)(ptvar : TVar<A>) -> IO<Either<MVar<()>, A>> {
-	return do_ {
-		let _tva : ITVar<A> = !takeMVar(ptvar.tvar)
+func tryReadTvarWithLog<A>(log : MVar<TransactionLog<A>>)(ptvar : TVar<A>) -> Either<MVar<()>, A> {
+	let _tva : ITVar<A> = ptvar.tvar.take()
 
-		let lg = !readIORef(log)
-		switch destruct(lg.tripleStack) {
-			case .Empty:
-				assert(false, "")
-			case .Destructure(let (la, ln, lw), let xs):
-				if member(ptvar)(la) {
+//	let lg = !readMVar(log)
+	switch log.read().tripleStack {
+		case .Empty:
+			assert(false, "")
+		case .Destructure(let (la, ln, lw), let xs):
+			if member(ptvar)(la) {
+				return do_ { () -> Either<MVar<()>, A> in
+					let mid = pthread_self()
+					let localmap = !readMVar(_tva.localContent)
+					let lk = !readMVar(fromSome(lookup(mid)(localmap)))
+					!putMVar(ptvar.tvar)(_tva)
+					return Either.right(head(lk))
+				}
+			} else {
+				let b : Bool = !isEmptyMVar(_tva.lock)
+				if b {
 					return do_ { () -> Either<MVar<()>, A> in
 						let mid = pthread_self()
-						let localmap = !readMVar(_tva.localContent)
-						let lk = !readIORef(fromSome(lookup(mid)(localmap)))
+
+						let nl = !takeMVar(_tva.notifyList)
+						!putMVar(_tva.notifyList)(insert(mid)(nl))
+						let globalC = !readMVar(_tva.globalContent)
+						let content_local = !newMVar([globalC])
+						let mp = !takeMVar(_tva.localContent)
+
+						let lg2 = TransactionLog(insert(ptvar)(lg.readTVars), [(insert(ptvar)(la), ln, lw)] + lg.tripleStack, lg.lockingSet)
+						!writeMVar(log)(v: lg2)
+						!putMVar(_tva.localContent)(insert(mid)(content_local)(mp))
 						!putMVar(ptvar.tvar)(_tva)
-						return Either.right(head(lk))
+						return Either.right(globalC)
 					}
 				} else {
-					let b : Bool = !isEmptyMVar(_tva.lock)
-					if b {
-						return do_ { () -> Either<MVar<()>, A> in
-							let mid = pthread_self()
-
-							let nl = !takeMVar(_tva.notifyList)
-							!putMVar(_tva.notifyList)(insert(mid)(nl))
-							let globalC = !readMVar(_tva.globalContent)
-							let content_local = !newIORef([globalC])
-							let mp = !takeMVar(_tva.localContent)
-
-							let lg2 = TransactionLog(insert(ptvar)(lg.readTVars), [(insert(ptvar)(la), ln, lw)] + lg.tripleStack, lg.lockingSet)
-							!writeIORef(log)(v: lg2)
-							!putMVar(_tva.localContent)(insert(mid)(content_local)(mp))
-							!putMVar(ptvar.tvar)(_tva)
-							return Either.right(globalC)
-						}
-					} else {
-						return do_ { () -> Either<MVar<()>, A> in
-							let blockvar : MVar<()> = !newEmptyMVar()
-							let wq = !takeMVar(_tva.waitingQueue)
-							!putMVar(_tva.waitingQueue)([blockvar] + wq)
-							!putMVar(ptvar.tvar)(_tva)
-							return Either.left(blockvar)
-						}
+					return do_ { () -> Either<MVar<()>, A> in
+						let blockvar : MVar<()> = !newEmptyMVar()
+						let wq = !takeMVar(_tva.waitingQueue)
+						!putMVar(_tva.waitingQueue)([blockvar] + wq)
+						!putMVar(ptvar.tvar)(_tva)
+						return Either.left(blockvar)
 					}
 				}
-
-		}
-
-	}
-}
-
-func writeTVarWithLog<A>(log : IORef<TransactionLog<A>>)(v : TVar<A>)(x : A) -> IO<()> {
-	return do_ {
-		let res : Either<MVar<()>, ()> = !tryWriteTVarWithLog(log)(ptvar: v)(con: x)
-		switch res.destruct() {
-			case .Right(_):
-				return IO.pure(())
-			case .Left(let blockvar):
-				return do_ {
-					!takeMVar(blockvar.unBox())
-					return writeTVarWithLog(log)(v: v)(x: x)
-				}
 			}
+
 	}
 }
 
-func tryWriteTVarWithLog<A>(log : IORef<TransactionLog<A>>)(ptvar : TVar<A>)(con : A) -> IO<Either<MVar<()>, ()>> {
+func writeTVarWithLog<A>(log : MVar<TransactionLog<A>>)(v : TVar<A>)(x : A) {
+	let res : Either<MVar<()>, ()> = tryWriteTVarWithLog(log)(ptvar: v)(con: x)
+	switch res {
+		case .Right(_):
+			return
+		case .Left(let blockvar):
+			blockvar.value.take()
+			return writeTVarWithLog(log)(v: v)(x: x)
+		}
+}
+
+func tryWriteTVarWithLog<A>(log : MVar<TransactionLog<A>>)(ptvar : TVar<A>)(con : A) -> IO<Either<MVar<()>, ()>> {
 	return do_ {
 		let _tva : ITVar<A> = !takeMVar(ptvar.tvar)
-		let lg = !readIORef(log)
+		let lg = !readMVar(log)
 		let mid = pthread_self()
 
 		switch destruct(lg.tripleStack) {
@@ -160,12 +161,12 @@ func tryWriteTVarWithLog<A>(log : IORef<TransactionLog<A>>)(ptvar : TVar<A>)(con
 					return do_ { () -> Either<MVar<()>, ()> in
 						let mid = pthread_self()
 						let localmap = !readMVar(_tva.localContent)
-						let ioref_with_old_content = fromSome(lookup(mid)(localmap))
-						let lk = !readIORef(fromSome(lookup(mid)(localmap)))
-						!writeIORef(ioref_with_old_content)(v: [con] + tail(lk))
+						let MVar_with_old_content = fromSome(lookup(mid)(localmap))
+						let lk = !readMVar(fromSome(lookup(mid)(localmap)))
+						!writeMVar(MVar_with_old_content)(v: [con] + tail(lk))
 
 						let lg2 = TransactionLog<A>(lg.readTVars, [(la, ln, insert(ptvar)(lw))] + xs, lg.lockingSet)
-						!writeIORef(log)(v: lg2)
+						!writeMVar(log)(v: lg2)
 						!putMVar(ptvar.tvar)(_tva)
 						return Either.right(())
 					}
@@ -174,11 +175,11 @@ func tryWriteTVarWithLog<A>(log : IORef<TransactionLog<A>>)(ptvar : TVar<A>)(con
 					if b {
 						return do_ { () -> Either<MVar<()>, ()> in
 							let globalC = !readMVar(_tva.globalContent)
-							let content_local = !newIORef([con])
+							let content_local = !newMVar([con])
 							let mp = !takeMVar(_tva.localContent)
 							!putMVar(_tva.localContent)(insert(mid)(content_local)(mp))
 							let lg2 = TransactionLog(insert(ptvar)(lg.readTVars), [(insert(ptvar)(la), ln, insert(ptvar)(lw))] + xs, lg.lockingSet)
-							!writeIORef(log)(v: lg2)
+							!writeMVar(log)(v: lg2)
 							!putMVar(ptvar.tvar)(_tva)
 							return Either.right(())
 
@@ -200,9 +201,9 @@ func tryWriteTVarWithLog<A>(log : IORef<TransactionLog<A>>)(ptvar : TVar<A>)(con
 	}
 }
 
-func orRetryWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
+func orRetryWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ {
-		let lg = !readIORef(log)
+		let lg = !readMVar(log)
 		switch destruct(lg.tripleStack) {
 			case .Empty:
 				assert(false, "")
@@ -210,7 +211,7 @@ func orRetryWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
 				return do_ {
 					let mid = pthread_self()
 					!undoubleLocalTVars(mid)(l: elems(la))
-					return writeIORef(log)(v: TransactionLog<A>(lg.readTVars, xs, lg.lockingSet))
+					return writeMVar(log)(v: TransactionLog<A>(lg.readTVars, xs, lg.lockingSet))
 				}
 		}
 
@@ -229,8 +230,8 @@ private func undoubleLocalTVars<A>(mid : ThreadID)(l : [TVar<A>]) -> IO<()> {
 					case .None:
 						assert(false, "")
 					case .Some(let conp):
-						let l = !readIORef(conp)
-						!writeIORef(conp)(v: tail(l))
+						let l = !readMVar(conp)
+						!writeMVar(conp)(v: tail(l))
 						!putMVar(tv.tvar)(_tvany)
 						!putMVar(_tvany.localContent)(localmap)
 						return undoubleLocalTVars(mid)(l: xs)
@@ -240,9 +241,9 @@ private func undoubleLocalTVars<A>(mid : ThreadID)(l : [TVar<A>]) -> IO<()> {
 	}
 }
 
-func orElseWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
+func orElseWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ {
-		let lg : TransactionLog<A> = !readIORef(log)
+		let lg : TransactionLog<A> = !readMVar(log)
 		let mid = pthread_self()
 		switch destruct(lg.tripleStack) {
 			case .Empty:
@@ -250,7 +251,7 @@ func orElseWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
 			case .Destructure(let (la, ln, lw), let xs):
 				return do_ {
 					!doubleLocalTVars(mid)(l: elems(la))
-					return writeIORef(log)(v: TransactionLog<A>(lg.readTVars, [(la, ln, lw)] + [(la, ln, lw)] + xs, lg.lockingSet))
+					return writeMVar(log)(v: TransactionLog<A>(lg.readTVars, [(la, ln, lw)] + [(la, ln, lw)] + xs, lg.lockingSet))
 				}
 		}
 	}
@@ -269,8 +270,8 @@ private func doubleLocalTVars<A>(mid : ThreadID)(l : [TVar<A>]) -> IO<()> {
 						return IO.pure(())
 					case .Some(let conp):
 						return do_ {
-							let lx : [A] = !readIORef(conp)
-							!writeIORef(conp)(v: [head(lx)] + [head(lx)] + tail(lx))
+							let lx : [A] = !readMVar(conp)
+							!writeMVar(conp)(v: [head(lx)] + [head(lx)] + tail(lx))
 							!putMVar(_tvany.localContent)(localmap)
 							!putMVar(tv.tvar)(_tvany)
 							return doubleLocalTVars(mid)(l: xs)
@@ -280,7 +281,7 @@ private func doubleLocalTVars<A>(mid : ThreadID)(l : [TVar<A>]) -> IO<()> {
 	}
 }
 
-func commit<A>(tlog : IORef<TransactionLog<A>>) -> IO<()> {
+func commit<A>(tlog : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ { () -> () in
 		!writeStartWithLog(tlog)
 		!writeClearWithLog(tlog)
@@ -292,11 +293,11 @@ func commit<A>(tlog : IORef<TransactionLog<A>>) -> IO<()> {
 	}
 }
 
-private func _writeStartWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<Either<MVar<()>, ()>> {
+private func _writeStartWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<Either<MVar<()>, ()>> {
 	return do_ {
 		let mid = pthread_self()
 
-		let lg = !readIORef(log)
+		let lg = !readMVar(log)
 		switch destruct(lg.tripleStack) {
 			case .Empty:
 				assert(false, "")
@@ -309,7 +310,7 @@ private func _writeStartWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<Either<
 					case .Right(_):
 						return do_ { () -> Either<MVar<()>, ()> in
 							let lg2 = TransactionLog<A>(lg.readTVars, lg.tripleStack, xs)
-							!writeIORef(log)(v: lg2)
+							!writeMVar(log)(v: lg2)
 							return Either.right(())
 						}
 					case .Left(let lock):
@@ -355,7 +356,7 @@ private func grabLocks<A>(mid : ThreadID)(held : [TVar<A>]) -> IO<Either<MVar<()
 	}
 }
 
-func writeStartWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
+func writeStartWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ { () -> () in
 		let res : Either<MVar<()>, ()> = !_writeStartWithLog(log)
 		switch res.destruct() {
@@ -370,16 +371,16 @@ func writeStartWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
 	}
 }
 
-func writeClearWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
+func writeClearWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ {
-		let lg : TransactionLog<A> = !readIORef(log)
+		let lg : TransactionLog<A> = !readMVar(log)
 		let xs = elems(lg.readTVars)
 		!iterateClearWithLog(log)(l: xs)
-		return writeIORef(log)(v: TransactionLog<A>(empty(), lg.tripleStack, lg.lockingSet))
+		return writeMVar(log)(v: TransactionLog<A>(empty(), lg.tripleStack, lg.lockingSet))
 	}
 }
 
-private func iterateClearWithLog<A>(log : IORef<TransactionLog<A>>)(l: [TVar<A>]) -> IO<()> {
+private func iterateClearWithLog<A>(log : MVar<TransactionLog<A>>)(l: [TVar<A>]) -> IO<()> {
 	return do_ {
 		switch destruct(l) {
 			case .Empty:
@@ -409,9 +410,9 @@ func notify(l : [ThreadID]) -> IO<()> {
 	}
 }
 
-func sendRetryWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
+func sendRetryWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ {
-		let lg : TransactionLog<A> = !readIORef(log)
+		let lg : TransactionLog<A> = !readMVar(log)
 		let mid = pthread_self()
 		switch destruct(lg.tripleStack) {
 			case .Empty:
@@ -443,9 +444,9 @@ private func getIDs<A>(l: [TVar<A>])(ls : Set<ThreadID>) -> IO<[ThreadID]> {
 	}
 }
 
-func writeTVWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
+func writeTVWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ {
-		let lg : TransactionLog<A> = !readIORef(log)
+		let lg : TransactionLog<A> = !readMVar(log)
 		let mid = pthread_self()
 		switch destruct(lg.tripleStack) {
 			case .Empty:
@@ -453,7 +454,7 @@ func writeTVWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
 			case .Destructure(let (la, ln, lw), let xs):
 				let tobewritten = difference(lw)(ln)
 				!writeTVars(elems(tobewritten))
-				return writeIORef(log)(v: TransactionLog<A>(lg.readTVars, [(la, ln, empty())] + xs, lg.lockingSet))
+				return writeMVar(log)(v: TransactionLog<A>(lg.readTVars, [(la, ln, empty())] + xs, lg.lockingSet))
 		}
 	}
 }
@@ -471,7 +472,7 @@ private func writeTVars<A>(l : [TVar<A>]) -> IO<()> {
 					case .None:
 						assert(false, "")
 					case .Some(let conp):
-						let con : [A] = !readIORef(conp)
+						let con : [A] = !readMVar(conp)
 
 						!putMVar(_tvany.localContent)(delete(mid)(localmap))
 						!takeMVar(_tvany.globalContent)
@@ -484,9 +485,9 @@ private func writeTVars<A>(l : [TVar<A>]) -> IO<()> {
 	}
 }
 
-func writeTVnWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
+func writeTVnWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ {
-		let lg : TransactionLog<A> = !readIORef(log)
+		let lg : TransactionLog<A> = !readMVar(log)
 		let mid = pthread_self()
 		switch destruct(lg.tripleStack) {
 			case .Empty:
@@ -496,7 +497,7 @@ func writeTVnWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
 				let k = lg.lockingSet
 				let toBeWritten = elems(ln)
 				!writeNew(toBeWritten)
-				return writeIORef(log)(v: TransactionLog<A>(lg.readTVars, [(la, empty(), lw)] + xs, lg.lockingSet))
+				return writeMVar(log)(v: TransactionLog<A>(lg.readTVars, [(la, empty(), lw)] + xs, lg.lockingSet))
 		}
 	}
 }
@@ -515,7 +516,7 @@ private func writeNew<A>(l : [TVar<A>]) -> IO<()> {
 						case .None:
 							assert(false, "")
 						case .Some(let conp):
-							let con : [A] = !readIORef(conp)
+							let con : [A] = !readMVar(conp)
 
 							!takeMVar(_tvany.globalContent)
 							!putMVar(_tvany.globalContent)(head(con))
@@ -530,9 +531,9 @@ private func writeNew<A>(l : [TVar<A>]) -> IO<()> {
 	}
 }
 
-func writeEndWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
+func writeEndWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ {
-		let lg : TransactionLog<A> = !readIORef(log)
+		let lg : TransactionLog<A> = !readMVar(log)
 		let mid = pthread_self()
 		switch destruct(lg.tripleStack) {
 			case .Empty:
@@ -560,9 +561,9 @@ func clearEntries<A>(l: [TVar<A>]) -> IO<()> {
 	}
 }
 
-func unlockTVWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
+func unlockTVWithLog<A>(log : MVar<TransactionLog<A>>) -> IO<()> {
 	return do_ {
-		let lg : TransactionLog<A> = !readIORef(log)
+		let lg : TransactionLog<A> = !readMVar(log)
 		let mid = pthread_self()
 		switch destruct(lg.tripleStack) {
 			case .Empty:
@@ -570,7 +571,7 @@ func unlockTVWithLog<A>(log : IORef<TransactionLog<A>>) -> IO<()> {
 			case .Destructure(let (la, ln, lw), let xs):
 				let k = lg.lockingSet
 				!unlockTVars(elems(k))
-				return writeIORef(log)(v: TransactionLog<A>(lg.readTVars, lg.tripleStack, empty()))
+				return writeMVar(log)(v: TransactionLog<A>(lg.readTVars, lg.tripleStack, empty()))
 		}
 	}
 }
