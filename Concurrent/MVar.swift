@@ -6,17 +6,15 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
-
 /// `MVar`s (literally "Mutable Variables") are mutable references that are either empty or contain
-/// a value of type A. In this way, they are "Synchronization Primitives" that can be used to make
-/// threads wait on a value before proceeding with a computation.
+/// a value of type A. In this way, they are a form of synchronization primitive that can be used to
+/// make threads wait on a value before proceeding with a computation.
 ///
 /// - Reading an empty `MVar` causes the reader to block.
 ///
-/// - Reading a filled 'MVar' empties it and returns value, and potentially wakes up a blocked writer.
+/// - Reading a filled 'MVar' empties it, returns a value, and potentially wakes up a blocked writer.
 ///
-/// - Writing to an empty 'MVar' fills it with a value, and potentially, wakes up a blocked reader.
+/// - Writing to an empty 'MVar' fills it with a value and potentially wakes up a blocked reader.
 ///
 /// - Writing to a filled 'MVar' causes the writer to block.
 public final class MVar<A> {

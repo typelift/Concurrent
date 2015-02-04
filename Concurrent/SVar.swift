@@ -9,16 +9,16 @@
 /// An SVar ("Sample Variable") is an MVar that allows for overwriting its contents without blocking.
 ///
 /// - Reading an empty 'SVar' causes the reader to block.
-///   (same as 'take()' on empty 'MVar')
+///   (same as 'take()' on an empty 'MVar')
 ///
-/// - Reading a filled 'SVar' empties it and returns value.
+/// - Reading a filled 'SVar' empties it and returns its value.
 ///   (same as 'take() on a full MVar')
 ///
-/// - Writing to an empty 'SVar' fills it with a value, and potentially, wakes up a blocked reader 
-///   (same as for 'put()' on empty 'MVar').
+/// - Writing to an empty 'SVar' fills it with a value and potentially wakes up a blocked reader.
+///   (same as for 'put()' on an empty 'MVar').
 ///
 /// - Writing to a filled 'SVar' overwrites the current value.
-///   (different from 'putMVar' on full 'MVar'.)
+///   (different from 'put()' on a full 'MVar'.)
 public struct SVar<A> {
 	let svar : MVar<(Int, MVar<A>)>
 	

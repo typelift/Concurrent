@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
-
 /// Channels are unbounded FIFO streams of values with a read and write terminals comprised of
 /// MVars.
 public struct Chan<A> {
