@@ -3,19 +3,20 @@
 Concurrent
 ==========
 
-Concurrent is a collection of functional concurrency primitives inspired by 
-[Concurrent ML](http://cml.cs.uchicago.edu/) and 
-[Concurrent Haskell](http://hackage.haskell.org/package/base-4.7.0.2/docs/Control-Concurrent.html).
-Traditional approaches to concurrency like locks, latches, and semaphores all 
-fall under the same category of basic resource protection.  While this affords 
-them a large measure of simplicity, their use is entirely ad-hoc, and failing
-to properly lock or unlock critical sections can lead a program to beachball or
-worse.  In addition, though we have become accustomed to performing work on background
-threads, communication between these threads is frought with peril.  
-The primitives in this library instead focus on *merging* data with protection, choosing
-to abstract away the use of locks entirely.  By approaching concurrency from the 
-data-side first, rather than the code side, thread-safety, synchronization, and 
-protection become inherent in types rather than in code.
+Concurrent is a collection of functional concurrency primitives inspired by
+[Concurrent ML](http://cml.cs.uchicago.edu/) and [Concurrent
+Haskell](http://hackage.haskell.org/package/base-4.7.0.2/docs/Control-Concurrent.html).
+Traditional approaches to concurrency like locks, latches, and semaphores all
+fall under the same category of basic resource protection.  While this affords
+them a large measure of simplicity, their use is entirely ad-hoc, and failing to
+properly lock or unlock critical sections can lead a program to beachball or
+worse.  In addition, though we have become accustomed to performing work on
+background threads, communication between these threads is frought with peril.  
+
+The primitives in this library instead focus on *merging* data with protection,
+choosing to abstract away the use of locks entirely.  By approaching concurrency
+from the data side, rather than the code side, thread-safety, synchronization,
+and protection become inherent in types rather than in code.
 
 Take this simple example:
 
@@ -41,7 +42,7 @@ dispatch_after(time, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0),
 let x2 = chan.read() // Blocks until the dispatch block is executed and the Channel becomes non-empty.
 ```
 
-Unlike lock-based protection mechanisms, we can wrap mutable variables that must 
+Unlike lock-based protection mechanisms, we can wrap mutable variables that must
 be accessed concurrently in an MVar.
 
 ```
@@ -159,3 +160,4 @@ License
 =======
 
 Concurrent is released under the MIT license.
+

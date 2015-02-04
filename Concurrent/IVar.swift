@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
-
 /// IVars are write-once mutable references.  Attempting to write into an already full IVar throws
 /// an exception because the thread will be blocked indefinitely.
 public struct IVar<A> {
