@@ -8,7 +8,7 @@
 
 import Swiftx
 
-public class STM<A> : K1<A> {
+public struct STM<A> {
 	typealias B = Any
 
 	let act : STMD<A>
@@ -17,50 +17,49 @@ public class STM<A> : K1<A> {
 	init(_ act : STMD<A>) {
 		self.act = act
 	}
-
-	public func destruct() -> STMD<A> {
-		return self.act
-	}
 }
 
-extension STM : Functor {
+extension STM /*: Functor*/ {
 	typealias FA = STM<A>
 
-	public class func fmap<B>(f: A -> B) -> STM<A> -> STM<B> {
-		return { x in x >>- { y in STM<B>.pure(f(y)) } }
+	public func fmap<B>(f : A -> B) -> STM<B> {
+		return self >>- { y in STM<B>.pure(f(y)) }
 	}
 }
 
-public func <%><A, B>(f: A -> B, io : STM<A>) -> STM<B> {
-	return STM.fmap(f)(io)
+public func <^> <A, B>(f : A -> B, io : STM<A>) -> STM<B> {
+	return io.fmap(f)
 }
 
-public func <% <A, B>(x : A, io : STM<B>) -> STM<A> {
-	return STM.fmap(const(x))(io)
-}
+//public func <^ <A, B>(x : A, io : STM<B>) -> STM<A> {
+//	return STM.fmap(const(x))(io)
+//}
 
-extension STM : Applicative {
-	public class func pure(a: A) -> STM<A> {
+extension STM /*: Applicative*/ {
+	public static func pure(a : A) -> STM<A> {
 		return STM<A>(STMD<A>.Return(a))
 	}
-
+	
+	public func ap<B>(fn : STM<A -> B>) -> STM<B> {
+		return !fn <^> self
+	}
 }
 
-public func <*><A, B>(fn: STM<A -> B>, m: STM<A>) -> STM<B> {
-	return !fn <%> m
+public func <*> <A, B>(fn : STM<A -> B>, m: STM<A>) -> STM<B> {
+	return !fn <^> m
 }
 
-public func *> <A, B>(a : STM<A>, b : STM<B>) -> STM<B> {
-	return const(id) <%> a <*> b
-}
+//public func *> <A, B>(a : STM<A>, b : STM<B>) -> STM<B> {
+//	return const(identity) <^> a <*> b
+//}
+//
+//public func <* <A, B>(a : STM<A>, b : STM<B>) -> STM<A> {
+//	return const <^> a <*> b
+//}
 
-public func <* <A, B>(a : STM<A>, b : STM<B>) -> STM<A> {
-	return const <%> a <*> b
-}
-
-extension STM : Monad {
-	public func bind<B>(f: A -> STM<B>) -> STM<B> {
-		return STM<B>(self.destruct().bind({ a in f(a).destruct() }))
+extension STM /*: Monad*/ {
+	public func bind<B>(f : A -> STM<B>) -> STM<B> {
+		return STM<B>(self.act.bind({ a in f(a).act }))
 	}
 }
 
@@ -76,7 +75,7 @@ public func >><A, B>(x: STM<A>, y: STM<B>) -> STM<B> {
 }
 
 public prefix func !<A>(stm: STM<A>) -> A {
-	return !atomically(stm)
+	return atomically(stm)
 }
 
 public func do_<A>(fn: () -> A) -> STM<A> {
@@ -102,13 +101,13 @@ public enum STMD<A> {
 			case .Retry:
 				return STMD<B>.Retry
 			case .NewTVar(let x, _, let cont):
-				return cont(x()).destruct().bind(f)
+				return cont(x()).act.bind(f)
 			case .ReadTVar(let x, let cont):
-				return STM<B>(cont(!readMVar((!readMVar(x.tvar)).globalContent)).destruct().bind(f)).destruct()
+				return STM<B>(cont(x.tvar.read().globalContent.read()).act.bind(f)).act
 			case .WriteTVar(let v, let x, let cont):
-				return cont.destruct().bind({ _ in f(!readMVar((!readMVar(v.tvar)).globalContent)) })
+				return cont.act.bind({ _ in f(v.tvar.read().globalContent.read()) })
 			case .OrElse(let a1, let a2, let cont):
-				return a1.destruct().bind({ i in cont(i).destruct().bind(f) })
+				return a1.act.bind({ i in cont(i).act.bind(f) })
 		}
 	}
 }
@@ -121,105 +120,73 @@ public func retry<A>() -> STM<A> {
 	return STM(STMD<A>.Retry)
 }
 
-public func newTVarIO<A>(x : A) -> IO<TVar<A>> {
+public func newTVarIO<A>(x : A) -> TVar<A> {
 	return atomically(newTVar(x))
 }
 
-public func atomically<A>(act : STM<A>) -> IO<A> {
-	return do_ {
-		let tlog : IORef<TransactionLog<A>> = !emptyTLOG()
-		return performSTM(tlog)(act: act.destruct())
-	}
+public func atomically<A>(act : STM<A>) -> A {
+	let tlog : MVar<TransactionLog<A>> = emptyTLOG()
+	return performSTM(tlog)(act: act.act)
 }
 
-private func performSTM<A>(tlog : IORef<TransactionLog<A>>)(act : STMD<A>) -> IO<A> {
+private func performSTM<A>(tlog : MVar<TransactionLog<A>>)(act : STMD<A>) -> A {
 	switch act {
 		case .Return(let a):
-			return do_ { () -> A in
-				commit(tlog)
-				return a()
-		}
+			commit(tlog)
+			return a()
 		case .Retry:
 			return waitForExternalRetry()
 		case .NewTVar(_, let x, let cont):
-			return do_ {
-				let tv = !newTVarWithLog(tlog)(tvar: x)
-				return performSTM(tlog)(act: (cont(!takeMVar((!takeMVar(tv.tvar)).globalContent))).destruct())
-			}
+			let tv = newTVarWithLog(tlog)(tvar: x)
+			return performSTM(tlog)(act: (cont(tv.tvar.take().globalContent.take().act).destruct()))
 		case .ReadTVar(let x, let cont):
-			return do_ {
-				let res : A = !readTVarWithLog(tlog)(v: x)
-				return performSTM(tlog)(act: cont(res).destruct())
-			}
+			let res : A = readTVarWithLog(tlog)(v: x)
+			return performSTM(tlog)(act: cont(res).act)
 		case .WriteTVar(let v, let x, let cont):
-			return do_ {
-				!writeTVarWithLog(tlog)(v: v)(x: x())
-				return performSTM(tlog)(act: cont.destruct())
-			}
+			writeTVarWithLog(tlog)(v: v)(x: x())
+			return performSTM(tlog)(act: cont.act)
 		case .OrElse(let act1, let act2, let cont):
-			return do_ {
-				!orElseWithLog(tlog)
-				let resl = !performOrElseLeft(tlog)(act: act1.destruct())
-				switch resl {
-					case .Some(let a):
-						return performSTM(tlog)(act: cont(a).destruct())
-					case .None:
-						return do_ {
-							!orRetryWithLog(tlog)
-							return performSTM(tlog)(act: act2.bind(cont).destruct())
-						}
-				}
+			orElseWithLog(tlog)
+			let resl = performOrElseLeft(tlog)(act: act1.act)
+			switch resl {
+				case .Some(let a):
+					return performSTM(tlog)(act: cont(a).act)
+				case .None:
+					orRetryWithLog(tlog)
+					return performSTM(tlog)(act: act2.bind(cont).act)
 			}
 	}
 }
 
-private func performOrElseLeft<A>(tlog : IORef<TransactionLog<A>>)(act : STMD<A>) -> IO<Optional<A>> {
+private func performOrElseLeft<A>(tlog : MVar<TransactionLog<A>>)(act : STMD<A>) -> Optional<A> {
 	switch act {
 		case .Return(let a):
-			return do_ { () -> Optional<A> in
-				return .Some(a())
-			}
+			return .Some(a())
 		case .Retry:
-			return do_ { () -> Optional<A> in
-					return .None
-			}
+				return .None
 		case .NewTVar(_, let x, let cont):
-			return do_ {
-				let tv = !newTVarWithLog(tlog)(tvar: x)
-				return performOrElseLeft(tlog)(act: (cont(!takeMVar((!takeMVar(tv.tvar)).globalContent))).destruct())
-			}
+			let tv = newTVarWithLog(tlog)(tvar: x)
+			return performOrElseLeft(tlog)(act: cont(tv.tvar.take().globalContent.take()).act)
 		case .ReadTVar(let x, let cont):
-			return do_ {
-				let res : A = !readTVarWithLog(tlog)(v: x)
-				return performOrElseLeft(tlog)(act: cont(res).destruct())
-			}
+			let res : A = readTVarWithLog(tlog)(v: x)
+			return performOrElseLeft(tlog)(act: cont(res).act)
 		case .WriteTVar(let v, let x, let cont):
-			return do_ {
-				!writeTVarWithLog(tlog)(v: v)(x: x())
-				return performOrElseLeft(tlog)(act: cont.destruct())
-			}
+			writeTVarWithLog(tlog)(v: v)(x: x())
+			return performOrElseLeft(tlog)(act: cont.act)
 		case .OrElse(let act1, let act2, let cont):
-			return do_ { () -> IO<Optional<A>> in
-				!orElseWithLog(tlog)
-				let resl = !performOrElseLeft(tlog)(act: act1.destruct())
-				switch resl {
-					case .Some(let x):
-						return do_ { () -> IO<Optional<A>> in
-							return performOrElseLeft(tlog)(act: cont(x).destruct())
-						}
-					case .None:
-						return do_ {
-							!orRetryWithLog(tlog)
-							return performOrElseLeft(tlog)(act: act2.bind(cont).destruct())
-						}
-				}
+			orElseWithLog(tlog)
+			let resl = performOrElseLeft(tlog)(act: act1.act)
+			switch resl {
+				case .Some(let x):
+					return performOrElseLeft(tlog)(act: cont(x).act)
+				case .None:
+					orRetryWithLog(tlog)
+					return performOrElseLeft(tlog)(act: act2.bind(cont).act)
 			}
 	}
 }
 
-func waitForExternalRetry<A>() -> IO<A> {
-	return do_ {
-		return undefined()
-	}
+func waitForExternalRetry<A>() -> A {
+	return undefined()
 }
 
