@@ -7,7 +7,7 @@
 //
 
 import Concurrent
-import Swiftx
+import Swiftz
 import XCTest
 
 class ParallelTests: XCTestCase {

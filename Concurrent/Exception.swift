@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 TypeLift. All rights reserved.
 //
 
-import Swiftx
+import Swiftz
 
 public protocol Exception : Printable {	}
 

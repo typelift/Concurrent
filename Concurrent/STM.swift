@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Robert Widmann. All rights reserved.
 //
 
-import Swiftx
+import Swiftz
 
 public struct STM<A> {
 	typealias B = Any

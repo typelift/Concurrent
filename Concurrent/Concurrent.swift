@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
+import Swiftz
 
 public typealias ThreadID = pthread_t
 

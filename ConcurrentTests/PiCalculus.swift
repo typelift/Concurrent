@@ -7,7 +7,7 @@
 //
 
 import Concurrent
-import Swiftx
+import Swiftz
 import XCTest
 
 typealias Name = String

@@ -30,9 +30,7 @@
 		8434FA4019E9CE9F008D9909 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434FA2C19E9CE9F008D9909 /* IVar.swift */; };
 		8434FA4119E9CE9F008D9909 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434FA2D19E9CE9F008D9909 /* MVar.swift */; };
 		8434FA4219E9CE9F008D9909 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434FA2E19E9CE9F008D9909 /* QSem.swift */; };
-		847520551A7EBA3F00975C8B /* Swiftx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847520501A7EBA3200975C8B /* Swiftx.framework */; };
 		8475205C1A7EC55F00975C8B /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475205B1A7EC55F00975C8B /* Exception.swift */; };
-		8475205D1A7EDD2D00975C8B /* Swiftx.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 847520501A7EBA3200975C8B /* Swiftx.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		849AA3AE1A0984FD00472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434FA0719E9CE73008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -44,26 +42,19 @@
 			remoteGlobalIDString = 8434FA0619E9CE73008D9909;
 			remoteInfo = Concurrent;
 		};
-		8475204F1A7EBA3200975C8B /* PBXContainerItemProxy */ = {
+		84FE01DE1A87EF03006D3EEA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8475204A1A7EBA3200975C8B /* Swiftx-iOS.xcodeproj */;
+			containerPortal = 84FE01D91A87EF03006D3EEA /* Swiftz-iOS.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 84A88D101A70BE0D003D53CF;
-			remoteInfo = Swiftx;
+			remoteGlobalIDString = 84A88D981A70C280003D53CF;
+			remoteInfo = Swiftz;
 		};
-		847520511A7EBA3200975C8B /* PBXContainerItemProxy */ = {
+		84FE01E01A87EF03006D3EEA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8475204A1A7EBA3200975C8B /* Swiftx-iOS.xcodeproj */;
+			containerPortal = 84FE01D91A87EF03006D3EEA /* Swiftz-iOS.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 84A88CBA1A70BD82003D53CF;
-			remoteInfo = "Swiftx-iOSTests";
-		};
-		847520531A7EBA3A00975C8B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8475204A1A7EBA3200975C8B /* Swiftx-iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 84A88D0F1A70BE0D003D53CF;
-			remoteInfo = Swiftx;
+			remoteGlobalIDString = 84A88D5C1A70C23D003D53CF;
+			remoteInfo = "Swiftz-iOSTests";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -74,7 +65,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8475205D1A7EDD2D00975C8B /* Swiftx.framework in CopyFiles */,
 				849AA3AE1A0984FD00472F08 /* Concurrent.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,8 +98,8 @@
 		8434FA2C19E9CE9F008D9909 /* IVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVar.swift; sourceTree = "<group>"; };
 		8434FA2D19E9CE9F008D9909 /* MVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MVar.swift; sourceTree = "<group>"; };
 		8434FA2E19E9CE9F008D9909 /* QSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QSem.swift; sourceTree = "<group>"; };
-		8475204A1A7EBA3200975C8B /* Swiftx-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Swiftx-iOS.xcodeproj"; path = "Carthage/Checkouts/Swiftx/Swiftx-iOS.xcodeproj"; sourceTree = "<group>"; };
 		8475205B1A7EC55F00975C8B /* Exception.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
+		84FE01D91A87EF03006D3EEA /* Swiftz-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Swiftz-iOS.xcodeproj"; path = "Carthage/Checkouts/Swiftz/Swiftz-iOS.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +115,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				847520551A7EBA3F00975C8B /* Swiftx.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,7 +139,7 @@
 		8434F9D519E9CE41008D9909 = {
 			isa = PBXGroup;
 			children = (
-				8475204A1A7EBA3200975C8B /* Swiftx-iOS.xcodeproj */,
+				84FE01D91A87EF03006D3EEA /* Swiftz-iOS.xcodeproj */,
 				8434FA0819E9CE73008D9909 /* Concurrent */,
 				8434F9FB19E9CE5F008D9909 /* ConcurrentTests */,
 				8434F9E019E9CE41008D9909 /* Products */,
@@ -206,11 +195,11 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8475204B1A7EBA3200975C8B /* Products */ = {
+		84FE01DA1A87EF03006D3EEA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				847520501A7EBA3200975C8B /* Swiftx.framework */,
-				847520521A7EBA3200975C8B /* Swiftx-iOSTests.xctest */,
+				84FE01DF1A87EF03006D3EEA /* Swiftz.framework */,
+				84FE01E11A87EF03006D3EEA /* Swiftz-iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -262,7 +251,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				847520541A7EBA3A00975C8B /* PBXTargetDependency */,
 			);
 			name = Concurrent;
 			productName = Concurrent;
@@ -298,8 +286,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 8475204B1A7EBA3200975C8B /* Products */;
-					ProjectRef = 8475204A1A7EBA3200975C8B /* Swiftx-iOS.xcodeproj */;
+					ProductGroup = 84FE01DA1A87EF03006D3EEA /* Products */;
+					ProjectRef = 84FE01D91A87EF03006D3EEA /* Swiftz-iOS.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -311,18 +299,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		847520501A7EBA3200975C8B /* Swiftx.framework */ = {
+		84FE01DF1A87EF03006D3EEA /* Swiftz.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = Swiftx.framework;
-			remoteRef = 8475204F1A7EBA3200975C8B /* PBXContainerItemProxy */;
+			path = Swiftz.framework;
+			remoteRef = 84FE01DE1A87EF03006D3EEA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		847520521A7EBA3200975C8B /* Swiftx-iOSTests.xctest */ = {
+		84FE01E11A87EF03006D3EEA /* Swiftz-iOSTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "Swiftx-iOSTests.xctest";
-			remoteRef = 847520511A7EBA3200975C8B /* PBXContainerItemProxy */;
+			path = "Swiftz-iOSTests.xctest";
+			remoteRef = 84FE01E01A87EF03006D3EEA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -386,11 +374,6 @@
 			isa = PBXTargetDependency;
 			target = 8434FA0619E9CE73008D9909 /* Concurrent */;
 			targetProxy = 8434FA2019E9CE8F008D9909 /* PBXContainerItemProxy */;
-		};
-		847520541A7EBA3A00975C8B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Swiftx;
-			targetProxy = 847520531A7EBA3A00975C8B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

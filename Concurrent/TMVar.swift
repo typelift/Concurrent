@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
+import Swiftz
 
 public class TMVar<A> : K1<A> {
 	let tvar : TVar<Optional<A>>

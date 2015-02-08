@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
+import Swiftz
 
 public struct TVar<A> {
 	public let tvar : MVar<ITVar<A>>
