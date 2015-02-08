@@ -34,11 +34,11 @@ public func newTVar<A>(x : A) -> STM<TVar<A>> {
 	let pointer_local_content = MVar(initial: [x])
 	let mp = [mid: pointer_local_content]
 	let content_local = MVar(initial: mp)
-	let notify_list : MVar<Set<ThreadID>> = MVar(initial: empty())
+	let notify_list : MVar<Set<ThreadID>> = MVar(initial: Set())
 	let unset_lock : MVar<ThreadID> = MVar()
 
 	let content_waiting_queue = MVar(initial: [] as [MVar<()>])
-	let content_tvarx = MVar(ITVar(content_global, content_local, notify_list, unset_lock, waitingQueue: content_waiting_queue))
+	let content_tvarx = MVar(initial: ITVar(content_global, content_local, notify_list, unset_lock, waitingQueue: content_waiting_queue))
 
 	let tvar = TVar<A>(content_tvarx, tvar_id)
 	return STM(STMD.NewTVar(x, tvar, { (let y : A) in STM.pure(y) })) >> STM<TVar<A>>.pure(tvar)

@@ -7,7 +7,7 @@
 //
 
 import Concurrent
-import Swiftz
+import class Swiftz.Box
 import XCTest
 
 typealias Name = String

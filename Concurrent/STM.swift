@@ -11,10 +11,10 @@ import Swiftz
 public struct STM<A> {
 	typealias B = Any
 
-	let act : STMD<A>
+	let act : () -> STMD<A>
 
 
-	init(_ act : STMD<A>) {
+	init(_ act : @autoclosure () -> STMD<A>) {
 		self.act = act
 	}
 }
@@ -59,7 +59,7 @@ public func <*> <A, B>(fn : STM<A -> B>, m: STM<A>) -> STM<B> {
 
 extension STM /*: Monad*/ {
 	public func bind<B>(f : A -> STM<B>) -> STM<B> {
-		return STM<B>(self.act.bind({ a in f(a).act }))
+		return STM<B>(self.act().bind({ a in f(a).act() }))
 	}
 }
 
@@ -101,13 +101,13 @@ public enum STMD<A> {
 			case .Retry:
 				return STMD<B>.Retry
 			case .NewTVar(let x, _, let cont):
-				return cont(x()).act.bind(f)
+				return cont(x()).act().bind(f)
 			case .ReadTVar(let x, let cont):
-				return STM<B>(cont(x.tvar.read().globalContent.read()).act.bind(f)).act
+				return STM<B>(cont(x.tvar.read().globalContent.read()).act().bind(f)).act()
 			case .WriteTVar(let v, let x, let cont):
-				return cont.act.bind({ _ in f(v.tvar.read().globalContent.read()) })
+				return cont.act().bind({ _ in f(v.tvar.read().globalContent.read()) })
 			case .OrElse(let a1, let a2, let cont):
-				return a1.act.bind({ i in cont(i).act.bind(f) })
+				return a1.act().bind({ i in cont(i).act().bind(f) })
 		}
 	}
 }
@@ -126,7 +126,7 @@ public func newTVarIO<A>(x : A) -> TVar<A> {
 
 public func atomically<A>(act : STM<A>) -> A {
 	let tlog : MVar<TransactionLog<A>> = emptyTLOG()
-	return performSTM(tlog)(act: act.act)
+	return performSTM(tlog)(act: act.act())
 }
 
 private func performSTM<A>(tlog : MVar<TransactionLog<A>>)(act : STMD<A>) -> A {
@@ -138,22 +138,22 @@ private func performSTM<A>(tlog : MVar<TransactionLog<A>>)(act : STMD<A>) -> A {
 			return waitForExternalRetry()
 		case .NewTVar(_, let x, let cont):
 			let tv = newTVarWithLog(tlog)(tvar: x)
-			return performSTM(tlog)(act: (cont(tv.tvar.take().globalContent.take()).act))
+			return performSTM(tlog)(act: (cont(tv.tvar.take().globalContent.take()).act()))
 		case .ReadTVar(let x, let cont):
 			let res : A = readTVarWithLog(tlog)(v: x)
-			return performSTM(tlog)(act: cont(res).act)
+			return performSTM(tlog)(act: cont(res).act())
 		case .WriteTVar(let v, let x, let cont):
 			writeTVarWithLog(tlog)(v: v)(x: x())
-			return performSTM(tlog)(act: cont.act)
+			return performSTM(tlog)(act: cont.act())
 		case .OrElse(let act1, let act2, let cont):
 			orElseWithLog(tlog)
-			let resl = performOrElseLeft(tlog)(act: act1.act)
+			let resl = performOrElseLeft(tlog)(act: act1.act())
 			switch resl {
 				case .Some(let a):
-					return performSTM(tlog)(act: cont(a).act)
+					return performSTM(tlog)(act: cont(a).act())
 				case .None:
 					orRetryWithLog(tlog)
-					return performSTM(tlog)(act: act2.bind(cont).act)
+					return performSTM(tlog)(act: act2.bind(cont).act())
 			}
 	}
 }
@@ -166,22 +166,22 @@ private func performOrElseLeft<A>(tlog : MVar<TransactionLog<A>>)(act : STMD<A>)
 				return .None
 		case .NewTVar(_, let x, let cont):
 			let tv = newTVarWithLog(tlog)(tvar: x)
-			return performOrElseLeft(tlog)(act: cont(tv.tvar.take().globalContent.take()).act)
+			return performOrElseLeft(tlog)(act: cont(tv.tvar.take().globalContent.take()).act())
 		case .ReadTVar(let x, let cont):
 			let res : A = readTVarWithLog(tlog)(v: x)
-			return performOrElseLeft(tlog)(act: cont(res).act)
+			return performOrElseLeft(tlog)(act: cont(res).act())
 		case .WriteTVar(let v, let x, let cont):
 			writeTVarWithLog(tlog)(v: v)(x: x())
-			return performOrElseLeft(tlog)(act: cont.act)
+			return performOrElseLeft(tlog)(act: cont.act())
 		case .OrElse(let act1, let act2, let cont):
 			orElseWithLog(tlog)
-			let resl = performOrElseLeft(tlog)(act: act1.act)
+			let resl = performOrElseLeft(tlog)(act: act1.act())
 			switch resl {
 				case .Some(let x):
-					return performOrElseLeft(tlog)(act: cont(x).act)
+					return performOrElseLeft(tlog)(act: cont(x).act())
 				case .None:
 					orRetryWithLog(tlog)
-					return performOrElseLeft(tlog)(act: act2.bind(cont).act)
+					return performOrElseLeft(tlog)(act: act2.bind(cont).act())
 			}
 	}
 }

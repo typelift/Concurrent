@@ -8,11 +8,20 @@
 
 import Swiftz
 
-public class TMVar<A> : K1<A> {
+public struct TMVar<A> {
 	let tvar : TVar<Optional<A>>
 
 	init(_ tvar : TVar<Optional<A>>) {
 		self.tvar = tvar
+	}
+	
+	public init() {
+		self.init(TVar(.None))
+	}
+
+	public init(initial : A) {
+		let t : TVar<Optional<A>> = TVar(.Some(initial))
+		self.init(t)
 	}
 }
 
@@ -23,23 +32,9 @@ public func newTMVar<A>(x : A) -> STM<TMVar<A>> {
 	}
 }
 
-public func newTMVarIO<A>(x : A) -> IO<TMVar<A>> {
-	return do_ { () -> TMVar<A> in
-		let t : TVar<Optional<A>>! = !newTVarIO(Optional.Some(x))
-		return TMVar(t)
-	}
-}
-
 public func newEmptyTMVar<A>() -> STM<TMVar<A>> {
 	return do_ { () -> TMVar<A> in
 		let t : TVar<Optional<A>>! = !newTVar(.None)
-		return TMVar(t)
-	}
-}
-
-public func newEmptyTMVarIO<A>() -> IO<TMVar<A>> {
-	return do_ { () -> TMVar<A> in
-		let t : TVar<Optional<A>> = !newTVarIO(.None)
 		return TMVar(t)
 	}
 }

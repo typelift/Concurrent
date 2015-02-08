@@ -14,11 +14,19 @@ public struct TBQueue<A> {
 	let writeNum : TVar<Int>
 	let writeHead : TVar<[A]>
 
-	init(_ readNum : TVar<Int>, _ readHead : TVar<[A]>, _ writeNum : TVar<Int>, _ writeHead : TVar<[A]>) {
+	private init(_ readNum : TVar<Int>, _ readHead : TVar<[A]>, _ writeNum : TVar<Int>, _ writeHead : TVar<[A]>) {
 		self.readNum = readNum
 		self.readHead = readHead
 		self.writeNum = writeNum
 		self.writeHead = writeHead
+	}
+	
+	public init(n : Int) {
+		let read = TVar([A]())
+		let write = TVar([A]())
+		let rsize = TVar(0)
+		let wsize = TVar(n)
+		self.init(rsize, read, wsize, write)
 	}
 }
 
@@ -28,16 +36,6 @@ public func newTBQueue<A>(n : Int) -> STM<TBQueue<A>> {
 		let write = !newTVar([] as [A])
 		let rsize = !newTVar(0)
 		let wsize = !newTVar(n)
-		return TBQueue(rsize, read, wsize, write)
-	}
-}
-
-public func newTBQueueIO<A>(n : Int) -> IO<TBQueue<A>> {
-	return do_ { () -> TBQueue<A> in
-		let read = !newTVarIO([] as [A])
-		let write = !newTVarIO([] as [A])
-		let rsize = !newTVarIO(0)
-		let wsize = !newTVarIO(n)
 		return TBQueue(rsize, read, wsize, write)
 	}
 }

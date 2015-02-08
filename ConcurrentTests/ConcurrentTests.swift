@@ -7,7 +7,9 @@
 //
 
 import Concurrent
-import Swiftz
+import enum Swiftz.Result
+import func Swiftz.==
+import func Swiftz.<^>
 import XCTest
 
 class ParallelTests: XCTestCase {
