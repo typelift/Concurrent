@@ -32,6 +32,7 @@
 		8434FA4219E9CE9F008D9909 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434FA2E19E9CE9F008D9909 /* QSem.swift */; };
 		8475205C1A7EC55F00975C8B /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475205B1A7EC55F00975C8B /* Exception.swift */; };
 		849AA3AE1A0984FD00472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434FA0719E9CE73008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84FE01E41A87EF3D006D3EEA /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE01DF1A87EF03006D3EEA /* Swiftz.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 84A88D5C1A70C23D003D53CF;
 			remoteInfo = "Swiftz-iOSTests";
+		};
+		84FE01E21A87EF3A006D3EEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84FE01D91A87EF03006D3EEA /* Swiftz-iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 84A88D971A70C280003D53CF;
+			remoteInfo = Swiftz;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -115,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84FE01E41A87EF3D006D3EEA /* Swiftz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +260,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				84FE01E31A87EF3A006D3EEA /* PBXTargetDependency */,
 			);
 			name = Concurrent;
 			productName = Concurrent;
@@ -374,6 +384,11 @@
 			isa = PBXTargetDependency;
 			target = 8434FA0619E9CE73008D9909 /* Concurrent */;
 			targetProxy = 8434FA2019E9CE8F008D9909 /* PBXContainerItemProxy */;
+		};
+		84FE01E31A87EF3A006D3EEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Swiftz;
+			targetProxy = 84FE01E21A87EF3A006D3EEA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

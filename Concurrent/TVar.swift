@@ -8,7 +8,7 @@
 
 import Swiftz
 
-public struct TVar<A> {
+public struct TVar<A> : Hashable {
 	public let tvar : MVar<ITVar<A>>
 	let id : TVarId
 
@@ -19,6 +19,10 @@ public struct TVar<A> {
 	
 	public init(_ x : A) {
 		self = atomically(newTVar(x))
+	}
+	
+	public var hashValue : Int { 
+		return self.id 
 	}
 }
 

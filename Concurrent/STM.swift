@@ -138,7 +138,7 @@ private func performSTM<A>(tlog : MVar<TransactionLog<A>>)(act : STMD<A>) -> A {
 			return waitForExternalRetry()
 		case .NewTVar(_, let x, let cont):
 			let tv = newTVarWithLog(tlog)(tvar: x)
-			return performSTM(tlog)(act: (cont(tv.tvar.take().globalContent.take().act).destruct()))
+			return performSTM(tlog)(act: (cont(tv.tvar.take().globalContent.take()).act))
 		case .ReadTVar(let x, let cont):
 			let res : A = readTVarWithLog(tlog)(v: x)
 			return performSTM(tlog)(act: cont(res).act)
