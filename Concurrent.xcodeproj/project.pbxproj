@@ -33,6 +33,7 @@
 		8475205A1A7EC3E800975C8B /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847520591A7EC3E800975C8B /* Exception.swift */; };
 		849AA3AF1A09850400472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434F98019E9CD76008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84FE01E51A87EF47006D3EEA /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE01D61A87EF01006D3EEA /* Swiftz.framework */; };
+		84FE01E91A881FE6006D3EEA /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE01E81A881FE6006D3EEA /* STMSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		8434F9D319E9CE28008D9909 /* ConcurrentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentTests.swift; sourceTree = "<group>"; };
 		847520591A7EC3E800975C8B /* Exception.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		84FE01D01A87EF01006D3EEA /* Swiftz.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Swiftz.xcodeproj; path = Carthage/Checkouts/Swiftz/Swiftz.xcodeproj; sourceTree = "<group>"; };
+		84FE01E81A881FE6006D3EEA /* STMSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				8434F9D319E9CE28008D9909 /* ConcurrentTests.swift */,
+				84FE01E81A881FE6006D3EEA /* STMSpec.swift */,
 				8434F9CF19E9CE1D008D9909 /* PiCalculus.swift */,
 				8434F99019E9CD76008D9909 /* Supporting Files */,
 			);
@@ -382,6 +385,7 @@
 			files = (
 				8434F9D419E9CE28008D9909 /* ConcurrentTests.swift in Sources */,
 				8434F9D019E9CE1D008D9909 /* PiCalculus.swift in Sources */,
+				84FE01E91A881FE6006D3EEA /* STMSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

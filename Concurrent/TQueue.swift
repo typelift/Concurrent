@@ -29,8 +29,8 @@ public func newTQueue<A>() -> STM<TQueue<A>> {
 public func writeTQueue<A>(q : TQueue<A>) -> A -> STM<()> {
 	return { x in
 		do_ { () -> () in
-			let list : [A] = !readTVar(q.writeEnd)
-			writeTVar(q.writeEnd)(x: [x] + list)
+			let list : [A] = !q.writeEnd.read()
+			!q.writeEnd.write([x] + list)
 		}
 	}
 }

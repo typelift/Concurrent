@@ -43,20 +43,20 @@ public func newTBQueue<A>(n : Int) -> STM<TBQueue<A>> {
 public func writeTBQueue<A>(q : TBQueue<A>) -> A -> STM<()> {
 	return { x in
 		do_ { () -> () in
-			let w : Int = !readTVar(q.writeNum)
+			let w : Int = !q.writeNum.read()
 			if w != 0 {
-				writeTVar(q.writeNum)(x: w - 1)
+				!q.writeNum.write(w - 1)
 			} else {
-				let r : Int = !readTVar(q.readNum)
+				let r : Int = !q.readNum.read()
 				if r != 0 {
-					writeTVar(q.readNum)(x: 0)
-					writeTVar(q.writeNum)(x: r - 1)
+					!q.readNum.write(0)
+					!q.writeNum.write(r - 1)
 				} else {
-					retry() as STM<()>
+					let _ : () = !retry()
 				}
 			}
-			let listend : [A] = !readTVar(q.writeHead)
-			writeTVar(q.writeHead)(x: [x] + listend)
+			let listend : [A] = !q.writeHead.read()
+			q.writeHead.write([x] + listend)
 		}
 	}
 }

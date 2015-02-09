@@ -40,12 +40,22 @@ struct TransactionLog<A> {
 	}
 }
 
+func commit<A>(tlog : MVar<TransactionLog<A>>) {
+	writeStartWithLog(tlog)
+	writeClearWithLog(tlog)
+	sendRetryWithLog(tlog)
+	writeTVWithLog(tlog)
+	writeTVnWithLog(tlog)
+	writeEndWithLog(tlog)
+	unlockTVWithLog(tlog)
+}
+
 func emptyTLOG<A>() -> MVar<TransactionLog<A>> {
 	return MVar(initial: TransactionLog<A>(Set(), [(Set(), Set(), Set())], Set()))
 }
 
 func newTVarWithLog<A>(log : MVar<TransactionLog<A>>)(tvar : TVar<A>) -> TVar<A> {
-	let lg = log.read()
+	let lg = log.take()
 
 	if lg.tripleStack.isEmpty {
 		return error("")
@@ -54,7 +64,7 @@ func newTVarWithLog<A>(log : MVar<TransactionLog<A>>)(tvar : TVar<A>) -> TVar<A>
 	let (la, ln, lw) = lg.tripleStack.first!
 	
 	let lg2 = TransactionLog(lg.readTVars, [(la.add(tvar), ln.add(tvar), lw)], lg.lockingSet)
-	log.put(lg2)
+	log.swap(lg2)
 	return tvar
 }
 
@@ -94,7 +104,7 @@ func tryReadTvarWithLog<A>(log : MVar<TransactionLog<A>>)(ptvar : TVar<A>) -> Ei
 					let content_local = MVar<[A]>(initial: [globalC])
 
 					let lg2 = TransactionLog(lg.readTVars.add(ptvar), [(la.add(ptvar), ln, lw)] + lg.tripleStack, lg.lockingSet)
-					log.put(lg2)
+					log.swap(lg2)
 					
 					var mp = _tva.localContent.take()
 					mp[mid] = content_local
@@ -139,7 +149,7 @@ func tryWriteTVarWithLog<A>(log : MVar<TransactionLog<A>>)(ptvar : TVar<A>)(con 
 				MVar_with_old_content.put([con] + tail(lk)!)
 
 				let lg2 = TransactionLog<A>(lg.readTVars, [(la, ln, lw.add(ptvar))] + xs, lg.lockingSet)
-				log.put(lg2)
+				log.swap(lg2)
 				ptvar.tvar.put(_tva)
 				return Either.right(())
 			} else {
@@ -152,7 +162,7 @@ func tryWriteTVarWithLog<A>(log : MVar<TransactionLog<A>>)(ptvar : TVar<A>)(con 
 					_tva.localContent.put(mp)
 					
 					let lg2 = TransactionLog(lg.readTVars.add(ptvar), [(la.add(ptvar), ln, lw.add(ptvar))] + xs, lg.lockingSet)
-					log.put(lg2)
+					log.swap(lg2)
 					
 					ptvar.tvar.put(_tva)
 					return Either.right(())
@@ -177,7 +187,7 @@ func orRetryWithLog<A>(log : MVar<TransactionLog<A>>) {
 		case .Cons(let (la, ln, lw), let xs):
 			let mid = pthread_self()
 			undoubleLocalTVars(mid)(l: la.toArray)
-			return log.put(TransactionLog<A>(lg.readTVars, xs, lg.lockingSet))
+			log.swap(TransactionLog<A>(lg.readTVars, xs, lg.lockingSet))
 	}
 }
 
@@ -210,7 +220,7 @@ func orElseWithLog<A>(log : MVar<TransactionLog<A>>) {
 			return error("")
 		case .Cons(let (la, ln, lw), let xs):
 			doubleLocalTVars(mid)(l: la.toArray)
-			return log.put(TransactionLog<A>(lg.readTVars, [(la, ln, lw)] + [(la, ln, lw)] + xs, lg.lockingSet))
+			log.swap(TransactionLog<A>(lg.readTVars, [(la, ln, lw)] + [(la, ln, lw)] + xs, lg.lockingSet))
 	}
 }
 
@@ -234,19 +244,8 @@ private func doubleLocalTVars<A>(mid : ThreadID)(l : [TVar<A>]) {
 	}
 }
 
-func commit<A>(tlog : MVar<TransactionLog<A>>) {
-	writeStartWithLog(tlog)
-	writeClearWithLog(tlog)
-	sendRetryWithLog(tlog)
-	writeTVWithLog(tlog)
-	writeTVnWithLog(tlog)
-	writeEndWithLog(tlog)
-	unlockTVWithLog(tlog)
-}
-
 private func _writeStartWithLog<A>(log : MVar<TransactionLog<A>>) -> Either<MVar<()>, ()> {
 	let mid = pthread_self()
-
 	let lg = log.read()
 	switch match(lg.tripleStack) {
 		case .Nil:
@@ -255,11 +254,11 @@ private func _writeStartWithLog<A>(log : MVar<TransactionLog<A>>) -> Either<MVar
 			let t = lg.readTVars
 			let xs = t.union(la.minus(ln))
 			let held = sorted(xs.toArray)
-			let res : Either<MVar<()>, ()> = grabLocks(mid)(held: held)
+			let res : Either<MVar<()>, ()> = grabLocks(mid, held, [])
 			switch res {
 				case .Right(_):
 					let lg2 = TransactionLog<A>(lg.readTVars, lg.tripleStack, xs)
-					log.put(lg2)
+					log.swap(lg2)
 					return Either.right(())
 				case .Left(let lock):
 					return Either.left(lock.value)
@@ -267,8 +266,8 @@ private func _writeStartWithLog<A>(log : MVar<TransactionLog<A>>) -> Either<MVar
 	}
 }
 
-private func grabLocks<A>(mid : ThreadID)(held : [TVar<A>]) -> Either<MVar<()>, ()> {
-	switch match(held) {
+private func grabLocks<A>(mid : ThreadID, list : [TVar<A>], held : [TVar<A>]) -> Either<MVar<()>, ()> {
+	switch match(list) {
 		case .Nil:
 			return Either.right(())
 		case .Cons(let ptvar, let xs):
@@ -276,7 +275,7 @@ private func grabLocks<A>(mid : ThreadID)(held : [TVar<A>]) -> Either<MVar<()>, 
 			let _tvany : ITVar<A> = ptvar.tvar.take()
 			if _tvany.lock.tryPut(mid) {
 				ptvar.tvar.put(_tvany)
-				return grabLocks(mid)(held: [ptvar] + held)
+				return grabLocks(mid, tail(list)!, [ptvar] + held)
 			} else {
 				let waiton : MVar<()> = MVar()
 				let l = _tvany.waitingQueue.take()
@@ -299,6 +298,7 @@ func writeStartWithLog<A>(log : MVar<TransactionLog<A>>) {
 		case .Left(let lock):
 			lock.value.take()
 			yield()
+			sleep(1000)
 			writeStartWithLog(log)
 		case .Right(_):
 			return
@@ -309,7 +309,7 @@ func writeClearWithLog<A>(log : MVar<TransactionLog<A>>) {
 	let lg : TransactionLog<A> = log.read()
 	let xs = lg.readTVars.toArray
 	iterateClearWithLog(log)(l: xs)
-	return log.put(TransactionLog<A>(Set(), lg.tripleStack, lg.lockingSet))
+	log.swap(TransactionLog<A>(Set(), lg.tripleStack, lg.lockingSet))
 }
 
 private func iterateClearWithLog<A>(log : MVar<TransactionLog<A>>)(l: [TVar<A>]) {
@@ -372,7 +372,7 @@ func writeTVWithLog<A>(log : MVar<TransactionLog<A>>) {
 		case .Cons(let (la, ln, lw), let xs):
 			let tobewritten = lw.minus(ln)
 			writeTVars(tobewritten.toArray)
-			return log.put(TransactionLog<A>(lg.readTVars, [(la, ln, Set())] + xs, lg.lockingSet))
+			log.swap(TransactionLog<A>(lg.readTVars, [(la, ln, Set())] + xs, lg.lockingSet))
 	}
 }
 
@@ -411,7 +411,7 @@ func writeTVnWithLog<A>(log : MVar<TransactionLog<A>>) {
 			let k = lg.lockingSet
 			let toBeWritten = ln.toArray
 			writeNew(toBeWritten)
-			return log.put(TransactionLog<A>(lg.readTVars, [(la, Set(), lw)] + xs, lg.lockingSet))
+			log.swap(TransactionLog<A>(lg.readTVars, [(la, Set(), lw)] + xs, lg.lockingSet))
 	}
 }
 
@@ -480,7 +480,7 @@ func unlockTVWithLog<A>(log : MVar<TransactionLog<A>>) {
 		case .Cons(let (la, ln, lw), let xs):
 			let k = lg.lockingSet
 			unlockTVars(k.toArray)
-			return log.put(TransactionLog<A>(lg.readTVars, lg.tripleStack, Set()))
+			log.swap(TransactionLog<A>(lg.readTVars, lg.tripleStack, Set()))
 	}
 }
 
@@ -491,7 +491,6 @@ func unlockTVars<A>(l : [TVar<A>]) {
 		case .Cons(let tv, let xs):
 			let _tvany : ITVar<A> = tv.tvar.take()
 			let wq = _tvany.waitingQueue.take()
-
 			_tvany.lock.take()
 			let _ = wq.map({ mv in 
 				mv.put(()) 

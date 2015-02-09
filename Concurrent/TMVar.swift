@@ -41,13 +41,13 @@ public func newEmptyTMVar<A>() -> STM<TMVar<A>> {
 
 public func takeTMVar<A>(t : TMVar<A>) -> STM<A> {
 	return do_ {
-		let m : Optional<A> = !readTVar(t.tvar)
+		let m : Optional<A> = !t.tvar.read()
 		switch m {
 			case .None:
 				return retry()
 			case .Some(let a):
 				return do_ { () -> A in
-					writeTVar(t.tvar)(x: .None)
+					t.tvar.write(.None)
 					return a
 				}
 		}
@@ -56,13 +56,13 @@ public func takeTMVar<A>(t : TMVar<A>) -> STM<A> {
 
 public func tryTakeTMVar<A>(t : TMVar<A>) -> STM<Optional<A>> {
 	return do_ {
-		let m : Optional<A> = !readTVar(t.tvar)
+		let m : Optional<A> = !t.tvar.read()
 		switch m {
 			case .None:
 				return do_ { () in .None }
 			case .Some(let a):
 				return do_ { () -> Optional<A> in
-					writeTVar(t.tvar)(x: .None)
+					t.tvar.write(.None)
 					return .Some(a)
 				}
 		}
@@ -72,12 +72,12 @@ public func tryTakeTMVar<A>(t : TMVar<A>) -> STM<Optional<A>> {
 public func putTMVar<A>(t : TMVar<A>) -> A -> STM<()> {
 	return { x in
 		do_ {
-			let m : Optional<A> = !readTVar(t.tvar)
+			let m : Optional<A> = !t.tvar.read()
 			switch m {
 				case .Some(_):
 					return retry()
 				case .None:
-					return writeTVar(t.tvar)(x: .Some(x))
+					return t.tvar.write(.Some(x))
 			}
 		}
 	}
@@ -86,13 +86,13 @@ public func putTMVar<A>(t : TMVar<A>) -> A -> STM<()> {
 public func tryPutTMVar<A>(t : TMVar<A>) -> A -> STM<Bool> {
 	return { x in
 		do_ {
-			let m : Optional<A> = !readTVar(t.tvar)
+			let m : Optional<A> = !t.tvar.read()
 			switch m {
 				case .Some(_):
 					return do_ { () in false }
 				case .None:
 					return do_ { () -> Bool in
-						writeTVar(t.tvar)(x: .Some(x))
+						!t.tvar.write(.Some(x))
 						return true
 					}
 			}
@@ -102,7 +102,7 @@ public func tryPutTMVar<A>(t : TMVar<A>) -> A -> STM<Bool> {
 
 public func readTMVar<A>(t : TMVar<A>) -> STM<A> {
 	return do_ {
-		let m : Optional<A> = !readTVar(t.tvar)
+		let m : Optional<A> = !t.tvar.read()
 		switch m {
 			case .None:
 				return retry()
@@ -113,19 +113,19 @@ public func readTMVar<A>(t : TMVar<A>) -> STM<A> {
 }
 
 public func tryReadTMVar<A>(t : TMVar<A>) -> STM<Optional<A>> {
-	return readTVar(t.tvar)
+	return t.tvar.read()
 }
 
 public func swapTMVar<A>(t : TMVar<A>) -> A -> STM<A> {
 	return { x in
 		do_ {
-			let m : Optional<A> = !readTVar(t.tvar)
+			let m : Optional<A> = !t.tvar.read()
 			switch m {
 				case .None:
 					return retry()
 				case .Some(let a):
 					return do_ { () -> A in
-						writeTVar(t.tvar)(x: .Some(x))
+						!t.tvar.write(.Some(x))
 						return a
 					}
 			}
@@ -135,7 +135,7 @@ public func swapTMVar<A>(t : TMVar<A>) -> A -> STM<A> {
 
 public func isEmptyTMVar<A>(t : TMVar<A>) -> STM<Bool> {
 	return do_ { () -> Bool in
-		let m : Optional<A> = !readTVar(t.tvar)
+		let m : Optional<A> = !t.tvar.read()
 		switch m {
 			case .None:
 				return true

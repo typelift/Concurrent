@@ -33,6 +33,7 @@
 		8475205C1A7EC55F00975C8B /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475205B1A7EC55F00975C8B /* Exception.swift */; };
 		849AA3AE1A0984FD00472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434FA0719E9CE73008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84FE01E41A87EF3D006D3EEA /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE01DF1A87EF03006D3EEA /* Swiftz.framework */; };
+		84FE01EC1A881FF2006D3EEA /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE01EA1A881FED006D3EEA /* STMSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		8434FA2E19E9CE9F008D9909 /* QSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QSem.swift; sourceTree = "<group>"; };
 		8475205B1A7EC55F00975C8B /* Exception.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		84FE01D91A87EF03006D3EEA /* Swiftz-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Swiftz-iOS.xcodeproj"; path = "Carthage/Checkouts/Swiftz/Swiftz-iOS.xcodeproj"; sourceTree = "<group>"; };
+		84FE01EA1A881FED006D3EEA /* STMSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				8434F9FC19E9CE5F008D9909 /* ConcurrentTests.swift */,
+				84FE01EA1A881FED006D3EEA /* STMSpec.swift */,
 				8434F9FE19E9CE5F008D9909 /* PiCalculus.swift */,
 				8434F9FD19E9CE5F008D9909 /* Info.plist */,
 			);
@@ -349,6 +352,7 @@
 			files = (
 				8434FA0119E9CE5F008D9909 /* PiCalculus.swift in Sources */,
 				8434F9FF19E9CE5F008D9909 /* ConcurrentTests.swift in Sources */,
+				84FE01EC1A881FF2006D3EEA /* STMSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -58,24 +58,24 @@ public func newBroadcastTChanIO<A>() -> TChan<A> {
 public func writeTChan<A>(c : TChan<A>) -> A -> STM<()> {
 	return { x in
 		do_ { () -> () in
-			let l = !readTVar(c.writeHead)
+			let l = !c.writeHead.read()
 			let nl : TVar<TList<A>> = !newTVar(TList.TNil)
-			writeTVar(l)(x: TList.TCons(x, nl))
-			writeTVar(c.writeHead)(x: nl)
+			l.write(TList.TCons(x, nl))
+			c.writeHead.write(nl)
 		}
 	}
 }
 
 public func readTChan<A>(c : TChan<A>) -> STM<A> {
 	return do_ {
-		let hd = !readTVar(c.readHead)
-		let lst = !readTVar(hd)
+		let hd = !c.readHead.read()
+		let lst = !hd.read()
 		switch lst {
 			case .TNil:
 				return retry()
 			case .TCons(let x, let xs):
 				return do_ { () -> A in
-					writeTVar(c.readHead)(x: xs)
+					!c.readHead.write(xs)
 					return x
 				}
 		}
@@ -84,14 +84,14 @@ public func readTChan<A>(c : TChan<A>) -> STM<A> {
 
 public func tryReadTChan<A>(c : TChan<A>) -> STM<Optional<A>> {
 	return do_ { () -> STM<Optional<A>> in
-		let hd = !readTVar(c.readHead)
-		let lst = !readTVar(hd)
+		let hd = !c.readHead.read()
+		let lst = !hd.read()
 		switch lst {
 			case .TNil:
 				return do_ { () in .None }
 			case .TCons(let x, let xs):
 				return do_ { () -> Optional<A> in
-					writeTVar(c.readHead)(x: xs)
+					c.readHead.write(xs)
 					return .Some(x)
 				}
 		}
@@ -100,8 +100,8 @@ public func tryReadTChan<A>(c : TChan<A>) -> STM<Optional<A>> {
 
 public func peekTChan<A>(c : TChan<A>) -> STM<A> {
 	return do_ { () -> STM<A> in
-		let hd = !readTVar(c.readHead)
-		let lst = !readTVar(hd)
+		let hd = !c.readHead.read()
+		let lst = !hd.read()
 		switch lst {
 			case .TNil:
 				return retry()
@@ -113,8 +113,8 @@ public func peekTChan<A>(c : TChan<A>) -> STM<A> {
 
 public func tryPeekTChan<A>(c : TChan<A>) -> STM<Optional<A>> {
 	return do_ { () -> Optional<A> in
-		let hd = !readTVar(c.readHead)
-		let lst = !readTVar(hd)
+		let hd = !c.readHead.read()
+		let lst = !hd.read()
 		switch lst {
 			case .TNil:
 				return .None
@@ -126,7 +126,7 @@ public func tryPeekTChan<A>(c : TChan<A>) -> STM<Optional<A>> {
 
 public func dupTChan<A>(c : TChan<A>) -> STM<TChan<A>> {
 	return do_ { () -> TChan<A> in
-		let hd = !readTVar(c.writeHead)
+		let hd = !c.writeHead.read()
 		let newread = !newTVar(hd)
 		return TChan(newread, c.writeHead)
 	}
@@ -135,17 +135,17 @@ public func dupTChan<A>(c : TChan<A>) -> STM<TChan<A>> {
 public func unGetTChan<A>(c : TChan<A>) -> A -> STM<()> {
 	return { x in
 		do_ {
-			let hd = !readTVar(c.readHead)
+			let hd = !c.readHead.read()
 			let newhd = !newTVar(TList.TCons(x, hd))
-			return writeTVar(c.readHead)(x: newhd)
+			return c.readHead.write(newhd)
 		}
 	}
 }
 
 public func isEmptyTChan<A>(c : TChan<A>) -> STM<Bool> {
 	return do_ { () -> Bool in
-		let hd = !readTVar(c.readHead)
-		let lst = !readTVar(hd)
+		let hd = !c.readHead.read()
+		let lst = !hd.read()
 		switch lst {
 			case .TNil:
 				return true
@@ -157,7 +157,7 @@ public func isEmptyTChan<A>(c : TChan<A>) -> STM<Bool> {
 
 public func cloneTChan<A>(c : TChan<A>) -> STM<TChan<A>> {
 	return do_ { () -> TChan<A> in
-		let hd = !readTVar(c.readHead)
+		let hd = !c.readHead.read()
 		let newread = !newTVar(hd)
 		return TChan(newread, c.writeHead)
 	}

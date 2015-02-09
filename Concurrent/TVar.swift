@@ -24,6 +24,14 @@ public struct TVar<A> : Hashable {
 	public var hashValue : Int { 
 		return self.id 
 	}
+	
+	public func read() -> STM<A> {
+		return STM<A>(STMD<A>.ReadTVar(self, { y in STM.pure(y) }))
+	}
+	
+	public func write(x : A) -> STM<()> {
+		return STM<A>(STMD<A>.WriteTVar(self, x, STM<A>.pure(x))).then(STM<()>.pure(()))
+	}
 }
 
 public func newTVar<A>(x : A) -> STM<TVar<A>> {
@@ -41,17 +49,8 @@ public func newTVar<A>(x : A) -> STM<TVar<A>> {
 	let content_tvarx = MVar(initial: ITVar(content_global, content_local, notify_list, unset_lock, waitingQueue: content_waiting_queue))
 
 	let tvar = TVar<A>(content_tvarx, tvar_id)
-	return STM(STMD.NewTVar(x, tvar, { (let y : A) in STM.pure(y) })) >> STM<TVar<A>>.pure(tvar)
+	return STM(STMD.NewTVar(x, tvar, { (let y : A) in STM.pure(y) })).then(STM<TVar<A>>.pure(tvar))
 }
-
-public func readTVar<A>(v : TVar<A>) -> STM<A> {
-	return STM<A>(STMD<A>.ReadTVar(v, { y in STM.pure(y) }))
-}
-
-public func writeTVar<A>(v : TVar<A>)(x : A) -> STM<()> {
-	return STM<A>(STMD<A>.WriteTVar(v, x, STM<A>.pure(x))) >> STM<()>.pure(())
-}
-
 
 typealias TVarId = Int
 

@@ -24,11 +24,11 @@ public func newTSem(i : Int) -> STM<TSem> {
 }
 
 public func waitTSem(sem : TSem) -> STM<()> {
-	let i : Int = !readTVar(sem.tvar)
-	return (i <= 0) ? retry() : writeTVar(sem.tvar)(x: i - 1)
+	let i : Int = !sem.tvar.read()
+	return (i <= 0) ? retry() : sem.tvar.write(i - 1)
 }
 
 public func signalTSem(sem : TSem) -> STM<()> {
-	let i : Int = !readTVar(sem.tvar)
-	return writeTVar(sem.tvar)(x: i + 1)
+	let i : Int = !sem.tvar.read()
+	return sem.tvar.write(i + 1)
 }

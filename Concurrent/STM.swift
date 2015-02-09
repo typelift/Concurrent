@@ -17,9 +17,15 @@ public struct STM<A> {
 	init(_ act : @autoclosure () -> STMD<A>) {
 		self.act = act
 	}
+	
+	public func then<B>(next : STM<B>) -> STM<B> {
+		return self.bind({ (_) in
+			return next
+		})
+	}
 }
 
-extension STM /*: Functor*/ {
+extension STM : Functor {
 	typealias FA = STM<A>
 
 	public func fmap<B>(f : A -> B) -> STM<B> {
@@ -35,7 +41,7 @@ public func <^> <A, B>(f : A -> B, io : STM<A>) -> STM<B> {
 //	return STM.fmap(const(x))(io)
 //}
 
-extension STM /*: Applicative*/ {
+extension STM : Applicative {
 	public static func pure(a : A) -> STM<A> {
 		return STM<A>(STMD<A>.Return(a))
 	}
@@ -57,21 +63,15 @@ public func <*> <A, B>(fn : STM<A -> B>, m: STM<A>) -> STM<B> {
 //	return const <^> a <*> b
 //}
 
-extension STM /*: Monad*/ {
+extension STM : Monad {
 	public func bind<B>(f : A -> STM<B>) -> STM<B> {
 		return STM<B>(self.act().bind({ a in f(a).act() }))
 	}
 }
 
 
-public func >>-<A, B>(x: STM<A>, f: A -> STM<B>) -> STM<B> {
+public func >>- <A, B>(x: STM<A>, f: A -> STM<B>) -> STM<B> {
 	return x.bind(f)
-}
-
-public func >><A, B>(x: STM<A>, y: STM<B>) -> STM<B> {
-	return x.bind({ (_) in
-		return y
-	})
 }
 
 public prefix func !<A>(stm: STM<A>) -> A {
