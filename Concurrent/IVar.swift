@@ -13,7 +13,7 @@ public struct IVar<A> {
 	private let trans : MVar<A>
 	private let val : () -> A
 	
-	private init(_ lock : MVar<()>, _ trans : MVar<A>, _ val : @autoclosure () -> A) {
+	private init(_ lock : MVar<()>, _ trans : MVar<A>, @autoclosure(escaping) _ val :  () -> A) {
 		self.lock = lock
 		self.trans = trans
 		self.val = val
@@ -26,7 +26,7 @@ public struct IVar<A> {
 	}
 	
 	/// Creates a new IVar containing the supplied value.
-	public init(initial : @autoclosure () -> A) {
+	public init(@autoclosure(escaping) initial :  () -> A) {
 		let lock = MVar<()>()
 		self.init(lock, MVar(initial: initial()), initial)
 	}
@@ -49,8 +49,8 @@ public struct IVar<A> {
 	
 	/// Attempts to read the contents of an IVar
 	///
-	/// If the MVar is empty, this function returns a None in an IO computation.  If the MVar is full,
-	/// this function wraps the value in a Some and an IO computation and returns immediately.
+	/// If the MVar is empty, this function returns a .None.  If the MVar is full, this function 
+	//// wraps the value in a .Some and returns immediately.
 	public func tryRead() -> Optional<A> {
 		if self.lock.isEmpty {
 			return .Some(self.val())
@@ -60,8 +60,8 @@ public struct IVar<A> {
 	
 	/// Attempts to write a value into an IVar.
 	///
-	/// If the IVar is empty, this will immediately return true wrapped in an IO computation.  If the
-	/// IVar is full, nothing happens and it will return false wrapped in an IO computation.
+	/// If the IVar is empty, this will immediately return true.  If the IVar is full, nothing 
+	/// happens and it will return false.
 	public func tryPut(x : A) -> Bool {
 		if let _ = self.lock.tryTake() {
 			self.trans.put(x)

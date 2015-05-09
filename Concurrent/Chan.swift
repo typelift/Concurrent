@@ -48,8 +48,12 @@ public struct Chan<A> {
 	public func writeList(xs : [A]) {
 		xs.map({ self.write($0) })
 	}
-	
-	
+
+	/// Returns whether the channel is empty.
+	///
+	/// This function is just a snapshot of the state of the Chan at that point in time.  In heavily
+	/// concurrent computations, this may change out from under you without warning, or even by the
+	/// time it can be acted on.  It is better to use one of the direct actions above.
 	public var isEmpty : Bool {
 		return self.readEnd.withMVar { r in
 			let w = r.tryRead()
@@ -67,7 +71,8 @@ public struct Chan<A> {
 		let newReadVar = MVar(initial: hole)
 		return Chan(read: newReadVar, write: self.writeEnd)
 	}
-	
+
+	/// Reads the entirety of the channel into an array.
 	public func contents() -> [A] {
 		if self.isEmpty {
 			return []
@@ -82,7 +87,7 @@ internal struct ChItem<A> {
 	let val : () -> A
 	let stream : () -> MVar<ChItem<A>>
 
-	init(_ val : @autoclosure () -> A, _ stream : @autoclosure () -> MVar<ChItem<A>>) {
+	init(@autoclosure(escaping) _ val : () -> A, @autoclosure(escaping) _ stream :  () -> MVar<ChItem<A>>) {
 		self.val = val
 		self.stream = stream
 	}

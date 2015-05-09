@@ -46,8 +46,8 @@ public struct IChan<A> {
 	}
 
 	/// Attempts to write a value to the head of the channel.  If the channel head has already been 
-	/// written to, the result is an IO computation returning None.  If the channel head is empty, the
-	/// value is written, and a new write head wrapped in an IO computation is returned.
+	/// written to, the result is .None.  If the channel head is empty, the value is written, and a 
+	/// new write head is returned.
 	public func tryWrite(x : A) -> Optional<IChan<A>> {
 		let ic = IChan()
 		return self.ivar.tryPut((x, ic)) ? .Some(ic) : .None

@@ -6,19 +6,52 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
+import Swiftz
 
-public class TBQueue<A> : K1<A> {
+/// `TBQueue` is a bounded version of TQueue. The queue has a maximum capacity set when it is 
+/// created. If the queue already contains the maximum number of elements, then `write(_:)` blocks
+/// until an element is removed from the queue.
+///
+/// The implementation is based on the traditional purely-functional queue representation that uses 
+/// two lists to obtain amortised O(1) enqueue and dequeue operations.
+public struct TBQueue<A> {
 	let readNum : TVar<Int>
 	let readHead : TVar<[A]>
 	let writeNum : TVar<Int>
 	let writeHead : TVar<[A]>
 
-	init(_ readNum : TVar<Int>, _ readHead : TVar<[A]>, _ writeNum : TVar<Int>, _ writeHead : TVar<[A]>) {
+	private init(_ readNum : TVar<Int>, _ readHead : TVar<[A]>, _ writeNum : TVar<Int>, _ writeHead : TVar<[A]>) {
 		self.readNum = readNum
 		self.readHead = readHead
 		self.writeNum = writeNum
 		self.writeHead = writeHead
+	}
+	
+	public init(n : Int) {
+		let read = TVar([A]())
+		let write = TVar([A]())
+		let rsize = TVar(0)
+		let wsize = TVar(n)
+		self.init(rsize, read, wsize, write)
+	}
+
+	public func write(x : A) -> STM<()> {
+		return do_ { () -> () in
+			let w : Int = !self.writeNum.read()
+			if w != 0 {
+				!self.writeNum.write(w - 1)
+			} else {
+				let r : Int = !self.readNum.read()
+				if r != 0 {
+					!self.readNum.write(0)
+					!self.writeNum.write(r - 1)
+				} else {
+					let _ : () = !retry()
+				}
+			}
+			let listend : [A] = !self.writeHead.read()
+			self.writeHead.write([x] + listend)
+		}
 	}
 }
 
@@ -29,36 +62,5 @@ public func newTBQueue<A>(n : Int) -> STM<TBQueue<A>> {
 		let rsize = !newTVar(0)
 		let wsize = !newTVar(n)
 		return TBQueue(rsize, read, wsize, write)
-	}
-}
-
-public func newTBQueueIO<A>(n : Int) -> IO<TBQueue<A>> {
-	return do_ { () -> TBQueue<A> in
-		let read = !newTVarIO([] as [A])
-		let write = !newTVarIO([] as [A])
-		let rsize = !newTVarIO(0)
-		let wsize = !newTVarIO(n)
-		return TBQueue(rsize, read, wsize, write)
-	}
-}
-
-public func writeTBQueue<A>(q : TBQueue<A>) -> A -> STM<()> {
-	return { x in
-		do_ { () -> () in
-			let w : Int = !readTVar(q.writeNum)
-			if w != 0 {
-				writeTVar(q.writeNum)(x: w - 1)
-			} else {
-				let r : Int = !readTVar(q.readNum)
-				if r != 0 {
-					writeTVar(q.readNum)(x: 0)
-					writeTVar(q.writeNum)(x: r - 1)
-				} else {
-					retry() as STM<()>
-				}
-			}
-			let listend : [A] = !readTVar(q.writeHead)
-			writeTVar(q.writeHead)(x: [x] + listend)
-		}
 	}
 }
