@@ -26,18 +26,23 @@ public struct TVar<A> : Hashable {
 		return self.id 
 	}
 
+	/// Returns an operation to get the contents of the receiver.
 	public func read() -> STM<A> {
 		return STM<A>(STMD<A>.ReadTVar(self, { y in STM.pure(y) }))
 	}
-	
+
+	/// Returns an operation to write a value into the receiver.
 	public func write(x : A) -> STM<()> {
 		return STM<A>(STMD<A>.WriteTVar(self, { x }, STM<A>.pure(x))).then(STM<()>.pure(()))
 	}
 
+	/// Returns an operation that modifies the contents of the receiver using the given function.
 	public func modify(f : A -> A) -> STM<()> {
 		return self.read().bind { x in self.write(f(x)) }
 	}
 
+	/// Returns an operation that takes a value from the receiver, puts a given new value in the
+	/// receiver, then returns the receiver's old value.
 	public func swap(n : A) -> STM<A> {
 		return self.read().bind({ old in self.write(n).then(STM.pure(old)) })
 	}
