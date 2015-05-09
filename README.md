@@ -143,14 +143,14 @@ Concurrent can be included one of two ways:
 
 **Framework**
 
-Drag Concurrent.xcodeproj or Concurrent-iOS.xcodeproj into your project tree as a subproject
-Under your project's Build Phases, expand Target Dependencies
-Click the + and add Concurrent
-Expand the Link Binary With Libraries phase
-Click the + and add Concurrent
-Click the + at the top left corner to add a Copy Files build phase
-Set the directory to Frameworks
-Click the + and add Concurrent
+- Drag Concurrent.xcodeproj or Concurrent-iOS.xcodeproj into your project tree as a subproject
+- Under your project's Build Phases, expand Target Dependencies
+- Click the + and add Concurrent
+- Expand the Link Binary With Libraries phase
+- Click the + and add Concurrent
+- Click the + at the top left corner to add a Copy Files build phase
+- Set the directory to Frameworks
+- Click the + and add Concurrent
 
 **Standalone**
 
