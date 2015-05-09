@@ -43,8 +43,8 @@ public final class MVar<A> {
 	
 	/// Returns the contents of the receiver.
 	///
-	/// If the MVar is empty, this will block until a value is put into the MVar.  If the MVar is full,
-	/// the value is wrapped up in an IO computation and the MVar is emptied.
+	/// If the MVar is empty, this will block until a value is put into the MVar.  If the MVar is 
+	/// full, the value is returned and the MVar is emptied.
 	public func take() -> A {
 		pthread_mutex_lock(self.lock)
 		while self.val == nil {
@@ -59,8 +59,8 @@ public final class MVar<A> {
 	
 	/// Atomically reads the contents of the receiver.
 	///
-	/// If the MVar is currently empty, this will block until a value is put into it.  If the MVar is
-	/// full, the value is wrapped up in an IO computation, but the MVar remains full.
+	/// If the MVar is currently empty, this will block until a value is put into it.  If the MVar 
+	/// is full, the value is returned, but the MVar remains full.
 	public func read() -> A {
 		pthread_mutex_lock(self.lock)
 		while self.val == nil {
@@ -88,8 +88,8 @@ public final class MVar<A> {
 
 	/// Attempts to return the contents of the receiver without blocking.
 	///
-	/// If the MVar is empty, this will immediately returns a None wrapped in an IO computation.  If the
-	/// MVar is full, the value is wrapped up in an IO computation and the MVar is emptied.
+	/// If the MVar is empty, this will immediately return .None. If the MVar is full, the value is 
+	/// returned and the MVar is emptied.
 	public func tryTake() -> Optional<A> {
 		pthread_mutex_lock(self.lock)
 		if self.val == nil {
@@ -104,8 +104,8 @@ public final class MVar<A> {
 	
 	/// Attempts to put a value into the receiver without blocking.
 	///
-	/// If the MVar is empty, this will immediately returns a true wrapped in an IO computation.  If the
-	/// MVar is full, nothing occurs and a false is returned in an IO computation.
+	/// If the MVar is empty, this will immediately returns true.  If the MVar is full, nothing 
+	/// occurs and false is returned.
 	public func tryPut(x : A) -> Bool {
 		pthread_mutex_lock(self.lock)
 		if self.val != nil {
@@ -119,8 +119,8 @@ public final class MVar<A> {
 	
 	/// Attempts to read the contents of the receiver without blocking.
 	///
-	/// If the MVar is empty, this function returns a None in an IO computation.  If the MVar is full,
-	/// this function wraps the value in a Some and an IO computation and returns immediately.
+	/// If the MVar is empty, this function returns .None.  If the MVar is full, this function wraps
+	/// the value in .Some and returns.
 	public func tryRead() -> Optional<A> {
 		pthread_mutex_lock(self.lock)
 		if self.val == nil {
@@ -135,14 +135,14 @@ public final class MVar<A> {
 	/// Returns whether the receiver is empty.
 	///
 	/// This function is just a snapshot of the state of the MVar at that point in time.  In heavily 
-	/// concurrent computations, this may change out from under you without warning, or even by the time
-	/// it can be acted on.  It is better to use one of the direct actions above.
+	/// concurrent computations, this may change out from under you without warning, or even by the 
+	/// time it can be acted on.  It is better to use one of the direct actions above.
 	public var isEmpty : Bool {
 		return (self.val == nil)
 	}
 	
-	/// Atomically, take a value from the MVar, put a new value in the MVar, then return the old value 
-	/// in an IO computation.
+	/// Atomically, take a value from the receiver, put a given new value in the receiver, then 
+	/// return the receiver's old value.
 	public func swap(x : A) -> A {
 		let old = self.take()
 		self.put(x)
@@ -151,8 +151,8 @@ public final class MVar<A> {
 	
 	/// An exception-safe way of using the value in the receiver in a computation.
 	///
-	/// On exception, the value previously stored in the MVar is put back into it, and the exception is
-	/// rethrown.
+	/// On exception, the value previously stored in the MVar is put back into it, and the exception
+	/// is rethrown.
 	public func withMVar<B>(f : A -> B) -> B {
 		return mask { (let restore : (B -> B)) -> B in
 			let a = self.take()
@@ -165,11 +165,11 @@ public final class MVar<A> {
 		}
 	}
 	
-	/// An exception-safe way to modify the contents of the receiver.  On successful modification, the new
-	/// value of the MVar is returned in an IO computation.
+	/// An exception-safe way to modify the contents of the receiver.  On successful modification, 
+	/// the new value of the MVar is returned.
 	///
-	/// On exception, the value previously stored in the MVar is put back into it, and the exception is
-	/// rethrown.
+	/// On exception, the value previously stored in the MVar is put back into it, and the exception
+	/// is rethrown.
 	public func modify<B>(f : A -> (A, B)) -> B {
 		return mask { (let restore : (A, B) -> (A, B)) -> B in
 			let a = self.take()
@@ -184,8 +184,8 @@ public final class MVar<A> {
 	
 	/// An exception-safe way to modify the contents of the receiver.
 	///
-	/// On exception, the value previously stored in the MVar is put back into it, and the exception is
-	/// rethrown.
+	/// On exception, the value previously stored in the MVar is put back into it, and the exception
+	/// is rethrown.
 	public func modify_(f : A -> A) {
 		return mask { (let restore : A -> A) -> () in
 			let a = self.take()
@@ -220,7 +220,3 @@ public func ==<A : Equatable>(lhs : MVar<A>, rhs : MVar<A>) -> Bool {
 	}
 	return lhs.read() == rhs.read()
 }
-
-
-
-

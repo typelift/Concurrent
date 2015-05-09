@@ -8,8 +8,9 @@
 
 import Swiftz
 
+/// TVars (Transactional Variables) are atomic mutable references in the STM Monad.
 public struct TVar<A> : Hashable {
-	public let tvar : MVar<ITVar<A>>
+	let tvar : MVar<ITVar<A>>
 	let id : TVarId
 
 	init(_ tvar : MVar<ITVar<A>>, _ id : TVarId) {
@@ -24,13 +25,21 @@ public struct TVar<A> : Hashable {
 	public var hashValue : Int { 
 		return self.id 
 	}
-	
+
 	public func read() -> STM<A> {
 		return STM<A>(STMD<A>.ReadTVar(self, { y in STM.pure(y) }))
 	}
 	
 	public func write(x : A) -> STM<()> {
 		return STM<A>(STMD<A>.WriteTVar(self, { x }, STM<A>.pure(x))).then(STM<()>.pure(()))
+	}
+
+	public func modify(f : A -> A) -> STM<()> {
+		return self.read().bind { x in self.write(f(x)) }
+	}
+
+	public func swap(n : A) -> STM<A> {
+		return self.read().bind({ old in self.write(n).then(STM.pure(old)) })
 	}
 }
 
@@ -66,7 +75,7 @@ public func >=<A>(lhs: TVar<A>, rhs: TVar<A>) -> Bool { return lhs.id >= rhs.id 
 public func ><A>(lhs: TVar<A>, rhs: TVar<A>) -> Bool { return lhs.id > rhs.id }
 public func <<A>(lhs: TVar<A>, rhs: TVar<A>) -> Bool { return lhs.id < rhs.id }
 
-public struct ITVar<A> {
+internal struct ITVar<A> {
 	let globalContent : MVar<A>
 	let localContent  : MVar<Dictionary<ThreadID, MVar<[A]>>>
 	let notifyList    : MVar<Set<ThreadID>>

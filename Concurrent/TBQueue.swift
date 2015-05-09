@@ -8,6 +8,12 @@
 
 import Swiftz
 
+/// `TBQueue` is a bounded version of TQueue. The queue has a maximum capacity set when it is 
+/// created. If the queue already contains the maximum number of elements, then `write(_:)` blocks
+/// until an element is removed from the queue.
+///
+/// The implementation is based on the traditional purely-functional queue representation that uses 
+/// two lists to obtain amortised O(1) enqueue and dequeue operations.
 public struct TBQueue<A> {
 	let readNum : TVar<Int>
 	let readHead : TVar<[A]>
@@ -28,6 +34,25 @@ public struct TBQueue<A> {
 		let wsize = TVar(n)
 		self.init(rsize, read, wsize, write)
 	}
+
+	public func write(x : A) -> STM<()> {
+		return do_ { () -> () in
+			let w : Int = !self.writeNum.read()
+			if w != 0 {
+				!self.writeNum.write(w - 1)
+			} else {
+				let r : Int = !self.readNum.read()
+				if r != 0 {
+					!self.readNum.write(0)
+					!self.writeNum.write(r - 1)
+				} else {
+					let _ : () = !retry()
+				}
+			}
+			let listend : [A] = !self.writeHead.read()
+			self.writeHead.write([x] + listend)
+		}
+	}
 }
 
 public func newTBQueue<A>(n : Int) -> STM<TBQueue<A>> {
@@ -37,26 +62,5 @@ public func newTBQueue<A>(n : Int) -> STM<TBQueue<A>> {
 		let rsize = !newTVar(0)
 		let wsize = !newTVar(n)
 		return TBQueue(rsize, read, wsize, write)
-	}
-}
-
-public func writeTBQueue<A>(q : TBQueue<A>) -> A -> STM<()> {
-	return { x in
-		do_ { () -> () in
-			let w : Int = !q.writeNum.read()
-			if w != 0 {
-				!q.writeNum.write(w - 1)
-			} else {
-				let r : Int = !q.readNum.read()
-				if r != 0 {
-					!q.readNum.write(0)
-					!q.writeNum.write(r - 1)
-				} else {
-					let _ : () = !retry()
-				}
-			}
-			let listend : [A] = !q.writeHead.read()
-			q.writeHead.write([x] + listend)
-		}
 	}
 }

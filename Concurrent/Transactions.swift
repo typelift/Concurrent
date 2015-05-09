@@ -144,9 +144,9 @@ func tryWriteTVarWithLog<A>(log : MVar<TransactionLog<A>>)(ptvar : TVar<A>)(con 
 			if la.contains(ptvar) {
 				let mid = pthread_self()
 				let localmap = _tva.localContent.read()
-				let MVar_with_old_content = localmap[mid]!
+				let oldContent = localmap[mid]!
 				let lk = localmap[mid]!.read()
-				MVar_with_old_content.put([con] + tail(lk)!)
+				oldContent.put([con] + tail(lk)!)
 
 				let lg2 = TransactionLog<A>(lg.readTVars, [(la, ln, lw.union([ptvar]))] + xs, lg.lockingSet)
 				log.swap(lg2)

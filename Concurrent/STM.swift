@@ -8,6 +8,24 @@
 
 import Swiftz
 
+/// Conceptually, `STM` is an implementation of Software Transactional Memory in Swift.
+///
+/// The STM Monad allows access to shared memory (in this case, a shared mutable variable) with
+/// database-transaction-like functions.  Transactions are independent atomic units of execution 
+/// that can be applied on success and retried or removed on failure.  The STM Monad will keep track
+/// of the order and execution of these units and guarantee access to a stable value.
+///
+/// For more information about this implementation, see Composable Memory Transactions 
+/// ~( http://research.microsoft.com/pubs/67418/2005-ppopp-composable.pdf ) [Harris, Marlow, Jones, 
+/// Herlihy; 2005]
+///
+/// Semantics
+/// ---------
+///
+/// The order of transactions submitted to the STM Monad is strictly FIFO, even under highly 
+/// concurrent environments.  Execution of these transactions, however, is nondeterministic and the 
+/// results of executing or applying each unit may not be relied upon until the entire computation 
+/// has completed.
 public struct STM<A> {
 	typealias B = Any
 
@@ -37,10 +55,6 @@ public func <^> <A, B>(f : A -> B, io : STM<A>) -> STM<B> {
 	return io.fmap(f)
 }
 
-//public func <^ <A, B>(x : A, io : STM<B>) -> STM<A> {
-//	return STM.fmap(const(x))(io)
-//}
-
 extension STM : Applicative {
 	public static func pure(a : A) -> STM<A> {
 		return STM<A>(STMD<A>.Return({ a }))
@@ -54,14 +68,6 @@ extension STM : Applicative {
 public func <*> <A, B>(fn : STM<A -> B>, m: STM<A>) -> STM<B> {
 	return !fn <^> m
 }
-
-//public func *> <A, B>(a : STM<A>, b : STM<B>) -> STM<B> {
-//	return const(identity) <^> a <*> b
-//}
-//
-//public func <* <A, B>(a : STM<A>, b : STM<B>) -> STM<A> {
-//	return const <^> a <*> b
-//}
 
 extension STM : Monad {
 	public func bind<B>(f : A -> STM<B>) -> STM<B> {
@@ -78,10 +84,12 @@ public prefix func !<A>(stm: STM<A>) -> A {
 	return atomically(stm)
 }
 
+/// Creates an atomic unit of execution from a block returning a value into the STM Monad.
 public func do_<A>(fn: () -> A) -> STM<A> {
 	return STM<A>(STMD<A>.Return(fn))
 }
 
+/// Creates an atomic unit of execution from a block returning an STM action inside the STM Monad.
 public func do_<A>(fn: () -> STM<A>) -> STM<A> {
 	return fn()
 }
@@ -112,18 +120,23 @@ public enum STMD<A> {
 	}
 }
 
-public func orElse<A>(a1 : STM<A>)(a2 : STM<A>) -> STM<A> {
-	return STM<A>(STMD<A>.OrElse(a1, a2, { x in STM<A>(STMD.Return({ x })) }))
+/// Executes the first action in the STM Monad.  Upon failure, the second action is executed.  If
+/// Whichever action suceeds first is the overall result of this function.
+public func orElse<A>(first : STM<A>)(second : STM<A>) -> STM<A> {
+	return STM<A>(STMD<A>.OrElse(first, second, { x in STM<A>(STMD.Return({ x })) }))
 }
 
+/// Retries the last operation.
 public func retry<A>() -> STM<A> {
 	return STM(STMD<A>.Retry)
 }
 
+/// Creates a new TVar that lives in Swift's imperative world rather than the STM Monad.
 public func newTVarIO<A>(x : A) -> TVar<A> {
 	return atomically(newTVar(x))
 }
 
+/// Atomically execute all transactions in an STM monad and return a final value.
 public func atomically<A>(act : STM<A>) -> A {
 	let tlog : MVar<TransactionLog<A>> = emptyTLOG()
 	return performSTM(tlog)(act: act.act())
