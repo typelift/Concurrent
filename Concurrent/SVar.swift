@@ -96,7 +96,7 @@ public func ==<A : Equatable>(lhs : SVar<A>, rhs : SVar<A>) -> Bool {
 	if lhs.isEmpty && !rhs.isEmpty {
 		return true
 	}
-	if lhs.isEmpty ^ rhs.isEmpty {
+	if lhs.isEmpty != rhs.isEmpty {
 		return false
 	}
 	return lhs.read() == rhs.read()

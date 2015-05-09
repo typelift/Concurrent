@@ -7,7 +7,7 @@
 //
 
 import Concurrent
-import Swiftx
+import class Swiftz.Box
 import XCTest
 
 typealias Name = String
@@ -41,7 +41,7 @@ struct Mu {
 
 typealias Environment = Dictionary<Name, Mu>
 
-func forever<A>(io : @autoclosure () -> A) -> (() -> A) {
+func forever<A>(@autoclosure(escaping) io :  () -> A) -> (() -> A) {
 	return { 
 		io() 
 		return forever(io)() 

@@ -6,13 +6,28 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftx
+import Swiftz
 
-public final class TSem : K0 {
+/// `TSem` is a transactional semaphore, a counting semaphore whose units are acquired and released
+/// with operations inside the STM Monad.
+public struct TSem {
 	let tvar : TVar<Int>
 
 	init(_ tvar : TVar<Int>) {
 		self.tvar = tvar
+	}
+
+	/// Returns an operation that decrements the value of the semaphore by 1 and waits for a unit to
+	/// become available.
+	public func wait() -> STM<()> {
+		let i : Int = !self.tvar.read()
+		return (i <= 0) ? retry() : self.tvar.write(i - 1)
+	}
+
+	/// Returns an operation that increments the value of the semaphore by 1 and signals that a unit
+	/// has become available.
+	public func signal() -> STM<()> {
+		return self.tvar.modify(+1)
 	}
 }
 
@@ -23,12 +38,3 @@ public func newTSem(i : Int) -> STM<TSem> {
 	}
 }
 
-public func waitTSem(sem : TSem) -> STM<()> {
-	let i : Int = !readTVar(sem.tvar)
-	return (i <= 0) ? retry() : writeTVar(sem.tvar)(x: i - 1)
-}
-
-public func signalTSem(sem : TSem) -> STM<()> {
-	let i : Int = !readTVar(sem.tvar)
-	return writeTVar(sem.tvar)(x: i + 1)
-}
