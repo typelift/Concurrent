@@ -215,7 +215,7 @@ public func ==<A : Equatable>(lhs : MVar<A>, rhs : MVar<A>) -> Bool {
 	if lhs.isEmpty && !rhs.isEmpty {
 		return true
 	}
-	if lhs.isEmpty ^ rhs.isEmpty {
+	if lhs.isEmpty != rhs.isEmpty {
 		return false
 	}
 	return lhs.read() == rhs.read()

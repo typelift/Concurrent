@@ -14,7 +14,7 @@ public struct STM<A> {
 	let act : () -> STMD<A>
 
 
-	init(_ act : @autoclosure () -> STMD<A>) {
+	init(@autoclosure(escaping) _ act :  () -> STMD<A>) {
 		self.act = act
 	}
 	
@@ -43,7 +43,7 @@ public func <^> <A, B>(f : A -> B, io : STM<A>) -> STM<B> {
 
 extension STM : Applicative {
 	public static func pure(a : A) -> STM<A> {
-		return STM<A>(STMD<A>.Return(a))
+		return STM<A>(STMD<A>.Return({ a }))
 	}
 	
 	public func ap<B>(fn : STM<A -> B>) -> STM<B> {
@@ -79,7 +79,7 @@ public prefix func !<A>(stm: STM<A>) -> A {
 }
 
 public func do_<A>(fn: () -> A) -> STM<A> {
-	return STM<A>(STMD<A>.Return(fn()))
+	return STM<A>(STMD<A>.Return(fn))
 }
 
 public func do_<A>(fn: () -> STM<A>) -> STM<A> {
@@ -87,10 +87,10 @@ public func do_<A>(fn: () -> STM<A>) -> STM<A> {
 }
 
 public enum STMD<A> {
-	case Return(@autoclosure() -> A)
-	case NewTVar(@autoclosure() -> A, TVar<A>, A -> STM<A>)
+	case Return(() -> A)
+	case NewTVar(() -> A, TVar<A>, A -> STM<A>)
 	case ReadTVar(TVar<A>, A -> STM<A>)
-	case WriteTVar(TVar<A>, @autoclosure() -> A, STM<A>)
+	case WriteTVar(TVar<A>, () -> A, STM<A>)
 	case Retry
 	case OrElse(STM<A>, STM<A>, (A -> STM<A>))
 
@@ -113,7 +113,7 @@ public enum STMD<A> {
 }
 
 public func orElse<A>(a1 : STM<A>)(a2 : STM<A>) -> STM<A> {
-	return STM(STMD<A>.OrElse(a1, a2, { x in STM(STMD.Return(x)) }))
+	return STM<A>(STMD<A>.OrElse(a1, a2, { x in STM<A>(STMD.Return({ x })) }))
 }
 
 public func retry<A>() -> STM<A> {

@@ -13,7 +13,7 @@ public struct IVar<A> {
 	private let trans : MVar<A>
 	private let val : () -> A
 	
-	private init(_ lock : MVar<()>, _ trans : MVar<A>, _ val : @autoclosure () -> A) {
+	private init(_ lock : MVar<()>, _ trans : MVar<A>, @autoclosure(escaping) _ val :  () -> A) {
 		self.lock = lock
 		self.trans = trans
 		self.val = val
@@ -26,7 +26,7 @@ public struct IVar<A> {
 	}
 	
 	/// Creates a new IVar containing the supplied value.
-	public init(initial : @autoclosure () -> A) {
+	public init(@autoclosure(escaping) initial :  () -> A) {
 		let lock = MVar<()>()
 		self.init(lock, MVar(initial: initial()), initial)
 	}
