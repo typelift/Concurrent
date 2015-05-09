@@ -65,7 +65,7 @@ extension STM : Applicative {
 	}
 }
 
-public func <*> <A, B>(fn : STM<A -> B>, m: STM<A>) -> STM<B> {
+public func <*> <A, B>(fn : STM<A -> B>, m : STM<A>) -> STM<B> {
 	return !fn <^> m
 }
 
@@ -76,21 +76,21 @@ extension STM : Monad {
 }
 
 
-public func >>- <A, B>(x: STM<A>, f: A -> STM<B>) -> STM<B> {
+public func >>- <A, B>(x : STM<A>, f : A -> STM<B>) -> STM<B> {
 	return x.bind(f)
 }
 
-public prefix func !<A>(stm: STM<A>) -> A {
+public prefix func !<A>(stm : STM<A>) -> A {
 	return atomically(stm)
 }
 
 /// Creates an atomic unit of execution from a block returning a value into the STM Monad.
-public func do_<A>(fn: () -> A) -> STM<A> {
+public func do_<A>(fn : () -> A) -> STM<A> {
 	return STM<A>(STMD<A>.Return(fn))
 }
 
 /// Creates an atomic unit of execution from a block returning an STM action inside the STM Monad.
-public func do_<A>(fn: () -> STM<A>) -> STM<A> {
+public func do_<A>(fn : () -> STM<A>) -> STM<A> {
 	return fn()
 }
 
@@ -102,7 +102,7 @@ public enum STMD<A> {
 	case Retry
 	case OrElse(STM<A>, STM<A>, (A -> STM<A>))
 
-	public func bind<B>(f: A -> STMD<B>) -> STMD<B> {
+	public func bind<B>(f : A -> STMD<B>) -> STMD<B> {
 		switch self {
 			case .Return(let x):
 				return f(x())
@@ -139,7 +139,7 @@ public func newTVarIO<A>(x : A) -> TVar<A> {
 /// Atomically execute all transactions in an STM monad and return a final value.
 public func atomically<A>(act : STM<A>) -> A {
 	let tlog : MVar<TransactionLog<A>> = emptyTLOG()
-	return performSTM(tlog)(act: act.act())
+	return performSTM(tlog)(act : act.act())
 }
 
 private func performSTM<A>(tlog : MVar<TransactionLog<A>>)(act : STMD<A>) -> A {
@@ -150,23 +150,23 @@ private func performSTM<A>(tlog : MVar<TransactionLog<A>>)(act : STMD<A>) -> A {
 		case .Retry:
 			return waitForExternalRetry()
 		case .NewTVar(_, let x, let cont):
-			let tv = newTVarWithLog(tlog)(tvar: x)
-			return performSTM(tlog)(act: (cont(tv.tvar.take().globalContent.take()).act()))
+			let tv = newTVarWithLog(tlog)(tvar : x)
+			return performSTM(tlog)(act : (cont(tv.tvar.take().globalContent.take()).act()))
 		case .ReadTVar(let x, let cont):
-			let res : A = readTVarWithLog(tlog)(v: x)
-			return performSTM(tlog)(act: cont(res).act())
+			let res : A = readTVarWithLog(tlog)(v : x)
+			return performSTM(tlog)(act : cont(res).act())
 		case .WriteTVar(let v, let x, let cont):
-			writeTVarWithLog(tlog)(v: v)(x: x())
-			return performSTM(tlog)(act: cont.act())
+			writeTVarWithLog(tlog)(v : v)(x : x())
+			return performSTM(tlog)(act : cont.act())
 		case .OrElse(let act1, let act2, let cont):
 			orElseWithLog(tlog)
-			let resl = performOrElseLeft(tlog)(act: act1.act())
+			let resl = performOrElseLeft(tlog)(act : act1.act())
 			switch resl {
 				case .Some(let a):
-					return performSTM(tlog)(act: cont(a).act())
+					return performSTM(tlog)(act : cont(a).act())
 				case .None:
 					orRetryWithLog(tlog)
-					return performSTM(tlog)(act: act2.bind(cont).act())
+					return performSTM(tlog)(act : act2.bind(cont).act())
 			}
 	}
 }
@@ -178,23 +178,23 @@ private func performOrElseLeft<A>(tlog : MVar<TransactionLog<A>>)(act : STMD<A>)
 		case .Retry:
 				return .None
 		case .NewTVar(_, let x, let cont):
-			let tv = newTVarWithLog(tlog)(tvar: x)
-			return performOrElseLeft(tlog)(act: cont(tv.tvar.take().globalContent.take()).act())
+			let tv = newTVarWithLog(tlog)(tvar : x)
+			return performOrElseLeft(tlog)(act : cont(tv.tvar.take().globalContent.take()).act())
 		case .ReadTVar(let x, let cont):
-			let res : A = readTVarWithLog(tlog)(v: x)
-			return performOrElseLeft(tlog)(act: cont(res).act())
+			let res : A = readTVarWithLog(tlog)(v : x)
+			return performOrElseLeft(tlog)(act : cont(res).act())
 		case .WriteTVar(let v, let x, let cont):
-			writeTVarWithLog(tlog)(v: v)(x: x())
-			return performOrElseLeft(tlog)(act: cont.act())
+			writeTVarWithLog(tlog)(v : v)(x : x())
+			return performOrElseLeft(tlog)(act : cont.act())
 		case .OrElse(let act1, let act2, let cont):
 			orElseWithLog(tlog)
-			let resl = performOrElseLeft(tlog)(act: act1.act())
+			let resl = performOrElseLeft(tlog)(act : act1.act())
 			switch resl {
 				case .Some(let x):
-					return performOrElseLeft(tlog)(act: cont(x).act())
+					return performOrElseLeft(tlog)(act : cont(x).act())
 				case .None:
 					orRetryWithLog(tlog)
-					return performOrElseLeft(tlog)(act: act2.bind(cont).act())
+					return performOrElseLeft(tlog)(act : act2.bind(cont).act())
 			}
 	}
 }
