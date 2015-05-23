@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/typelift/Concurrent.svg?branch=master)](https://travis-ci.org/typelift/Concurrent)
-
 Concurrent
 ==========
 
@@ -141,6 +139,17 @@ Setup
 
 Concurrent can be included one of two ways:
 
+**Using Carthage**
+
+- Add Concurrent to your Cartfile
+- Run `carthage update`
+- Drag the relevant copy of Concurrent into your project.
+- Expand the Link Binary With Libraries phase
+- Click the + and add Concurrent
+- Click the + at the top left corner to add a Copy Files build phase
+- Set the directory to `Frameworks`
+- Click the + and add Concurrent and Swiftz
+
 **Framework**
 
 - Drag Concurrent.xcodeproj or Concurrent-iOS.xcodeproj into your project tree as a subproject
@@ -151,10 +160,6 @@ Concurrent can be included one of two ways:
 - Click the + at the top left corner to add a Copy Files build phase
 - Set the directory to Frameworks
 - Click the + and add Concurrent
-
-**Standalone**
-
-Copy the swift files under Concurrent/Concurrent into your project.
 
 License
 =======
