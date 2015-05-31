@@ -60,6 +60,7 @@
 		84A53DDF1B1A966700E8A107 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F98519E9CD76008D9909 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A53DE01B1A966E00E8A107 /* CONCRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F99E19E9CDC0008D9909 /* CONCRealWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A53DE11B1A966E00E8A107 /* Concurrent-ObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F9A019E9CDC0008D9909 /* Concurrent-ObjCBridge.h */; };
+		84A53DED1B1A9C6400E8A107 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD61B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84FE01E91A881FE6006D3EEA /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE01E81A881FE6006D3EEA /* STMSpec.swift */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +140,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				84A53DED1B1A9C6400E8A107 /* Swiftz.framework in CopyFiles */,
 				84A53D6B1B1A8F8B00E8A107 /* Concurrent.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
