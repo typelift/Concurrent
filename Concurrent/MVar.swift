@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
+import typealias Darwin.sys._pthread.pthread_mutex_t
+import typealias Darwin.sys._pthread.pthread_cond_t
+
 /// `MVar`s (literally "Mutable Variables") are mutable references that are either empty or contain
 /// a value of type A. In this way, they are a form of synchronization primitive that can be used to
 /// make threads wait on a value before proceeding with a computation.

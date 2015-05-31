@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0610"
+   LastUpgradeVersion = "0630"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8434FA0619E9CE73008D9909"
+               BlueprintIdentifier = "84A53D391B1A8F1800E8A107"
                BuildableName = "Concurrent.framework"
-               BlueprintName = "Concurrent"
-               ReferencedContainer = "container:Concurrent-iOS.xcodeproj">
+               BlueprintName = "Concurrent-iOS"
+               ReferencedContainer = "container:Concurrent.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8434F9E919E9CE41008D9909"
+               BlueprintIdentifier = "84A53D431B1A8F1800E8A107"
                BuildableName = "Concurrent-iOSTests.xctest"
                BlueprintName = "Concurrent-iOSTests"
-               ReferencedContainer = "container:Concurrent-iOS.xcodeproj">
+               ReferencedContainer = "container:Concurrent.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,20 +46,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8434F9E919E9CE41008D9909"
+               BlueprintIdentifier = "84A53D431B1A8F1800E8A107"
                BuildableName = "Concurrent-iOSTests.xctest"
                BlueprintName = "Concurrent-iOSTests"
-               ReferencedContainer = "container:Concurrent-iOS.xcodeproj">
+               ReferencedContainer = "container:Concurrent.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8434FA0619E9CE73008D9909"
+            BlueprintIdentifier = "84A53D391B1A8F1800E8A107"
             BuildableName = "Concurrent.framework"
-            BlueprintName = "Concurrent"
-            ReferencedContainer = "container:Concurrent-iOS.xcodeproj">
+            BlueprintName = "Concurrent-iOS"
+            ReferencedContainer = "container:Concurrent.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -75,10 +75,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8434FA0619E9CE73008D9909"
+            BlueprintIdentifier = "84A53D391B1A8F1800E8A107"
             BuildableName = "Concurrent.framework"
-            BlueprintName = "Concurrent"
-            ReferencedContainer = "container:Concurrent-iOS.xcodeproj">
+            BlueprintName = "Concurrent-iOS"
+            ReferencedContainer = "container:Concurrent.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -93,10 +93,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8434FA0619E9CE73008D9909"
+            BlueprintIdentifier = "84A53D391B1A8F1800E8A107"
             BuildableName = "Concurrent.framework"
-            BlueprintName = "Concurrent"
-            ReferencedContainer = "container:Concurrent-iOS.xcodeproj">
+            BlueprintName = "Concurrent-iOS"
+            ReferencedContainer = "container:Concurrent.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
