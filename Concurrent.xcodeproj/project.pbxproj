@@ -53,6 +53,9 @@
 		84A53D671B1A8F7000E8A107 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF71A819EFE006387D5 /* TVar.swift */; };
 		84A53D681B1A8F7000E8A107 /* CONCRealWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434F99F19E9CDC0008D9909 /* CONCRealWorld.m */; };
 		84A53D6B1B1A8F8B00E8A107 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84A53D6D1B1A8FC400E8A107 /* ConcurrentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9D319E9CE28008D9909 /* ConcurrentTests.swift */; };
+		84A53D6E1B1A8FC400E8A107 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE01E81A881FE6006D3EEA /* STMSpec.swift */; };
+		84A53D6F1B1A8FC400E8A107 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9CF19E9CE1D008D9909 /* PiCalculus.swift */; };
 		84FE01E51A87EF47006D3EEA /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE01D61A87EF01006D3EEA /* Swiftz.framework */; };
 		84FE01E91A881FE6006D3EEA /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE01E81A881FE6006D3EEA /* STMSpec.swift */; };
 /* End PBXBuildFile section */
@@ -550,6 +553,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A53D6D1B1A8FC400E8A107 /* ConcurrentTests.swift in Sources */,
+				84A53D6E1B1A8FC400E8A107 /* STMSpec.swift in Sources */,
+				84A53D6F1B1A8FC400E8A107 /* PiCalculus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
