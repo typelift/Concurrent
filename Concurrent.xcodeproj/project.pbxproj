@@ -33,7 +33,6 @@
 		8475205A1A7EC3E800975C8B /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847520591A7EC3E800975C8B /* Exception.swift */; };
 		849AA3AF1A09850400472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434F98019E9CD76008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84A53D451B1A8F1800E8A107 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */; };
-		84A53D561B1A8F2C00E8A107 /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE01D61A87EF01006D3EEA /* Swiftz.framework */; };
 		84A53D571B1A8F7000E8A107 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F99D19E9CDC0008D9909 /* Chan.swift */; };
 		84A53D581B1A8F7000E8A107 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9A119E9CDC0008D9909 /* Concurrent.swift */; };
 		84A53D591B1A8F7000E8A107 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847520591A7EC3E800975C8B /* Exception.swift */; };
@@ -56,7 +55,11 @@
 		84A53D6D1B1A8FC400E8A107 /* ConcurrentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9D319E9CE28008D9909 /* ConcurrentTests.swift */; };
 		84A53D6E1B1A8FC400E8A107 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE01E81A881FE6006D3EEA /* STMSpec.swift */; };
 		84A53D6F1B1A8FC400E8A107 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9CF19E9CE1D008D9909 /* PiCalculus.swift */; };
-		84FE01E51A87EF47006D3EEA /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE01D61A87EF01006D3EEA /* Swiftz.framework */; };
+		84A53DDB1B1A965700E8A107 /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; };
+		84A53DDE1B1A965F00E8A107 /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; };
+		84A53DDF1B1A966700E8A107 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F98519E9CD76008D9909 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84A53DE01B1A966E00E8A107 /* CONCRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F99E19E9CDC0008D9909 /* CONCRealWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84A53DE11B1A966E00E8A107 /* Concurrent-ObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F9A019E9CDC0008D9909 /* Concurrent-ObjCBridge.h */; };
 		84FE01E91A881FE6006D3EEA /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE01E81A881FE6006D3EEA /* STMSpec.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,33 +78,47 @@
 			remoteGlobalIDString = 84A53D391B1A8F1800E8A107;
 			remoteInfo = "Concurrent-iOS";
 		};
-		84A53D541B1A8F2600E8A107 /* PBXContainerItemProxy */ = {
+		84A53DD11B1A964400E8A107 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 84FE01D01A87EF01006D3EEA /* Swiftz.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 84A88F971A71DF7F003D53CF;
-			remoteInfo = Swiftz;
-		};
-		84FE01D51A87EF01006D3EEA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84FE01D01A87EF01006D3EEA /* Swiftz.xcodeproj */;
+			containerPortal = 84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 84A88F981A71DF7F003D53CF;
 			remoteInfo = Swiftz;
 		};
-		84FE01D71A87EF01006D3EEA /* PBXContainerItemProxy */ = {
+		84A53DD31B1A964400E8A107 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 84FE01D01A87EF01006D3EEA /* Swiftz.xcodeproj */;
+			containerPortal = 84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 84A88FA31A71DF7F003D53CF;
 			remoteInfo = SwiftzTests;
 		};
-		84FE01E61A87EF49006D3EEA /* PBXContainerItemProxy */ = {
+		84A53DD51B1A964400E8A107 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 84FE01D01A87EF01006D3EEA /* Swiftz.xcodeproj */;
+			containerPortal = 84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 84DF751E1B0BD17700C912B0;
+			remoteInfo = "Swiftz-iOS";
+		};
+		84A53DD71B1A964400E8A107 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 84DF75281B0BD17700C912B0;
+			remoteInfo = "Swiftz-iOSTests";
+		};
+		84A53DD91B1A964C00E8A107 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 84A88F971A71DF7F003D53CF;
 			remoteInfo = Swiftz;
+		};
+		84A53DDC1B1A965B00E8A107 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 84DF751D1B0BD17700C912B0;
+			remoteInfo = "Swiftz-iOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -140,7 +157,7 @@
 		84152BF71A819EFE006387D5 /* TVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVar.swift; sourceTree = "<group>"; };
 		8434F98019E9CD76008D9909 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434F98419E9CD76008D9909 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8434F98519E9CD76008D9909 /* Concurrent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Concurrent.h; sourceTree = "<group>"; };
+		8434F98519E9CD76008D9909 /* Concurrent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Concurrent.h; path = Concurrent/Concurrent.h; sourceTree = "<group>"; };
 		8434F98B19E9CD76008D9909 /* ConcurrentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcurrentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434F99D19E9CDC0008D9909 /* Chan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chan.swift; sourceTree = "<group>"; };
 		8434F99E19E9CDC0008D9909 /* CONCRealWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CONCRealWorld.h; sourceTree = "<group>"; };
@@ -158,7 +175,7 @@
 		847520591A7EC3E800975C8B /* Exception.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A53D441B1A8F1800E8A107 /* Concurrent-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		84FE01D01A87EF01006D3EEA /* Swiftz.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Swiftz.xcodeproj; path = Carthage/Checkouts/Swiftz/Swiftz.xcodeproj; sourceTree = "<group>"; };
+		84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Swiftz.xcodeproj; path = Carthage/Checkouts/Swiftz/Swiftz.xcodeproj; sourceTree = "<group>"; };
 		84FE01E81A881FE6006D3EEA /* STMSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -167,7 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84FE01E51A87EF47006D3EEA /* Swiftz.framework in Frameworks */,
+				84A53DDB1B1A965700E8A107 /* Swiftz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,7 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84A53D561B1A8F2C00E8A107 /* Swiftz.framework in Frameworks */,
+				84A53DDE1B1A965F00E8A107 /* Swiftz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +233,8 @@
 		8434F97619E9CD75008D9909 = {
 			isa = PBXGroup;
 			children = (
-				84FE01D01A87EF01006D3EEA /* Swiftz.xcodeproj */,
+				84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */,
+				8434F98519E9CD76008D9909 /* Concurrent.h */,
 				8434F98219E9CD76008D9909 /* Concurrent */,
 				8434F98F19E9CD76008D9909 /* ConcurrentTests */,
 				8434F98119E9CD76008D9909 /* Products */,
@@ -237,7 +255,6 @@
 		8434F98219E9CD76008D9909 /* Concurrent */ = {
 			isa = PBXGroup;
 			children = (
-				8434F98519E9CD76008D9909 /* Concurrent.h */,
 				8434F99D19E9CDC0008D9909 /* Chan.swift */,
 				8434F9A119E9CDC0008D9909 /* Concurrent.swift */,
 				847520591A7EC3E800975C8B /* Exception.swift */,
@@ -283,11 +300,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		84FE01D11A87EF01006D3EEA /* Products */ = {
+		84A53DCA1B1A964300E8A107 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84FE01D61A87EF01006D3EEA /* Swiftz.framework */,
-				84FE01D81A87EF01006D3EEA /* SwiftzTests.xctest */,
+				84A53DD21B1A964400E8A107 /* Swiftz.framework */,
+				84A53DD41B1A964400E8A107 /* SwiftzTests.xctest */,
+				84A53DD61B1A964400E8A107 /* Swiftz.framework */,
+				84A53DD81B1A964400E8A107 /* Swiftz-iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -309,6 +328,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A53DDF1B1A966700E8A107 /* Concurrent.h in Headers */,
+				84A53DE01B1A966E00E8A107 /* CONCRealWorld.h in Headers */,
+				84A53DE11B1A966E00E8A107 /* Concurrent-ObjCBridge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,7 +349,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				84FE01E71A87EF49006D3EEA /* PBXTargetDependency */,
+				84A53DDA1B1A964C00E8A107 /* PBXTargetDependency */,
 			);
 			name = Concurrent;
 			productName = Concurrent;
@@ -365,7 +387,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				84A53D551B1A8F2600E8A107 /* PBXTargetDependency */,
+				84A53DDD1B1A965B00E8A107 /* PBXTargetDependency */,
 			);
 			name = "Concurrent-iOS";
 			productName = "Concurrent-iOS";
@@ -426,8 +448,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 84FE01D11A87EF01006D3EEA /* Products */;
-					ProjectRef = 84FE01D01A87EF01006D3EEA /* Swiftz.xcodeproj */;
+					ProductGroup = 84A53DCA1B1A964300E8A107 /* Products */;
+					ProjectRef = 84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -441,18 +463,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		84FE01D61A87EF01006D3EEA /* Swiftz.framework */ = {
+		84A53DD21B1A964400E8A107 /* Swiftz.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Swiftz.framework;
-			remoteRef = 84FE01D51A87EF01006D3EEA /* PBXContainerItemProxy */;
+			remoteRef = 84A53DD11B1A964400E8A107 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		84FE01D81A87EF01006D3EEA /* SwiftzTests.xctest */ = {
+		84A53DD41B1A964400E8A107 /* SwiftzTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = SwiftzTests.xctest;
-			remoteRef = 84FE01D71A87EF01006D3EEA /* PBXContainerItemProxy */;
+			remoteRef = 84A53DD31B1A964400E8A107 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84A53DD61B1A964400E8A107 /* Swiftz.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Swiftz.framework;
+			remoteRef = 84A53DD51B1A964400E8A107 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84A53DD81B1A964400E8A107 /* Swiftz-iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Swiftz-iOSTests.xctest";
+			remoteRef = 84A53DD71B1A964400E8A107 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -572,15 +608,15 @@
 			target = 84A53D391B1A8F1800E8A107 /* Concurrent-iOS */;
 			targetProxy = 84A53D461B1A8F1800E8A107 /* PBXContainerItemProxy */;
 		};
-		84A53D551B1A8F2600E8A107 /* PBXTargetDependency */ = {
+		84A53DDA1B1A964C00E8A107 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Swiftz;
-			targetProxy = 84A53D541B1A8F2600E8A107 /* PBXContainerItemProxy */;
+			targetProxy = 84A53DD91B1A964C00E8A107 /* PBXContainerItemProxy */;
 		};
-		84FE01E71A87EF49006D3EEA /* PBXTargetDependency */ = {
+		84A53DDD1B1A965B00E8A107 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Swiftz;
-			targetProxy = 84FE01E61A87EF49006D3EEA /* PBXContainerItemProxy */;
+			name = "Swiftz-iOS";
+			targetProxy = 84A53DDC1B1A965B00E8A107 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
