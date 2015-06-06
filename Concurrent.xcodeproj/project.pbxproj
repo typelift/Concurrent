@@ -13,13 +13,6 @@
 		841022511B1A9FD100E799A0 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		841022551B1AA00D00E799A0 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841022531B1AA00D00E799A0 /* MVarSpec.swift */; };
 		84152B7A1A818C95006387D5 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152B791A818C95006387D5 /* SVar.swift */; };
-		84152BF81A819EFE006387D5 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF01A819EFE006387D5 /* STM.swift */; };
-		84152BF91A819EFE006387D5 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF11A819EFE006387D5 /* TBQueue.swift */; };
-		84152BFA1A819EFE006387D5 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF21A819EFE006387D5 /* TChan.swift */; };
-		84152BFB1A819EFE006387D5 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF31A819EFE006387D5 /* TMVar.swift */; };
-		84152BFC1A819EFE006387D5 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF41A819EFE006387D5 /* TQueue.swift */; };
-		84152BFE1A819EFE006387D5 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF61A819EFE006387D5 /* TSem.swift */; };
-		84152BFF1A819EFE006387D5 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF71A819EFE006387D5 /* TVar.swift */; };
 		8434F98619E9CD76008D9909 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F98519E9CD76008D9909 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8434F98C19E9CD76008D9909 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434F98019E9CD76008D9909 /* Concurrent.framework */; };
 		8434F9B019E9CDC0008D9909 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F99D19E9CDC0008D9909 /* Chan.swift */; };
@@ -46,13 +39,6 @@
 		84A53D5D1B1A8F7000E8A107 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9A519E9CDC0008D9909 /* MVar.swift */; };
 		84A53D5E1B1A8F7000E8A107 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152B791A818C95006387D5 /* SVar.swift */; };
 		84A53D5F1B1A8F7000E8A107 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9A619E9CDC0008D9909 /* QSem.swift */; };
-		84A53D601B1A8F7000E8A107 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF01A819EFE006387D5 /* STM.swift */; };
-		84A53D611B1A8F7000E8A107 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF11A819EFE006387D5 /* TBQueue.swift */; };
-		84A53D621B1A8F7000E8A107 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF21A819EFE006387D5 /* TChan.swift */; };
-		84A53D631B1A8F7000E8A107 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF31A819EFE006387D5 /* TMVar.swift */; };
-		84A53D641B1A8F7000E8A107 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF41A819EFE006387D5 /* TQueue.swift */; };
-		84A53D661B1A8F7000E8A107 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF61A819EFE006387D5 /* TSem.swift */; };
-		84A53D671B1A8F7000E8A107 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152BF71A819EFE006387D5 /* TVar.swift */; };
 		84A53D681B1A8F7000E8A107 /* CONCRealWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434F99F19E9CDC0008D9909 /* CONCRealWorld.m */; };
 		84A53D6B1B1A8F8B00E8A107 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84A53D6D1B1A8FC400E8A107 /* ConcurrentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9D319E9CE28008D9909 /* ConcurrentTests.swift */; };
@@ -200,13 +186,6 @@
 /* Begin PBXFileReference section */
 		841022531B1AA00D00E799A0 /* MVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MVarSpec.swift; sourceTree = "<group>"; };
 		84152B791A818C95006387D5 /* SVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVar.swift; sourceTree = "<group>"; };
-		84152BF01A819EFE006387D5 /* STM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STM.swift; sourceTree = "<group>"; };
-		84152BF11A819EFE006387D5 /* TBQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBQueue.swift; sourceTree = "<group>"; };
-		84152BF21A819EFE006387D5 /* TChan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TChan.swift; sourceTree = "<group>"; };
-		84152BF31A819EFE006387D5 /* TMVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMVar.swift; sourceTree = "<group>"; };
-		84152BF41A819EFE006387D5 /* TQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TQueue.swift; sourceTree = "<group>"; };
-		84152BF61A819EFE006387D5 /* TSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSem.swift; sourceTree = "<group>"; };
-		84152BF71A819EFE006387D5 /* TVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVar.swift; sourceTree = "<group>"; };
 		8434F98019E9CD76008D9909 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434F98419E9CD76008D9909 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8434F98519E9CD76008D9909 /* Concurrent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Concurrent.h; path = Concurrent/Concurrent.h; sourceTree = "<group>"; };
@@ -271,20 +250,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		84152C011A819F02006387D5 /* STM */ = {
-			isa = PBXGroup;
-			children = (
-				84152BF01A819EFE006387D5 /* STM.swift */,
-				84152BF11A819EFE006387D5 /* TBQueue.swift */,
-				84152BF21A819EFE006387D5 /* TChan.swift */,
-				84152BF31A819EFE006387D5 /* TMVar.swift */,
-				84152BF41A819EFE006387D5 /* TQueue.swift */,
-				84152BF61A819EFE006387D5 /* TSem.swift */,
-				84152BF71A819EFE006387D5 /* TVar.swift */,
-			);
-			name = STM;
-			sourceTree = "<group>";
-		};
 		8434F97619E9CD75008D9909 = {
 			isa = PBXGroup;
 			children = (
@@ -319,7 +284,6 @@
 				8434F9A519E9CDC0008D9909 /* MVar.swift */,
 				84152B791A818C95006387D5 /* SVar.swift */,
 				8434F9A619E9CDC0008D9909 /* QSem.swift */,
-				84152C011A819F02006387D5 /* STM */,
 				8434F98319E9CD76008D9909 /* Supporting Files */,
 			);
 			path = Concurrent;
@@ -636,19 +600,12 @@
 				8434F9B919E9CDC0008D9909 /* QSem.swift in Sources */,
 				8434F9B619E9CDC0008D9909 /* IChan.swift in Sources */,
 				8434F9B219E9CDC0008D9909 /* CONCRealWorld.m in Sources */,
-				84152BFC1A819EFE006387D5 /* TQueue.swift in Sources */,
 				8434F9B819E9CDC0008D9909 /* MVar.swift in Sources */,
-				84152BFE1A819EFE006387D5 /* TSem.swift in Sources */,
-				84152BFA1A819EFE006387D5 /* TChan.swift in Sources */,
-				84152BFB1A819EFE006387D5 /* TMVar.swift in Sources */,
 				8434F9B419E9CDC0008D9909 /* Concurrent.swift in Sources */,
 				8434F9B519E9CDC0008D9909 /* Future.swift in Sources */,
 				8434F9B719E9CDC0008D9909 /* IVar.swift in Sources */,
-				84152BF81A819EFE006387D5 /* STM.swift in Sources */,
-				84152BFF1A819EFE006387D5 /* TVar.swift in Sources */,
 				8434F9B019E9CDC0008D9909 /* Chan.swift in Sources */,
 				84152B7A1A818C95006387D5 /* SVar.swift in Sources */,
-				84152BF91A819EFE006387D5 /* TBQueue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,13 +632,6 @@
 				84A53D5D1B1A8F7000E8A107 /* MVar.swift in Sources */,
 				84A53D5E1B1A8F7000E8A107 /* SVar.swift in Sources */,
 				84A53D5F1B1A8F7000E8A107 /* QSem.swift in Sources */,
-				84A53D601B1A8F7000E8A107 /* STM.swift in Sources */,
-				84A53D611B1A8F7000E8A107 /* TBQueue.swift in Sources */,
-				84A53D621B1A8F7000E8A107 /* TChan.swift in Sources */,
-				84A53D631B1A8F7000E8A107 /* TMVar.swift in Sources */,
-				84A53D641B1A8F7000E8A107 /* TQueue.swift in Sources */,
-				84A53D661B1A8F7000E8A107 /* TSem.swift in Sources */,
-				84A53D671B1A8F7000E8A107 /* TVar.swift in Sources */,
 				84A53D681B1A8F7000E8A107 /* CONCRealWorld.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
