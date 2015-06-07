@@ -35,7 +35,7 @@ public struct SVar<A> {
 	/// Creates a new SVar containing the supplied value.
 	public init(initial : A){
 		let v = MVar<A>(initial: initial)
-		self.init(MVar(initial: (0, v)))
+		self.init(MVar(initial: (1, v)))
 	}
 	
 	/// Empties the reciever.
@@ -70,7 +70,7 @@ public struct SVar<A> {
 			self.svar.put(s)
 		default:
 			val.put(v)
-			self.svar.put(min(1, readers), val)
+			self.svar.put(min(1, readers + 1), val)
 		}
 	}
 	
