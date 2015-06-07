@@ -10,10 +10,11 @@
 		8410224B1B1A9F9E00E799A0 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53E011B1A9F1900E8A107 /* SwiftCheck.framework */; };
 		8410224F1B1A9FAC00E799A0 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DFD1B1A9F1900E8A107 /* SwiftCheck.framework */; };
 		841022501B1A9FBE00E799A0 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DFD1B1A9F1900E8A107 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		841022511B1A9FD100E799A0 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		841022551B1AA00D00E799A0 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841022531B1AA00D00E799A0 /* MVarSpec.swift */; };
 		84152B7A1A818C95006387D5 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152B791A818C95006387D5 /* SVar.swift */; };
 		842874721B24195300D6AAC2 /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; };
+		8428747D1B24DF0B00D6AAC2 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		842874801B24DF2100D6AAC2 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD61B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8434F98619E9CD76008D9909 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F98519E9CD76008D9909 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8434F98C19E9CD76008D9909 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434F98019E9CD76008D9909 /* Concurrent.framework */; };
 		8434F9B019E9CDC0008D9909 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F99D19E9CDC0008D9909 /* Chan.swift */; };
@@ -46,7 +47,6 @@
 		84A53DDF1B1A966700E8A107 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F98519E9CD76008D9909 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A53DE01B1A966E00E8A107 /* CONCRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F99E19E9CDC0008D9909 /* CONCRealWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A53DE11B1A966E00E8A107 /* Concurrent-ObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F9A019E9CDC0008D9909 /* Concurrent-ObjCBridge.h */; };
-		84A53DED1B1A9C6400E8A107 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD61B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84A53E081B1A9F2C00E8A107 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53E011B1A9F1900E8A107 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84EA2C591B23AE5D0001FB3F /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F467811B1B9244002A4C4C /* ChanSpec.swift */; };
 		84EA2C5A1B23AE5F0001FB3F /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841022531B1AA00D00E799A0 /* MVarSpec.swift */; };
@@ -157,13 +157,32 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		842874781B24DF0000D6AAC2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8428747D1B24DF0B00D6AAC2 /* Swiftz.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8428747E1B24DF1400D6AAC2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				842874801B24DF2100D6AAC2 /* Swiftz.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		849AA3A91A0984D800472F08 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				841022511B1A9FD100E799A0 /* Swiftz.framework in CopyFiles */,
 				841022501B1A9FBE00E799A0 /* SwiftCheck.framework in CopyFiles */,
 				849AA3AF1A09850400472F08 /* Concurrent.framework in CopyFiles */,
 			);
@@ -176,7 +195,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				84A53E081B1A9F2C00E8A107 /* SwiftCheck.framework in CopyFiles */,
-				84A53DED1B1A9C6400E8A107 /* Swiftz.framework in CopyFiles */,
 				84A53D6B1B1A8F8B00E8A107 /* Concurrent.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +394,7 @@
 				8434F97C19E9CD76008D9909 /* Frameworks */,
 				8434F97D19E9CD76008D9909 /* Headers */,
 				8434F97E19E9CD76008D9909 /* Resources */,
+				842874781B24DF0000D6AAC2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -415,6 +434,7 @@
 				84A53D361B1A8F1800E8A107 /* Frameworks */,
 				84A53D371B1A8F1800E8A107 /* Headers */,
 				84A53D381B1A8F1800E8A107 /* Resources */,
+				8428747E1B24DF1400D6AAC2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
