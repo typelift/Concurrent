@@ -42,7 +42,6 @@
 		84A53D6B1B1A8F8B00E8A107 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84A53D6F1B1A8FC400E8A107 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9CF19E9CE1D008D9909 /* PiCalculus.swift */; };
 		84A53DDB1B1A965700E8A107 /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; };
-		84A53DDE1B1A965F00E8A107 /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; };
 		84A53DDF1B1A966700E8A107 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F98519E9CD76008D9909 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A53DE01B1A966E00E8A107 /* CONCRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F99E19E9CDC0008D9909 /* CONCRealWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A53DE11B1A966E00E8A107 /* Concurrent-ObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F9A019E9CDC0008D9909 /* Concurrent-ObjCBridge.h */; };
@@ -52,6 +51,7 @@
 		84EA2C5A1B23AE5F0001FB3F /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841022531B1AA00D00E799A0 /* MVarSpec.swift */; };
 		84EA2C5C1B240C4D0001FB3F /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA2C5B1B240C4D0001FB3F /* SVarSpec.swift */; };
 		84EA2C5D1B240C4D0001FB3F /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA2C5B1B240C4D0001FB3F /* SVarSpec.swift */; };
+		84EA2C601B2417EE0001FB3F /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; };
 		84F467831B1B9244002A4C4C /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F467811B1B9244002A4C4C /* ChanSpec.swift */; };
 /* End PBXBuildFile section */
 
@@ -233,7 +233,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84A53DDE1B1A965F00E8A107 /* Swiftz.framework in Frameworks */,
+				84EA2C601B2417EE0001FB3F /* Swiftz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
