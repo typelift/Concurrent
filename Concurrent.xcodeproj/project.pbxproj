@@ -13,8 +13,8 @@
 		841022551B1AA00D00E799A0 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841022531B1AA00D00E799A0 /* MVarSpec.swift */; };
 		84152B7A1A818C95006387D5 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84152B791A818C95006387D5 /* SVar.swift */; };
 		842874721B24195300D6AAC2 /* Swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; };
-		8428747D1B24DF0B00D6AAC2 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		842874801B24DF2100D6AAC2 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD61B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		842874821B24E7A300D6AAC2 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD61B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		842874831B24E7AC00D6AAC2 /* Swiftz.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DD21B1A964400E8A107 /* Swiftz.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8434F98619E9CD76008D9909 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8434F98519E9CD76008D9909 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8434F98C19E9CD76008D9909 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434F98019E9CD76008D9909 /* Concurrent.framework */; };
 		8434F9B019E9CDC0008D9909 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F99D19E9CDC0008D9909 /* Chan.swift */; };
@@ -70,13 +70,6 @@
 			remoteGlobalIDString = 844FCC8C198B320500EB242A;
 			remoteInfo = SwiftCheck;
 		};
-		842874701B24194100D6AAC2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 84DF751D1B0BD17700C912B0;
-			remoteInfo = "Swiftz-iOS";
-		};
 		8434F98D19E9CD76008D9909 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8434F97719E9CD76008D9909 /* Project object */;
@@ -119,13 +112,6 @@
 			remoteGlobalIDString = 84DF75281B0BD17700C912B0;
 			remoteInfo = "Swiftz-iOSTests";
 		};
-		84A53DD91B1A964C00E8A107 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 84A88F971A71DF7F003D53CF;
-			remoteInfo = Swiftz;
-		};
 		84A53DFC1B1A9F1900E8A107 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84A53DF51B1A9F1800E8A107 /* SwiftCheck.xcodeproj */;
@@ -157,32 +143,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		842874781B24DF0000D6AAC2 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				8428747D1B24DF0B00D6AAC2 /* Swiftz.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8428747E1B24DF1400D6AAC2 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				842874801B24DF2100D6AAC2 /* Swiftz.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		849AA3A91A0984D800472F08 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				842874831B24E7AC00D6AAC2 /* Swiftz.framework in CopyFiles */,
 				841022501B1A9FBE00E799A0 /* SwiftCheck.framework in CopyFiles */,
 				849AA3AF1A09850400472F08 /* Concurrent.framework in CopyFiles */,
 			);
@@ -194,6 +161,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				842874821B24E7A300D6AAC2 /* Swiftz.framework in CopyFiles */,
 				84A53E081B1A9F2C00E8A107 /* SwiftCheck.framework in CopyFiles */,
 				84A53D6B1B1A8F8B00E8A107 /* Concurrent.framework in CopyFiles */,
 			);
@@ -394,12 +362,10 @@
 				8434F97C19E9CD76008D9909 /* Frameworks */,
 				8434F97D19E9CD76008D9909 /* Headers */,
 				8434F97E19E9CD76008D9909 /* Resources */,
-				842874781B24DF0000D6AAC2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				84A53DDA1B1A964C00E8A107 /* PBXTargetDependency */,
 			);
 			name = Concurrent;
 			productName = Concurrent;
@@ -434,12 +400,10 @@
 				84A53D361B1A8F1800E8A107 /* Frameworks */,
 				84A53D371B1A8F1800E8A107 /* Headers */,
 				84A53D381B1A8F1800E8A107 /* Resources */,
-				8428747E1B24DF1400D6AAC2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				842874711B24194100D6AAC2 /* PBXTargetDependency */,
 			);
 			name = "Concurrent-iOS";
 			productName = "Concurrent-iOS";
@@ -679,11 +643,6 @@
 			name = SwiftCheck;
 			targetProxy = 8410224C1B1A9FA300E799A0 /* PBXContainerItemProxy */;
 		};
-		842874711B24194100D6AAC2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Swiftz-iOS";
-			targetProxy = 842874701B24194100D6AAC2 /* PBXContainerItemProxy */;
-		};
 		8434F98E19E9CD76008D9909 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8434F97F19E9CD76008D9909 /* Concurrent */;
@@ -693,11 +652,6 @@
 			isa = PBXTargetDependency;
 			target = 84A53D391B1A8F1800E8A107 /* Concurrent-iOS */;
 			targetProxy = 84A53D461B1A8F1800E8A107 /* PBXContainerItemProxy */;
-		};
-		84A53DDA1B1A964C00E8A107 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Swiftz;
-			targetProxy = 84A53DD91B1A964C00E8A107 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -873,7 +827,8 @@
 				INFOPLIST_FILE = Concurrent/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = Concurrent;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -896,7 +851,8 @@
 				INFOPLIST_FILE = Concurrent/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = Concurrent;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
