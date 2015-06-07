@@ -50,6 +50,8 @@
 		84A53E081B1A9F2C00E8A107 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53E011B1A9F1900E8A107 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84EA2C591B23AE5D0001FB3F /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F467811B1B9244002A4C4C /* ChanSpec.swift */; };
 		84EA2C5A1B23AE5F0001FB3F /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841022531B1AA00D00E799A0 /* MVarSpec.swift */; };
+		84EA2C5C1B240C4D0001FB3F /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA2C5B1B240C4D0001FB3F /* SVarSpec.swift */; };
+		84EA2C5D1B240C4D0001FB3F /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA2C5B1B240C4D0001FB3F /* SVarSpec.swift */; };
 		84F467831B1B9244002A4C4C /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F467811B1B9244002A4C4C /* ChanSpec.swift */; };
 /* End PBXBuildFile section */
 
@@ -205,6 +207,7 @@
 		84A53D441B1A8F1800E8A107 /* Concurrent-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Swiftz.xcodeproj; path = Carthage/Checkouts/Swiftz/Swiftz.xcodeproj; sourceTree = "<group>"; };
 		84A53DF51B1A9F1800E8A107 /* SwiftCheck.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCheck.xcodeproj; path = Carthage/Checkouts/SwiftCheck/SwiftCheck.xcodeproj; sourceTree = SOURCE_ROOT; };
+		84EA2C5B1B240C4D0001FB3F /* SVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVarSpec.swift; sourceTree = "<group>"; };
 		84F467811B1B9244002A4C4C /* ChanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChanSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -301,6 +304,7 @@
 			children = (
 				84F467811B1B9244002A4C4C /* ChanSpec.swift */,
 				841022531B1AA00D00E799A0 /* MVarSpec.swift */,
+				84EA2C5B1B240C4D0001FB3F /* SVarSpec.swift */,
 				8434F9CF19E9CE1D008D9909 /* PiCalculus.swift */,
 				8434F99019E9CD76008D9909 /* Supporting Files */,
 			);
@@ -607,6 +611,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84EA2C5C1B240C4D0001FB3F /* SVarSpec.swift in Sources */,
 				8434F9D019E9CE1D008D9909 /* PiCalculus.swift in Sources */,
 				84EA2C5A1B23AE5F0001FB3F /* MVarSpec.swift in Sources */,
 				84EA2C591B23AE5D0001FB3F /* ChanSpec.swift in Sources */,
@@ -634,6 +639,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84EA2C5D1B240C4D0001FB3F /* SVarSpec.swift in Sources */,
 				84F467831B1B9244002A4C4C /* ChanSpec.swift in Sources */,
 				841022551B1AA00D00E799A0 /* MVarSpec.swift in Sources */,
 				84A53D6F1B1A8FC400E8A107 /* PiCalculus.swift in Sources */,

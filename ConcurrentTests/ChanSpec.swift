@@ -31,9 +31,9 @@ extension Action : Arbitrary {
 /// ~(https://github.com/ghc/ghc/blob/master/libraries/base/tests/Concurrent/Chan001.hs)
 class ChanSpec : XCTestCase {
 	func testProperties() {
-		property[""] = formulate([.NewChan, .IsEmptyChan], [.NewChan, .ReturnBool(true)])
+		property["New channels start empty"] = formulate([.NewChan, .IsEmptyChan], [.NewChan, .ReturnBool(true)])
 
-		property[""] = forAll { (n : Int) in
+		property["Written-to channels are non-empty"] = forAll { (n : Int) in
 			return self.formulate([.NewChan, .WriteChan(n), .IsEmptyChan], [.NewChan, .WriteChan(n), .ReturnBool(false)])
 		}
 
