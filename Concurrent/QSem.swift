@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftz
-
 /// QSem is a simple quanitity semaphore (read: counting semaphore) that aquires and releases
 /// resources in increments of 1.  The semaphore keeps track of blocked threads with MVar<()>'s.
 /// When a thread becomes unblocked, the semaphore simply fills the MVar with a ().  Threads can
