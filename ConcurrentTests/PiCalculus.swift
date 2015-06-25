@@ -7,10 +7,14 @@
 //
 
 import Concurrent
-import class Swiftz.Box
 import XCTest
 
 typealias Name = String
+
+internal class Box<T> {
+    let value : T
+    internal init(_ x : T) { self.value = x }
+}
 
 /// An encoding of the Pi Calculus, a process calculus of names and channels with equal expressive
 /// power to the Lambda Calculus.
@@ -48,7 +52,7 @@ func forever<A>(@autoclosure(escaping) io :  () -> A) -> (() -> A) {
 	}
 }
 
-func runπ(var env : Environment, pi : π) -> () {
+func runπ(var env : Environment, _ pi : π) -> () {
 	switch pi {
 		case .Simultaneously(let ba, let bb):
 			let f = { x in forkIO(runπ(env, x)) }
@@ -90,7 +94,7 @@ func !|! (l : π, r : π) -> π {
 	return .Simultaneously(Box(l), Box(r))
 }
 
-func repeat(p : π) -> π {
+func `repeat`(p : π) -> π {
 	return .Rep(Box(p))
 }
 
@@ -112,7 +116,7 @@ func recieve(on : Name, v : Name, then : π) -> π {
 
 class PiCalculusSpec : XCTestCase {
 	func testPi() {
-		let pi = newChannel("x", send("x", "z", terminate()) !|! recieve("x", "y", send("y", "x", recieve("x", "y", terminate()))) !|! send("z", "v", recieve("v", "v", terminate())))
+		let pi = newChannel("x", then: send("x", on: "z", then: terminate()) !|! recieve("x", v: "y", then: send("y", on: "x", then: recieve("x", v: "y", then: terminate()))) !|! send("z", on: "v", then: recieve("v", v: "v", then: terminate())))
 		runCompute(pi)
 	}
 }

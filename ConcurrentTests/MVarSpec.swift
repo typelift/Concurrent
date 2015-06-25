@@ -34,25 +34,25 @@ extension Action : Arbitrary {
 /// ~(https://github.com/ghc/ghc/blob/master/libraries/base/tests/Concurrent/MVar001.hs)
 class MVarSpec : XCTestCase {
 	func testProperties() {
-		property["An empty MVar really is empty"] = formulate([.NewEmptyMVar, .IsEmptyMVar], [.NewEmptyMVar, .ReturnBool(true)])
+		property("An empty MVar really is empty") <- self.formulate([.NewEmptyMVar, .IsEmptyMVar], [.NewEmptyMVar, .ReturnBool(true)])
 
-		property["A filled MVar really is filled"] = forAll { (n : Int) in
+		property("A filled MVar really is filled") <- forAll { (n : Int) in
 			return self.formulate([.NewMVar(n), .IsEmptyMVar], [.NewMVar(n), .ReturnBool(false)])
 		}
 
-		property["A take after filling == A return after an empty"] = forAll { (n : Int) in
+		property("A take after filling == A return after an empty") <- forAll { (n : Int) in
 			return self.formulate([.NewMVar(n), .TakeMVar], [.NewEmptyMVar, .ReturnInt(n)])
 		}
 
-		property["Filling then taking from an empty MVar is the same as an empty MVar"] = forAll { (n : Int) in
+		property("Filling then taking from an empty MVar is the same as an empty MVar") <- forAll { (n : Int) in
 			return self.formulate([.NewEmptyMVar, .PutMVar(n), .TakeMVar], [.NewEmptyMVar, .ReturnInt(n)])
 		}
 
-		property["Reading a new MVar is the same as a full MVar"] = forAll { (n : Int) in
+		property("Reading a new MVar is the same as a full MVar") <- forAll { (n : Int) in
 			return self.formulate([.NewMVar(n), .ReadMVar], [.NewMVar(n), .ReturnInt(n)])
 		}
 
-		property["Swapping a full MVar is the same as a full MVar with the swapped value"] = forAll { (m : Int, n : Int) in
+		property("Swapping a full MVar is the same as a full MVar with the swapped value") <- forAll { (m : Int, n : Int) in
 			return self.formulate([.NewMVar(m), .SwapMVar(n)], [.NewMVar(n)])
 		}
 	}

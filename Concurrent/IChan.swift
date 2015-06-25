@@ -41,7 +41,11 @@ public struct IChan<A> {
 	/// If the same head has been written to more than once, this function will throw an exception.
 	public func write(x : A) -> IChan<A> {
 		let ic = IChan()
-		self.ivar.put((x, ic))
+        do {
+            try self.ivar.put((x, ic))
+        } catch _ {
+            fatalError("Fatal: Accidentally wrote to the same IChan head twice.")
+        }
 		return ic
 	}
 

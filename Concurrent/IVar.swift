@@ -43,8 +43,10 @@ public struct IVar<A> {
 	///
 	/// If the IVar is currently full, the calling thread will seize up, and this function will throw an
 	/// exception.
-	public func put(x : A) {
-		return self.tryPut(x) ? () : throw(BlockedIndefinitelyOnIVar())
+	public func put(x : A) throws {
+        if !self.tryPut(x) {
+            throw BlockedIndefinitelyOnIVar()
+        }
 	}
 	
 	/// Attempts to read the contents of an IVar
@@ -65,15 +67,23 @@ public struct IVar<A> {
 	public func tryPut(x : A) -> Bool {
 		if let _ = self.lock.tryTake() {
 			self.trans.put(x)
-			let val = self.val()
+			let _ = self.val()
 			return true
 		}
 		return false
 	}
 }
 
-public struct BlockedIndefinitelyOnIVar : Exception {
-	public var description: String { 
+public struct BlockedIndefinitelyOnIVar : ErrorType {
+    public var _domain : String {
+        return "com.TypeLift.Concurrent"
+    }
+    
+    public var _code : Int {
+        return -1
+    }
+    
+	public var description : String { 
 		get {
 			return "Cannot write to an already full IVar.  Thread blocked indefinitely."
 		}
