@@ -24,21 +24,25 @@ public struct Future<A> {
 	}
 	
 	public func then(finalize : Result<A> -> ()) -> Future<A> {
-		let ma : Optional<Result<A>> = self.finalizers.modify { sTodo in
-			let res = self.cResult.tryRead()
-			if res == nil {
-				return (sTodo + [finalize], res)
-			}
-			return (sTodo, res)
-		}
-		
-		switch ma {
-		case .None:
-			return self
-		case .Some(let val):
-			self.runFinalizerWithResult(val)(finalize)
-			return self
-		}
+        do {
+            let ma : Optional<Result<A>> = try self.finalizers.modify { sTodo in
+                let res = self.cResult.tryRead()
+                if res == nil {
+                    return (sTodo + [finalize], res)
+                }
+                return (sTodo, res)
+            }
+            
+            switch ma {
+            case .None:
+                return self
+            case .Some(let val):
+                self.runFinalizerWithResult(val)(finalize)
+                return self
+            }
+        } catch _ {
+            fatalError("Fatal: Could not read underlying MVar to spark finalizers.")
+        }
 	}
 	
 	private func complete(r : Result<A>) -> Result<A> {
@@ -52,27 +56,32 @@ public struct Future<A> {
 
 public func forkFutures<A>(ios : [() -> A]) -> Chan<Result<A>> {
 	let c : Chan<Result<A>> = Chan()
-	let ps = ios.map({ forkFuture($0) }).map({ f in f.then({ c.write($0) }) })
+	_ = ios.map({ forkFuture($0) }).map({ f in f.then({ c.write($0) }) })
 	return c
 }
 
-public func forkFuture<A>(io : () -> A) -> Future<A> {
+public func forkFuture<A>(io : () throws -> A) -> Future<A> {
 	let msTid : MVar<Optional<ThreadID>> = MVar()
 	let result : IVar<Result<A>> = IVar()
 	let msTodo : MVar<[Result<A> -> ()]> = MVar(initial: [])
 
 	let p = Future(msTid, result, msTodo)
-	let act : dispatch_block_t = {
+	let act : () throws -> () = {
 		p.threadID.put(.Some(myTheadID()))
 		
-		let val : Result<A> = { r in
-			let res : Result<A> = r.toResult({ e in return NSError(domain: "", code: 0, userInfo: [ NSLocalizedDescriptionKey : e.description ]) })
+		let val : Result<A> = { res in
 			return p.complete(res)
-		}(try(io()))
+        }({
+        do {
+            return Result.Value(try io())
+        } catch let e {
+            return Result.Error(e as NSError)
+        }
+        }())
 		
 		switch val {
 			case .Error(let err):
-				return error("")
+				throw err
 			case .Value(_):
 				return ()
 		}
@@ -87,6 +96,13 @@ public func forkFuture<A>(io : () -> A) -> Future<A> {
 		let _ = sTodo.map(p.runFinalizerWithResult(val))
 	}
 
-	let thr = forkIO(finally(act())(then: process()))
+    _ = forkIO {
+        do {
+            try act()
+            process()
+        } catch _ {
+            process()
+        }
+    }
 	return p
 }

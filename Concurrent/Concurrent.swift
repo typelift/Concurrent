@@ -21,12 +21,24 @@ public func forkIO(@autoclosure(escaping) io :  () -> ()) -> ThreadID {
 	})
 }
 
+/// Forks a computation onto a new thread and returns its thread ID.
+public func forkIO(io :  () -> ()) -> ThreadID {
+    return CONCRealWorld.forkWithStart({
+        return io()
+    })
+}
+
 /// Forks a thread and calls the given function when the thread is about to terminate with either
 /// a value or an exception.
-public func forkFinally<A>(@autoclosure(escaping) io :  () -> A, finally : Either<Exception, A> -> ()) -> ThreadID {
-	return mask({ (let restore : A -> A) -> ThreadID in
-		return forkIO(finally(try(restore(io()))))
-	})
+public func forkFinally<A>(@autoclosure(escaping) io :  () throws -> A, finally : Either<ErrorType, A> -> ()) -> ThreadID {
+    return forkIO {
+        do {
+            let r = try io()
+            finally(Either.Right(r))
+        } catch let excn {
+            finally(Either.Left(excn))
+        }
+    }
 }
 
 /// Returns the number of processor the host has.

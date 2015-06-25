@@ -61,7 +61,7 @@ public struct QSem {
 			let t : (UInt, [MVar<()>], [MVar<()>]) = (1, [], [])
 			return t
 		} else if b2.count != 0 {
-			return self.loop(b2.reverse(), b2: [])
+			return self.loop(Array(b2.reverse()), b2: [])
 		}
 		
 		let b = l[0]

@@ -28,12 +28,10 @@
 		8434F9B819E9CDC0008D9909 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9A519E9CDC0008D9909 /* MVar.swift */; };
 		8434F9B919E9CDC0008D9909 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9A619E9CDC0008D9909 /* QSem.swift */; };
 		8434F9D019E9CE1D008D9909 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9CF19E9CE1D008D9909 /* PiCalculus.swift */; };
-		8475205A1A7EC3E800975C8B /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847520591A7EC3E800975C8B /* Exception.swift */; };
 		849AA3AF1A09850400472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434F98019E9CD76008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84A53D451B1A8F1800E8A107 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */; };
 		84A53D571B1A8F7000E8A107 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F99D19E9CDC0008D9909 /* Chan.swift */; };
 		84A53D581B1A8F7000E8A107 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9A119E9CDC0008D9909 /* Concurrent.swift */; };
-		84A53D591B1A8F7000E8A107 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847520591A7EC3E800975C8B /* Exception.swift */; };
 		84A53D5A1B1A8F7000E8A107 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9A219E9CDC0008D9909 /* Future.swift */; };
 		84A53D5B1B1A8F7000E8A107 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9A319E9CDC0008D9909 /* IChan.swift */; };
 		84A53D5C1B1A8F7000E8A107 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F9A419E9CDC0008D9909 /* IVar.swift */; };
@@ -188,7 +186,6 @@
 		8434F9A619E9CDC0008D9909 /* QSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QSem.swift; sourceTree = "<group>"; };
 		8434F9CF19E9CE1D008D9909 /* PiCalculus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PiCalculus.swift; sourceTree = "<group>"; };
 		8434F9D119E9CE24008D9909 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		847520591A7EC3E800975C8B /* Exception.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A53D441B1A8F1800E8A107 /* Concurrent-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A53DC91B1A964300E8A107 /* Swiftz.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Swiftz.xcodeproj; path = Carthage/Checkouts/Swiftz/Swiftz.xcodeproj; sourceTree = "<group>"; };
@@ -262,7 +259,6 @@
 			children = (
 				8434F99D19E9CDC0008D9909 /* Chan.swift */,
 				8434F9A119E9CDC0008D9909 /* Concurrent.swift */,
-				847520591A7EC3E800975C8B /* Exception.swift */,
 				8434F9A219E9CDC0008D9909 /* Future.swift */,
 				8434F9A319E9CDC0008D9909 /* IChan.swift */,
 				8434F9A419E9CDC0008D9909 /* IVar.swift */,
@@ -436,7 +432,8 @@
 		8434F97719E9CD76008D9909 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = TypeLift;
 				TargetAttributes = {
 					8434F97F19E9CD76008D9909 = {
@@ -578,7 +575,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8475205A1A7EC3E800975C8B /* Exception.swift in Sources */,
 				8434F9B919E9CDC0008D9909 /* QSem.swift in Sources */,
 				8434F9B619E9CDC0008D9909 /* IChan.swift in Sources */,
 				8434F9B219E9CDC0008D9909 /* CONCRealWorld.m in Sources */,
@@ -608,7 +604,6 @@
 			files = (
 				84A53D571B1A8F7000E8A107 /* Chan.swift in Sources */,
 				84A53D581B1A8F7000E8A107 /* Concurrent.swift in Sources */,
-				84A53D591B1A8F7000E8A107 /* Exception.swift in Sources */,
 				84A53D5A1B1A8F7000E8A107 /* Future.swift in Sources */,
 				84A53D5B1B1A8F7000E8A107 /* IChan.swift in Sources */,
 				84A53D5C1B1A8F7000E8A107 /* IVar.swift in Sources */,
@@ -676,6 +671,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -750,6 +746,7 @@
 				INFOPLIST_FILE = Concurrent/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
@@ -771,6 +768,7 @@
 				INFOPLIST_FILE = Concurrent/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
@@ -792,6 +790,7 @@
 				);
 				INFOPLIST_FILE = ConcurrentTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -806,6 +805,7 @@
 				);
 				INFOPLIST_FILE = ConcurrentTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -829,6 +829,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Concurrent;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -853,6 +854,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Concurrent;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -880,6 +882,7 @@
 				INFOPLIST_FILE = ConcurrentTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};
@@ -898,6 +901,7 @@
 				INFOPLIST_FILE = ConcurrentTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

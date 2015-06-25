@@ -29,25 +29,25 @@ extension Action : Arbitrary {
 
 class SVarSpec : XCTestCase {
 	func testProperties() {
-		property["An empty SVar really is empty"] = formulate([.NewEmptySVar, .IsEmptySVar], [.NewEmptySVar, .ReturnBool(true)])
+		property("An empty SVar really is empty") <- self.formulate([.NewEmptySVar, .IsEmptySVar], [.NewEmptySVar, .ReturnBool(true)])
 
-		property["A filled SVar really is filled"] = forAll { (n : Int) in
+		property("A filled SVar really is filled") <- forAll { (n : Int) in
 			return self.formulate([.NewSVar(n), .IsEmptySVar], [.NewSVar(n), .ReturnBool(false)])
 		}
 
-		property["A take after filling == A return after an empty"] = forAll { (n : Int) in
+		property("A take after filling == A return after an empty") <- forAll { (n : Int) in
 			return self.formulate([.NewSVar(n), .TakeSVar], [.NewEmptySVar, .ReturnInt(n)])
 		}
 
-		property["Filling then taking from an empty SVar is the same as an empty SVar"] = forAll { (n : Int) in
+		property("Filling then taking from an empty SVar is the same as an empty SVar") <- forAll { (n : Int) in
 			return self.formulate([.NewEmptySVar, .PutSVar(n), .TakeSVar], [.NewEmptySVar, .ReturnInt(n)])
 		}
 
-		property["Taking a new SVar is the same as a full SVar"] = forAll { (n : Int) in
+		property("Taking a new SVar is the same as a full SVar") <- forAll { (n : Int) in
 			return self.formulate([.NewSVar(n), .TakeSVar], [.NewSVar(n), .ReturnInt(n)])
 		}
 
-		property["Swapping a full SVar is the same as a full SVar with the swapped value"] = forAll { (m : Int, n : Int) in
+		property("Swapping a full SVar is the same as a full SVar with the swapped value") <- forAll { (m : Int, n : Int) in
 			return self.formulate([.NewSVar(m), .PutSVar(n)], [.NewSVar(n)])
 		}
 	}
