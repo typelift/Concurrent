@@ -23,8 +23,7 @@ private enum Action {
 
 // Here to make the typechecker happy.  Do not invoke these.
 extension Action : Arbitrary {
-	static func arbitrary() -> Gen<Action> { return error("Cannot generate arbitrary Action.") }
-	static func shrink(_ : Action) -> [Action] { return [] }
+	static var arbitrary : Gen<Action> { return error("Cannot generate arbitrary Action.") }
 }
 
 class SVarSpec : XCTestCase {
@@ -89,7 +88,7 @@ class SVarSpec : XCTestCase {
 			}
 			while (rand() % Int32(n)) != 0 {
 				if empty {
-					result = result + [.PutSVar(Int.arbitrary().generate)]
+					result = result + [.PutSVar(Int.arbitrary.generate)]
 					empty = false
 				} else {
 					result = result + [.TakeSVar]
