@@ -25,8 +25,7 @@ private enum Action {
 
 // Here to make the typechecker happy.  Do not invoke these.
 extension Action : Arbitrary {
-	static func arbitrary() -> Gen<Action> { return error("Cannot generate arbitrary Action.") }
-	static func shrink(_ : Action) -> [Action] { return [] }
+	static var arbitrary : Gen<Action> { return error("Cannot generate arbitrary Action.") }
 }
 
 /// This spec is a faithful translation of GHC's MVar tests (except for some Gen stuff relying on 
@@ -98,7 +97,7 @@ class MVarSpec : XCTestCase {
 			}
 			while (rand() % Int32(n)) != 0 {
 				if empty {
-					result = result + [.PutMVar(Int.arbitrary().generate)] + ((rand() % 2) == 0 ? [.SwapMVar(Int.arbitrary().generate)] : [.ReadMVar])
+					result = result + [.PutMVar(Int.arbitrary.generate)] + ((rand() % 2) == 0 ? [.SwapMVar(Int.arbitrary.generate)] : [.ReadMVar])
 					empty = false
 				} else {
 					result = result + [.TakeMVar]

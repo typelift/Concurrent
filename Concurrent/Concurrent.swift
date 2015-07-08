@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-import Swiftz
-
 public typealias ThreadID = pthread_t
 
 public func myTheadID() -> ThreadID {
@@ -26,19 +24,6 @@ public func forkIO(io :  () -> ()) -> ThreadID {
     return CONCRealWorld.forkWithStart({
         return io()
     })
-}
-
-/// Forks a thread and calls the given function when the thread is about to terminate with either
-/// a value or an exception.
-public func forkFinally<A>(@autoclosure(escaping) io :  () throws -> A, finally : Either<ErrorType, A> -> ()) -> ThreadID {
-    return forkIO {
-        do {
-            let r = try io()
-            finally(Either.Right(r))
-        } catch let excn {
-            finally(Either.Left(excn))
-        }
-    }
 }
 
 /// Returns the number of processor the host has.

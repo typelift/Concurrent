@@ -22,8 +22,7 @@ private enum Action {
 
 // Here to make the typechecker happy.  Do not invoke these.
 extension Action : Arbitrary {
-	static func arbitrary() -> Gen<Action> { return error("Cannot generate arbitrary Action.") }
-	static func shrink(_ : Action) -> [Action] { return [] }
+	static var arbitrary : Gen<Action> { return error("Cannot generate arbitrary Action.") }
 }
 
 /// This spec is a faithful translation of GHC's Chan tests (except for some Gen stuff relying on
@@ -80,7 +79,7 @@ class ChanSpec : XCTestCase {
 			} else if branch == 1 {
 				result = [.IsEmptyChan] + result + [.ReadChan]
 			} else {
-				result = [.WriteChan(Int.arbitrary().generate)] + result + [.ReadChan]
+				result = [.WriteChan(Int.arbitrary.generate)] + result + [.ReadChan]
 			}
 		}
 		return Gen.pure(ArrayOf(result))
