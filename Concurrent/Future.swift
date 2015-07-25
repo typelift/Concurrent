@@ -22,25 +22,25 @@ public struct Future<A> {
 	}
 	
 	public func then(finalize : Optional<A> -> ()) -> Future<A> {
-        do {
-            let ma : Optional<Optional<A>> = try self.finalizers.modify { sTodo in
-                let res = self.cOptional.tryRead()
-                if res == nil {
-                    return (sTodo + [finalize], res)
-                }
-                return (sTodo, res)
-            }
-            
-            switch ma {
-            case .None:
-                return self
-            case .Some(let val):
-                self.runFinalizerWithOptional(val)(finalize)
-                return self
-            }
-        } catch _ {
-            fatalError("Fatal: Could not read underlying MVar to spark finalizers.")
-        }
+		do {
+			let ma : Optional<Optional<A>> = try self.finalizers.modify { sTodo in
+				let res = self.cOptional.tryRead()
+				if res == nil {
+					return (sTodo + [finalize], res)
+				}
+				return (sTodo, res)
+			}
+			
+			switch ma {
+			case .None:
+				return self
+			case .Some(let val):
+				self.runFinalizerWithOptional(val)(finalize)
+				return self
+			}
+		} catch _ {
+			fatalError("Fatal: Could not read underlying MVar to spark finalizers.")
+		}
 	}
 	
 	private func complete(r : Optional<A>) -> Optional<A> {
@@ -83,9 +83,9 @@ public func forkFuture<A>(io : () throws -> A) -> Future<A> {
 		let _ = sTodo.map(p.runFinalizerWithOptional(val))
 	}
 
-    _ = forkIO {
+	_ = forkIO {
 		act()
 		process()
-    }
+	}
 	return p
 }

@@ -155,17 +155,17 @@ public final class MVar<A> {
 	/// An exception-safe way of using the value in the receiver in a computation.
 	///
 	/// On exception, the value previously stored in the MVar is put back into it and the exception
-    /// is rethrown.
+	/// is rethrown.
 	public func withMVar<B>(f : A throws -> B) throws -> B {
-        let a = self.take()
-        do {
-            let b = try f(a)
-            self.put(a)
-            return b
-        } catch let e {
-            self.put(a)
-            throw e
-        }
+		let a = self.take()
+		do {
+			let b = try f(a)
+			self.put(a)
+			return b
+		} catch let e {
+			self.put(a)
+			throw e
+		}
 	}
 	
 	/// An exception-safe way to modify the contents of the receiver.  On successful modification, 
@@ -173,28 +173,28 @@ public final class MVar<A> {
 	///
 	/// On exception, the value previously stored in the MVar is put back into it.
 	public func modify<B>(f : A throws -> (A, B)) throws -> B {
-        let a = self.take()
-        do {
-            let t = try f(a)
-            self.put(t.0)
-            return t.1
-        } catch let e {
-            self.put(a)
-            throw e
-        }
+		let a = self.take()
+		do {
+			let t = try f(a)
+			self.put(t.0)
+			return t.1
+		} catch let e {
+			self.put(a)
+			throw e
+		}
 	}
 	
 	/// An exception-safe way to modify the contents of the receiver.
 	///
 	/// On exception, the value previously stored in the MVar is put back into it.
 	public func modify_(f : A throws -> A) {
-        let a = self.take()
-        do {
-            let a1 = try f(a)
-            self.put(a1)
-        } catch _ {
-            self.put(a)
-        }
+		let a = self.take()
+		do {
+			let a1 = try f(a)
+			self.put(a1)
+		} catch _ {
+			self.put(a)
+		}
 	}
 	
 	deinit {
