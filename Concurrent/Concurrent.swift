@@ -21,9 +21,9 @@ public func forkIO(@autoclosure(escaping) io :  () -> ()) -> ThreadID {
 
 /// Forks a computation onto a new thread and returns its thread ID.
 public func forkIO(io :  () -> ()) -> ThreadID {
-    return CONCRealWorld.forkWithStart({
-        return io()
-    })
+	return CONCRealWorld.forkWithStart({
+		return io()
+	})
 }
 
 /// Returns the number of processor the host has.

@@ -29,14 +29,14 @@ public struct Chan<A> {
 	
 	/// Reads a value from the channel.
 	public func read() -> A {
-        do {
-            return try self.readEnd.modify { readEnd in
-                let item : ChItem<A> = readEnd.read()
-                return (item.stream(), item.val())
-            }
-        } catch _ {
-            fatalError("Fatal: Could not modify read head.")
-        }
+		do {
+			return try self.readEnd.modify { readEnd in
+				let item : ChItem<A> = readEnd.read()
+				return (item.stream(), item.val())
+			}
+		} catch _ {
+			fatalError("Fatal: Could not modify read head.")
+		}
 	}
 	
 	/// Writes a value to a channel.
@@ -59,14 +59,14 @@ public struct Chan<A> {
 	/// concurrent computations, this may change out from under you without warning, or even by the
 	/// time it can be acted on.  It is better to use one of the direct actions above.
 	public var isEmpty : Bool {
-        do {
-            return try self.readEnd.withMVar { r in
-                let w = r.tryRead()
-                return w == nil
-            }
-        } catch _ {
-            fatalError("Fatal: Could not determine emptiness; read of underlying MVar failed.")
-        }
+		do {
+			return try self.readEnd.withMVar { r in
+				let w = r.tryRead()
+				return w == nil
+			}
+		} catch _ {
+			fatalError("Fatal: Could not determine emptiness; read of underlying MVar failed.")
+		}
 	}
 	
 	/// Duplicates a channel.
