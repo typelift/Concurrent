@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		82BA2A041B75E8CA00F9F201 /* ConcurrentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA2A031B75E8CA00F9F201 /* ConcurrentSpec.swift */; };
+		82BA2A051B75E8CA00F9F201 /* ConcurrentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA2A031B75E8CA00F9F201 /* ConcurrentSpec.swift */; };
 		8410224B1B1A9F9E00E799A0 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53E011B1A9F1900E8A107 /* SwiftCheck.framework */; };
 		8410224F1B1A9FAC00E799A0 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DFD1B1A9F1900E8A107 /* SwiftCheck.framework */; };
 		841022501B1A9FBE00E799A0 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DFD1B1A9F1900E8A107 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -134,6 +136,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		82BA2A031B75E8CA00F9F201 /* ConcurrentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentSpec.swift; sourceTree = "<group>"; };
 		841022531B1AA00D00E799A0 /* MVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MVarSpec.swift; sourceTree = "<group>"; };
 		84152B791A818C95006387D5 /* SVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVar.swift; sourceTree = "<group>"; };
 		8434F98019E9CD76008D9909 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,6 +249,7 @@
 		8434F98F19E9CD76008D9909 /* ConcurrentTests */ = {
 			isa = PBXGroup;
 			children = (
+				82BA2A031B75E8CA00F9F201 /* ConcurrentSpec.swift */,
 				84F467811B1B9244002A4C4C /* ChanSpec.swift */,
 				841022531B1AA00D00E799A0 /* MVarSpec.swift */,
 				84EA2C5B1B240C4D0001FB3F /* SVarSpec.swift */,
@@ -514,6 +518,7 @@
 				8434F9D019E9CE1D008D9909 /* PiCalculus.swift in Sources */,
 				84EA2C5A1B23AE5F0001FB3F /* MVarSpec.swift in Sources */,
 				84EA2C591B23AE5D0001FB3F /* ChanSpec.swift in Sources */,
+				82BA2A041B75E8CA00F9F201 /* ConcurrentSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +546,7 @@
 				84F467831B1B9244002A4C4C /* ChanSpec.swift in Sources */,
 				841022551B1AA00D00E799A0 /* MVarSpec.swift in Sources */,
 				84A53D6F1B1A8FC400E8A107 /* PiCalculus.swift in Sources */,
+				82BA2A051B75E8CA00F9F201 /* ConcurrentSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

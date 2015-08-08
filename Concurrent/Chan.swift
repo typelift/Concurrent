@@ -50,7 +50,7 @@ public struct Chan<A> {
 	
 	/// Writes a list of values to a channel.
 	public func writeList(xs : [A]) {
-		xs.map({ self.write($0) })
+		xs.forEach(self.write)
 	}
 
 	/// Returns whether the channel is empty.

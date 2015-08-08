@@ -54,7 +54,7 @@ public struct Future<A> {
 
 public func forkFutures<A>(ios : [() -> A]) -> Chan<Optional<A>> {
 	let c : Chan<Optional<A>> = Chan()
-	_ = ios.map({ forkFuture($0) }).map({ f in f.then({ c.write($0) }) })
+	ios.map(forkFuture).forEach { f in f.then(c.write) }
 	return c
 }
 
@@ -80,7 +80,7 @@ public func forkFuture<A>(io : () throws -> A) -> Future<A> {
 		p.threadID.modify_({ _ in .None })
 		let val = p.complete(paranoid)
 		let sTodo = p.finalizers.swap([])
-		let _ = sTodo.map(p.runFinalizerWithOptional(val))
+		sTodo.forEach { _ in p.runFinalizerWithOptional(val) }
 	}
 
 	_ = forkIO {

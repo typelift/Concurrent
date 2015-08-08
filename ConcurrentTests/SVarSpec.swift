@@ -9,7 +9,6 @@
 import Concurrent
 import XCTest
 import SwiftCheck
-import Swiftz
 
 private enum Action {
 	case NewEmptySVar
