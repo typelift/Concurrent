@@ -24,7 +24,7 @@ private enum Action {
 
 // Here to make the typechecker happy.  Do not invoke these.
 extension Action : Arbitrary {
-	static var arbitrary : Gen<Action> { fatalError("Cannot generate arbitrary Action.") }
+	static var arbitrary : Gen<Action> { return error("Cannot generate arbitrary Action.") }
 }
 
 /// This spec is a faithful translation of GHC's MVar tests (except for some Gen stuff relying on 
@@ -137,7 +137,7 @@ class MVarSpec : XCTestCase {
 				let (b, l) = perform(mv, xs)
 				return ([v] + b, l)
 			default:
-				fatalError("Fatal: Creating new MVars in the middle of a performance is forbidden")
+				return error("Fatal: Creating new MVars in the middle of a performance is forbidden")
 			}
 		}
 		return ([], [])
@@ -159,7 +159,7 @@ class MVarSpec : XCTestCase {
 			case .NewMVar(let n):
 				return perform(MVar<Int>(initial: n), xs)
 			default:
-				fatalError("Fatal: NewMVar or NewEmptyMVar must be the first actions")
+				return error("Fatal: NewMVar or NewEmptyMVar must be the first actions")
 			}
 		}
 		return ([], [])
