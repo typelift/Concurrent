@@ -11,25 +11,20 @@ import XCTest
 
 typealias Name = String
 
-internal class Box<T> {
-    let value : T
-    internal init(_ x : T) { self.value = x }
-}
-
 /// An encoding of the Pi Calculus, a process calculus of names and channels with equal expressive
 /// power to the Lambda Calculus.
-enum π {
+indirect enum π {
 	/// Run the left and right computations simultaneously
-	case Simultaneously(Box<π>, Box<π>)
+	case Simultaneously(π, π)
 	/// Repeatedly spawn and execute copies of this computation forever.
-	case Rep(Box<π>)
+	case Rep(π)
 	/// Create a new channel with a given name, then run the next computation.
-	case New(Name, Box<π>)
+	case New(Name, π)
 	/// Send a value over the channel with a given name, then run the next computation.
-	case Send(Name, Name, Box<π>)
+	case Send(Name, Name, π)
 	/// Recieve a value on the channel with a given name, bind the result to the name, then run
 	/// the next computation.
-	case Recieve(Name, Name, Box<π>)
+	case Recieve(Name, Name, π)
 	/// Terminate the process.
 	case Terminate
 }
@@ -45,19 +40,12 @@ struct Mu {
 
 typealias Environment = Dictionary<Name, Mu>
 
-func forever<A>(@autoclosure(escaping) io :  () -> A) -> (() -> A) {
-	return { 
-		io() 
-		return forever(io)() 
-	}
-}
-
 func runπ(var env : Environment, _ pi : π) -> () {
 	switch pi {
 		case .Simultaneously(let ba, let bb):
 			let f = { x in forkIO(runπ(env, x)) }
-			f(ba.value)
-			f(bb.value)
+			f(ba)
+			f(bb)
 		case .Rep(let bp):
 			return runπ(env, π.Rep(bp))
 		case .Terminate:
@@ -66,16 +54,16 @@ func runπ(var env : Environment, _ pi : π) -> () {
 			let c : Chan<Mu> = Chan()
 			let mu = Mu(c)
 			env[bind] = mu
-			return runπ(env, bp.value)
+			return runπ(env, bp)
 		case .Send(let msg, let dest, let bp):
 			let w = env[dest]
 			w?.c.write(env[msg]!)
-			return runπ(env, bp.value)
+			return runπ(env, bp)
 		case .Recieve(let src, let bind, let bp):
 			let w = env[src]
 			let recv = w?.c.read()
 			env[bind] = recv
-			forkIO(runπ(env, bp.value))
+			forkIO(runπ(env, bp))
 	}
 }
 
@@ -91,11 +79,11 @@ infix operator !|! {
 }
 
 func !|! (l : π, r : π) -> π {
-	return .Simultaneously(Box(l), Box(r))
+	return .Simultaneously(l, r)
 }
 
 func `repeat`(p : π) -> π {
-	return .Rep(Box(p))
+	return .Rep(p)
 }
 
 func terminate() -> π {
@@ -103,20 +91,25 @@ func terminate() -> π {
 }
 
 func newChannel(n : Name, then : π) -> π {
-	return .New(n, Box(then))
+	return .New(n, then)
 }
 
 func send(v : Name, on : Name, then : π) -> π {
-	return .Send(v, on, Box(then))
+	return .Send(v, on, then)
 }
 
 func recieve(on : Name, v : Name, then : π) -> π {
-	return .Recieve(v, on, Box(then))
+	return .Recieve(v, on, then)
 }
 
 class PiCalculusSpec : XCTestCase {
 	func testPi() {
-		let pi = newChannel("x", then: send("x", on: "z", then: terminate()) !|! recieve("x", v: "y", then: send("y", on: "x", then: recieve("x", v: "y", then: terminate()))) !|! send("z", on: "v", then: recieve("v", v: "v", then: terminate())))
+		let pi = newChannel("x", then:
+					send("x", on: "z", then: terminate())
+					!|!
+					recieve("x", v: "y", then: send("y", on: "x", then: recieve("x", v: "y", then: terminate())))
+					!|!
+					send("z", on: "v", then: recieve("v", v: "v", then: terminate())))
 		runCompute(pi)
 	}
 }
