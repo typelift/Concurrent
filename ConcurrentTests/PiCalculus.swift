@@ -22,9 +22,9 @@ indirect enum π {
 	case New(Name, π)
 	/// Send a value over the channel with a given name, then run the next computation.
 	case Send(Name, Name, π)
-	/// Recieve a value on the channel with a given name, bind the result to the name, then run
+	/// Receive a value on the channel with a given name, bind the result to the name, then run
 	/// the next computation.
-	case Recieve(Name, Name, π)
+	case Receive(Name, Name, π)
 	/// Terminate the process.
 	case Terminate
 }
@@ -59,7 +59,7 @@ func runπ(var env : Environment, _ pi : π) -> () {
 			let w = env[dest]
 			w?.c.write(env[msg]!)
 			return runπ(env, bp)
-		case .Recieve(let src, let bind, let bp):
+		case .Receive(let src, let bind, let bp):
 			let w = env[src]
 			let recv = w?.c.read()
 			env[bind] = recv
@@ -98,8 +98,8 @@ func send(v : Name, on : Name, then : π) -> π {
 	return .Send(v, on, then)
 }
 
-func recieve(on : Name, v : Name, then : π) -> π {
-	return .Recieve(v, on, then)
+func receive(on : Name, v : Name, then : π) -> π {
+	return .Receive(v, on, then)
 }
 
 class PiCalculusSpec : XCTestCase {
@@ -107,9 +107,9 @@ class PiCalculusSpec : XCTestCase {
 		let pi = newChannel("x", then:
 					send("x", on: "z", then: terminate())
 					!|!
-					recieve("x", v: "y", then: send("y", on: "x", then: recieve("x", v: "y", then: terminate())))
+					receive("x", v: "y", then: send("y", on: "x", then: receive("x", v: "y", then: terminate())))
 					!|!
-					send("z", on: "v", then: recieve("v", v: "v", then: terminate())))
+					send("z", on: "v", then: receive("v", v: "v", then: terminate())))
 		runCompute(pi)
 	}
 }
