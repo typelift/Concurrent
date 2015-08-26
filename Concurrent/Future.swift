@@ -8,23 +8,23 @@
 
 public struct Future<A> {
 	let threadID : MVar<Optional<ThreadID>>
-	let cOptional : IVar<Optional<A>>
+	let completionLock : IVar<Optional<A>>
 	let finalizers : MVar<[Optional<A> -> ()]>
 
 	private init(_ threadID : MVar<Optional<ThreadID>>, _ cOptional : IVar<Optional<A>>, _ finalizers : MVar<[Optional<A> -> ()]>) {
 		self.threadID = threadID
-		self.cOptional = cOptional
+		self.completionLock = cOptional
 		self.finalizers = finalizers
 	}
 	
 	public func read() -> Optional<A> {
-		return self.cOptional.read()
+		return self.completionLock.read()
 	}
 	
 	public func then(finalize : Optional<A> -> ()) -> Future<A> {
 		do {
 			let ma : Optional<Optional<A>> = try self.finalizers.modify { sTodo in
-				let res = self.cOptional.tryRead()
+				let res = self.completionLock.tryRead()
 				if res == nil {
 					return (sTodo + [finalize], res)
 				}
@@ -44,7 +44,7 @@ public struct Future<A> {
 	}
 	
 	private func complete(r : Optional<A>) -> Optional<A> {
-		return self.cOptional.tryPut(r) ? r : self.cOptional.read()
+		return self.completionLock.tryPut(r) ? r : self.completionLock.read()
 	}
 	
 	private func runFinalizerWithOptional<A>(val : Optional<A>) -> (Optional<A> -> ()) -> ThreadID {
@@ -60,10 +60,10 @@ public func forkFutures<A>(ios : [() -> A]) -> Chan<Optional<A>> {
 
 public func forkFuture<A>(io : () throws -> A) -> Future<A> {
 	let msTid = MVar<ThreadID?>()
-	let Optional : IVar<A?> = IVar()
+	let lock : IVar<A?> = IVar()
 	let msTodo : MVar<[A? -> ()]> = MVar(initial: [])
 
-	let p = Future(msTid, Optional, msTodo)
+	let p = Future(msTid, lock, msTodo)
 	let act : () -> () = {
 		p.threadID.put(.Some(myTheadID()))
 		_ = p.complete({
@@ -80,7 +80,9 @@ public func forkFuture<A>(io : () throws -> A) -> Future<A> {
 		p.threadID.modify_({ _ in .None })
 		let val = p.complete(paranoid)
 		let sTodo = p.finalizers.swap([])
-		sTodo.forEach { _ in p.runFinalizerWithOptional(val) }
+		sTodo.forEach { _ in
+			let _ = p.runFinalizerWithOptional(val)
+		}
 	}
 
 	_ = forkIO {
