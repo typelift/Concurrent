@@ -93,7 +93,7 @@ public struct SVar<A> {
 /// have had its value swapped out from under you.  It is better to `read()` the values yourself
 /// if you need a stricter equality.
 public func ==<A : Equatable>(lhs : SVar<A>, rhs : SVar<A>) -> Bool {
-	if lhs.isEmpty && !rhs.isEmpty {
+	if lhs.isEmpty && rhs.isEmpty {
 		return true
 	}
 	if lhs.isEmpty != rhs.isEmpty {
