@@ -9,7 +9,6 @@
 import Concurrent
 import XCTest
 import SwiftCheck
-import Swiftz
 
 private enum Action {
 	case NewChan
@@ -22,8 +21,7 @@ private enum Action {
 
 // Here to make the typechecker happy.  Do not invoke these.
 extension Action : Arbitrary {
-	static func arbitrary() -> Gen<Action> { return error("Cannot generate arbitrary Action.") }
-	static func shrink(_ : Action) -> [Action] { return [] }
+	static var arbitrary : Gen<Action> { return error("Cannot generate arbitrary Action.") }
 }
 
 /// This spec is a faithful translation of GHC's Chan tests (except for some Gen stuff relying on
@@ -31,13 +29,13 @@ extension Action : Arbitrary {
 /// ~(https://github.com/ghc/ghc/blob/master/libraries/base/tests/Concurrent/Chan001.hs)
 class ChanSpec : XCTestCase {
 	func testProperties() {
-		property["New channels start empty"] = formulate([.NewChan, .IsEmptyChan], [.NewChan, .ReturnBool(true)])
+		property("New channels start empty") <- self.formulate([.NewChan, .IsEmptyChan], [.NewChan, .ReturnBool(true)])
 
-		property["Written-to channels are non-empty"] = forAll { (n : Int) in
+		property("Written-to channels are non-empty") <- forAll { (n : Int) in
 			return self.formulate([.NewChan, .WriteChan(n), .IsEmptyChan], [.NewChan, .WriteChan(n), .ReturnBool(false)])
 		}
 
-		property[""] = forAll { (n : Int) in
+		property("Reading from a freshly written chan is the same as the value written") <- forAll { (n : Int) in
 			return self.formulate([.NewChan, .WriteChan(n), .ReadChan], [.NewChan, .ReturnInt(n)])
 		}
 	}
@@ -80,7 +78,7 @@ class ChanSpec : XCTestCase {
 			} else if branch == 1 {
 				result = [.IsEmptyChan] + result + [.ReadChan]
 			} else {
-				result = [.WriteChan(Int.arbitrary().generate)] + result + [.ReadChan]
+				result = [.WriteChan(Int.arbitrary.generate)] + result + [.ReadChan]
 			}
 		}
 		return Gen.pure(ArrayOf(result))

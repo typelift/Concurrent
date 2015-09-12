@@ -29,9 +29,13 @@ public struct Chan<A> {
 	
 	/// Reads a value from the channel.
 	public func read() -> A {
-		return self.readEnd.modify { readEnd in
-			let item : ChItem<A> = readEnd.read()
-			return (item.stream(), item.val())
+		do {
+			return try self.readEnd.modify { readEnd in
+				let item : ChItem<A> = readEnd.read()
+				return (item.stream(), item.val())
+			}
+		} catch _ {
+			fatalError("Fatal: Could not modify read head.")
 		}
 	}
 	
@@ -46,7 +50,7 @@ public struct Chan<A> {
 	
 	/// Writes a list of values to a channel.
 	public func writeList(xs : [A]) {
-		xs.map({ self.write($0) })
+		xs.forEach(self.write)
 	}
 
 	/// Returns whether the channel is empty.
@@ -55,9 +59,13 @@ public struct Chan<A> {
 	/// concurrent computations, this may change out from under you without warning, or even by the
 	/// time it can be acted on.  It is better to use one of the direct actions above.
 	public var isEmpty : Bool {
-		return self.readEnd.withMVar { r in
-			let w = r.tryRead()
-			return w == nil
+		do {
+			return try self.readEnd.withMVar { r in
+				let w = r.tryRead()
+				return w == nil
+			}
+		} catch _ {
+			fatalError("Fatal: Could not determine emptiness; read of underlying MVar failed.")
 		}
 	}
 	

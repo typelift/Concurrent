@@ -46,7 +46,7 @@ public struct SVar<A> {
 		let (readers, val) = s
 		if readers > 0 {
 			let _ = val.take()
-			self.svar.put(0, val)
+			self.svar.put((Int.allZeros, val))
 		} else {
 			self.svar.put(s)
 		}
@@ -55,7 +55,7 @@ public struct SVar<A> {
 	/// Reads a value from the receiver, then empties it.
 	public func read() -> A {
 		let (readers, val) = self.svar.take()
-		self.svar.put(readers - 1, val)
+		self.svar.put((readers.predecessor(), val))
 		return val.take()
 	}
 	
@@ -70,7 +70,7 @@ public struct SVar<A> {
 			self.svar.put(s)
 		default:
 			val.put(v)
-			self.svar.put(min(1, readers + 1), val)
+			self.svar.put((min(1, readers.successor()), val))
 		}
 	}
 	
@@ -93,7 +93,7 @@ public struct SVar<A> {
 /// have had its value swapped out from under you.  It is better to `read()` the values yourself
 /// if you need a stricter equality.
 public func ==<A : Equatable>(lhs : SVar<A>, rhs : SVar<A>) -> Bool {
-	if lhs.isEmpty && !rhs.isEmpty {
+	if lhs.isEmpty && rhs.isEmpty {
 		return true
 	}
 	if lhs.isEmpty != rhs.isEmpty {
