@@ -9,7 +9,6 @@
 import Concurrent
 import XCTest
 import SwiftCheck
-import Swiftz
 
 private enum Action {
 	case NewEmptyMVar
@@ -25,8 +24,7 @@ private enum Action {
 
 // Here to make the typechecker happy.  Do not invoke these.
 extension Action : Arbitrary {
-	static func arbitrary() -> Gen<Action> { return error("Cannot generate arbitrary Action.") }
-	static func shrink(_ : Action) -> [Action] { return [] }
+	static var arbitrary : Gen<Action> { return error("Cannot generate arbitrary Action.") }
 }
 
 /// This spec is a faithful translation of GHC's MVar tests (except for some Gen stuff relying on 
@@ -34,25 +32,25 @@ extension Action : Arbitrary {
 /// ~(https://github.com/ghc/ghc/blob/master/libraries/base/tests/Concurrent/MVar001.hs)
 class MVarSpec : XCTestCase {
 	func testProperties() {
-		property["An empty MVar really is empty"] = formulate([.NewEmptyMVar, .IsEmptyMVar], [.NewEmptyMVar, .ReturnBool(true)])
+		property("An empty MVar really is empty") <- self.formulate([.NewEmptyMVar, .IsEmptyMVar], [.NewEmptyMVar, .ReturnBool(true)])
 
-		property["A filled MVar really is filled"] = forAll { (n : Int) in
+		property("A filled MVar really is filled") <- forAll { (n : Int) in
 			return self.formulate([.NewMVar(n), .IsEmptyMVar], [.NewMVar(n), .ReturnBool(false)])
 		}
 
-		property["A take after filling == A return after an empty"] = forAll { (n : Int) in
+		property("A take after filling == A return after an empty") <- forAll { (n : Int) in
 			return self.formulate([.NewMVar(n), .TakeMVar], [.NewEmptyMVar, .ReturnInt(n)])
 		}
 
-		property["Filling then taking from an empty MVar is the same as an empty MVar"] = forAll { (n : Int) in
+		property("Filling then taking from an empty MVar is the same as an empty MVar") <- forAll { (n : Int) in
 			return self.formulate([.NewEmptyMVar, .PutMVar(n), .TakeMVar], [.NewEmptyMVar, .ReturnInt(n)])
 		}
 
-		property["Reading a new MVar is the same as a full MVar"] = forAll { (n : Int) in
+		property("Reading a new MVar is the same as a full MVar") <- forAll { (n : Int) in
 			return self.formulate([.NewMVar(n), .ReadMVar], [.NewMVar(n), .ReturnInt(n)])
 		}
 
-		property["Swapping a full MVar is the same as a full MVar with the swapped value"] = forAll { (m : Int, n : Int) in
+		property("Swapping a full MVar is the same as a full MVar with the swapped value") <- forAll { (m : Int, n : Int) in
 			return self.formulate([.NewMVar(m), .SwapMVar(n)], [.NewMVar(n)])
 		}
 	}
@@ -98,7 +96,7 @@ class MVarSpec : XCTestCase {
 			}
 			while (rand() % Int32(n)) != 0 {
 				if empty {
-					result = result + [.PutMVar(Int.arbitrary().generate)] + ((rand() % 2) == 0 ? [.SwapMVar(Int.arbitrary().generate)] : [.ReadMVar])
+					result = result + [.PutMVar(Int.arbitrary.generate)] + ((rand() % 2) == 0 ? [.SwapMVar(Int.arbitrary.generate)] : [.ReadMVar])
 					empty = false
 				} else {
 					result = result + [.TakeMVar]
