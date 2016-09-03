@@ -34,14 +34,14 @@ public struct TVar<T> : Comparable, Hashable {
 }
 
 extension TVar where T : Equatable {
-	public init(@autoclosure(escaping) _ value : () -> T) {
+	public init(_ value : @autoclosure @escaping () -> T) {
 		self.value = PreEquatable(t: value)
 		nextId += 1
 		self._id = nextId
 	}
 	
 	/// Uses an STM transaction to write the supplied value into the receiver.
-	public func write(value : T) -> STM<()>  {
+	public func write(_ value : T) -> STM<()>  {
 		return STM<T> { (trans : TLog) in
 			trans.writeTVar(self, value: PreEquatable(t: { value }))
 			return value
@@ -50,14 +50,14 @@ extension TVar where T : Equatable {
 }
 
 extension TVar where T : AnyObject {
-	public init(@autoclosure(escaping) _ value : () -> T) {
+	public init(_ value : @autoclosure @escaping () -> T) {
 		self.value = UnderlyingRef(t: value)
 		nextId += 1
 		self._id = nextId
 	}
 	
 	/// Uses an STM transaction to write the supplied value into the receiver.
-	public func write(value : T) -> STM<()>  {
+	public func write(_ value : T) -> STM<()>  {
 		return STM<T> { (trans : TLog) in
 			trans.writeTVar(self, value: UnderlyingRef(t: { value }))
 			return value
@@ -66,14 +66,14 @@ extension TVar where T : AnyObject {
 }
 
 extension TVar where T : Any {
-	public init(@autoclosure(escaping) _ value : () -> T) {
+	public init(_ value : @autoclosure @escaping () -> T) {
 		self.value = Ref(t: value)
 		nextId += 1
 		self._id = nextId
 	}
 	
 	/// Uses an STM transaction to write the supplied value into the receiver.
-	public func write(value : T) -> STM<()>  {
+	public func write(_ value : T) -> STM<()>  {
 		return STM<T> { (trans : TLog) in
 			trans.writeTVar(self, value: Ref(t: { value }))
 			return value
@@ -109,7 +109,7 @@ internal class PreEquatable<T : Equatable> : TVarType<T> {
 	override var retrieve : T { return self.t() }
 	override var upCast : TVarType<Any> { return Ref<Any>(t: { (self.retrieve as Any) }) }
 
-	init(t : () -> T) { self.t = t }
+	init(t : @escaping () -> T) { self.t = t }
 }
 
 internal func == <T : Equatable>(l : PreEquatable<T>, r : PreEquatable<T>) -> Bool {
@@ -122,7 +122,7 @@ internal class Ref<T> : TVarType<T> {
 	override var retrieve : T { return self.t() }
 	override var upCast : TVarType<Any> { return Ref<Any>(t: { (self.retrieve as Any) }) }
 
-	init(t : () -> T) { self.t = t }
+	init(t : @escaping () -> T) { self.t = t }
 }
 
 internal func == <T>(l : Ref<T>, r : Ref<T>) -> Bool {
@@ -135,7 +135,7 @@ internal class UnderlyingRef<T : AnyObject> : TVarType<T> {
 	override var retrieve : T { return self.t() }
 	override var upCast : TVarType<Any> { return Ref<Any>(t: { (self.retrieve as Any) }) }
 
-	init(t : () -> T) { self.t = t }
+	init(t : @escaping () -> T) { self.t = t }
 }
 
 public func == <T>(l : TVar<T>, r : TVar<T>) -> Bool {

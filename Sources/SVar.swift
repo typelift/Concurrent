@@ -55,22 +55,22 @@ public struct SVar<A> {
 	/// Reads a value from the receiver, then empties it.
 	public func read() -> A {
 		let (readers, val) = self.svar.take()
-		self.svar.put((readers.predecessor(), val))
+		self.svar.put(((readers - 1), val))
 		return val.take()
 	}
 	
 	/// Writes a value into the receiver, overwriting any previous value that may currently exist.
-	public func write(v : A) {
+	public func write(_ v : A) {
 		let s = self.svar.take()
 		let (readers, val) = s
 		
 		switch readers {
 		case 1:
-			val.swap(v)
+			_ = val.swap(v)
 			self.svar.put(s)
 		default:
 			val.put(v)
-			self.svar.put((min(1, readers.successor()), val))
+			self.svar.put((min(1, (readers + 1)), val))
 		}
 	}
 	

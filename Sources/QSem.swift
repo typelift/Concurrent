@@ -45,7 +45,7 @@ public struct QSem {
 		self.contents.put(r)
 	}
 	
-	private func signal(t : (UInt, [MVar<()>], [MVar<()>])) -> (UInt, [MVar<()>], [MVar<()>]) {
+	private func signal(_ t : (UInt, [MVar<()>], [MVar<()>])) -> (UInt, [MVar<()>], [MVar<()>]) {
 		switch t {
 		case (let i, let a1, let a2):
 			if i == 0 {
@@ -56,12 +56,12 @@ public struct QSem {
 		}
 	}
 	
-	private func loop(l : [MVar<()>], b2 : [MVar<()>]) -> (UInt, [MVar<()>], [MVar<()>]) {
+	private func loop(_ l : [MVar<()>], b2 : [MVar<()>]) -> (UInt, [MVar<()>], [MVar<()>]) {
 		if l.count == 0 && b2.count == 0 {
 			let t : (UInt, [MVar<()>], [MVar<()>]) = (1, [], [])
 			return t
 		} else if b2.count != 0 {
-			return self.loop(Array(b2.reverse()), b2: [])
+			return self.loop(Array(b2.reversed()), b2: [])
 		}
 		
 		let b = l[0]

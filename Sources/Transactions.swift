@@ -38,7 +38,7 @@ internal final class Entry<T> {
 		self.hasOldValue = valid
 	}
 	
-	func mergeNested(e : Entry<T>) {
+	func mergeNested(_ e : Entry<T>) {
 		e._newValue = self._newValue
 	}
 	
@@ -52,24 +52,24 @@ internal final class Entry<T> {
 	}
 }
 
-private enum STMError : ErrorType {
-	case RetryException
-	case CommitFailedException
-	case InvalidOperationException
+private enum STMError : Error {
+	case retryException
+	case commitFailedException
+	case invalidOperationException
 }
 
 private var _current : Any? = nil
 
 /// A transactional memory log
 internal final class TLog {
-	lazy var locker = UnsafeMutablePointer<pthread_mutex_t>.alloc(sizeof(pthread_mutex_t))
-	lazy var cond = UnsafeMutablePointer<pthread_cond_t>.alloc(sizeof(pthread_mutex_t))
+	lazy var locker = UnsafeMutablePointer<pthread_mutex_t>.allocate(capacity: MemoryLayout<pthread_mutex_t>.size)
+	lazy var cond = UnsafeMutablePointer<pthread_cond_t>.allocate(capacity: MemoryLayout<pthread_mutex_t>.size)
 	
 	let outer : TLog?
 	var log : Dictionary<TVar<Any>, Entry<Any>> = [:]
 	
 	var isValid : Bool {
-		return self.log.values.reduce(true, combine: { $0 && $1.isValid }) && (outer == nil || outer!.isValid)
+		return self.log.values.reduce(true, { $0 && $1.isValid }) && (outer == nil || outer!.isValid)
 	}
 	
 	convenience init() {
@@ -82,11 +82,11 @@ internal final class TLog {
 		pthread_cond_init(self.cond, nil)
 	}
 	
-	static func newTVar<T>(value : T) -> TVar<T> {
+	static func newTVar<T>(_ value : T) -> TVar<T> {
 		return TVar(value)
 	}
 	
-	func readTVar<T>(location : TVar<T>) -> T {
+	func readTVar<T>(_ location : TVar<T>) -> T {
 		if let entry = self.log[location.upCast] {
 			return entry._newValue.retrieve as! T
 		} else if let out = outer {
@@ -119,7 +119,7 @@ internal final class TLog {
 		pthread_mutex_unlock(self.locker)
 	}
 	
-	func writeTVar<T>(location : TVar<T>, value : TVarType<T>) {
+	func writeTVar<T>(_ location : TVar<T>, value : TVarType<T>) {
 		if let entry = self.log[location.upCast] {
 			entry._newValue = value.upCast
 		} else {
@@ -142,7 +142,7 @@ internal final class TLog {
 	
 	func commit() throws {
 		if let _ = self.outer {
-			throw STMError.InvalidOperationException
+			throw STMError.invalidOperationException
 		} else {
 			log.values.forEach {
 				$0.commit()
@@ -150,7 +150,7 @@ internal final class TLog {
 		}
 	}
 	
-	static func atomically<T>(p : TLog throws -> T) throws -> T {
+	static func atomically<T>(_ p : (TLog) throws -> T) throws -> T {
 		let trans = TLog()
 		guard _current == nil else {
 			fatalError("Transaction already running on current thread")
@@ -175,7 +175,7 @@ internal final class TLog {
 					trans.log.removeAll()
 					continue
 				}
-			} catch STMError.RetryException {
+			} catch STMError.retryException {
 				trans.lock()
 				let isValid = trans.isValid
 				if isValid {
@@ -187,8 +187,8 @@ internal final class TLog {
 					trans.unlock()
 				}
 				continue
-			} catch STMError.CommitFailedException {
-				throw STMError.CommitFailedException
+			} catch STMError.commitFailedException {
+				throw STMError.commitFailedException
 			} catch let l {
 				trans.lock()
 				let isValid = trans.isValid
@@ -203,10 +203,10 @@ internal final class TLog {
 	}
 	
 	func retry<T>() throws -> T {
-		throw STMError.RetryException
+		throw STMError.retryException
 	}
 	
-	func orElse<T>(p : TLog throws -> T, q : TLog throws -> T) throws -> T {
+	func orElse<T>(_ p : (TLog) throws -> T, q : (TLog) throws -> T) throws -> T {
 		let first = TLog(outer: self)
 		do {
 			let result = try p(first)
@@ -217,9 +217,9 @@ internal final class TLog {
 				first.mergeNested()
 				return result
 			} else {
-				throw STMError.CommitFailedException
+				throw STMError.commitFailedException
 			}
-		} catch STMError.RetryException {
+		} catch STMError.retryException {
 			let second = TLog(outer: self)
 			do {
 				let result = try q(second)
@@ -230,21 +230,21 @@ internal final class TLog {
 					second.mergeNested()
 					return result
 				} else {
-					throw STMError.CommitFailedException
+					throw STMError.commitFailedException
 				}
-			} catch STMError.RetryException {
+			} catch STMError.retryException {
 				self.lock()
 				let isValid = first.isValid && second.isValid && self.isValid
 				self.unlock()
 				if isValid {
 					first.mergeNested()
 					second.mergeNested()
-					throw STMError.RetryException
+					throw STMError.retryException
 				} else {
-					throw STMError.CommitFailedException
+					throw STMError.commitFailedException
 				}
-			} catch STMError.CommitFailedException {
-				throw STMError.CommitFailedException
+			} catch STMError.commitFailedException {
+				throw STMError.commitFailedException
 			} catch let l {
 				second.lock()
 				let isValid = second.isValid
@@ -253,11 +253,11 @@ internal final class TLog {
 					second.mergeNested()
 					throw l
 				} else {
-					throw STMError.CommitFailedException
+					throw STMError.commitFailedException
 				}
 			}
-		} catch STMError.CommitFailedException {
-			throw STMError.CommitFailedException
+		} catch STMError.commitFailedException {
+			throw STMError.commitFailedException
 		} catch let l {
 			first.lock()
 			let isValid = first.isValid
@@ -266,7 +266,7 @@ internal final class TLog {
 				first.mergeNested()
 				throw l
 			} else {
-				throw STMError.CommitFailedException
+				throw STMError.commitFailedException
 			}
 		}
 	}

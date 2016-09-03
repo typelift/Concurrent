@@ -12,15 +12,15 @@ import SwiftCheck
 import func Darwin.C.stdlib.arc4random
 
 private enum Action {
-	case NewEmptyMVar
-	case NewMVar(Int)
-	case TakeMVar
-	case ReadMVar
-	case PutMVar(Int)
-	case SwapMVar(Int)
-	case IsEmptyMVar
-	case ReturnInt(Int)
-	case ReturnBool(Bool)
+	case newEmptyMVar
+	case newMVar(Int)
+	case takeMVar
+	case readMVar
+	case putMVar(Int)
+	case swapMVar(Int)
+	case isEmptyMVar
+	case returnInt(Int)
+	case returnBool(Bool)
 }
 
 // Here to make the typechecker happy.  Do not invoke these.
@@ -33,53 +33,53 @@ extension Action : Arbitrary {
 /// ~(https://github.com/ghc/ghc/blob/master/libraries/base/tests/Concurrent/MVar001.hs)
 class MVarSpec : XCTestCase {
 	func testProperties() {
-		property("An empty MVar really is empty") <- self.formulate([.NewEmptyMVar, .IsEmptyMVar], [.NewEmptyMVar, .ReturnBool(true)])
+		property("An empty MVar really is empty") <- self.formulate([.newEmptyMVar, .isEmptyMVar], [.newEmptyMVar, .returnBool(true)])
 
 		property("A filled MVar really is filled") <- forAll { (n : Int) in
-			return self.formulate([.NewMVar(n), .IsEmptyMVar], [.NewMVar(n), .ReturnBool(false)])
+			return self.formulate([.newMVar(n), .isEmptyMVar], [.newMVar(n), .returnBool(false)])
 		}
 
 		property("A take after filling == A return after an empty") <- forAll { (n : Int) in
-			return self.formulate([.NewMVar(n), .TakeMVar], [.NewEmptyMVar, .ReturnInt(n)])
+			return self.formulate([.newMVar(n), .takeMVar], [.newEmptyMVar, .returnInt(n)])
 		}
 
 		property("Filling then taking from an empty MVar is the same as an empty MVar") <- forAll { (n : Int) in
-			return self.formulate([.NewEmptyMVar, .PutMVar(n), .TakeMVar], [.NewEmptyMVar, .ReturnInt(n)])
+			return self.formulate([.newEmptyMVar, .putMVar(n), .takeMVar], [.newEmptyMVar, .returnInt(n)])
 		}
 
 		property("Reading a new MVar is the same as a full MVar") <- forAll { (n : Int) in
-			return self.formulate([.NewMVar(n), .ReadMVar], [.NewMVar(n), .ReturnInt(n)])
+			return self.formulate([.newMVar(n), .readMVar], [.newMVar(n), .returnInt(n)])
 		}
 
 		property("Swapping a full MVar is the same as a full MVar with the swapped value") <- forAll { (m : Int, n : Int) in
-			return self.formulate([.NewMVar(m), .SwapMVar(n)], [.NewMVar(n)])
+			return self.formulate([.newMVar(m), .swapMVar(n)], [.newMVar(n)])
 		}
 	}
 
 	// Returns whether or not a sequence of Actions leaves us with a full or empty MVar.
-	private func delta(b : Bool, ac : [Action]) -> Bool {
+	private func delta(_ b : Bool, ac : [Action]) -> Bool {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 			switch x {
-			case .TakeMVar:
+			case .takeMVar:
 				return self.delta(b ? error("take on empty MVar") : true, ac: xs)
-			case .ReadMVar:
+			case .readMVar:
 				return self.delta(b ? error("read on empty MVar") : false, ac: xs)
-			case .SwapMVar(_):
+			case .swapMVar(_):
 				return self.delta(b ? error("swap on empty MVar") : false, ac: xs)
-			case .IsEmptyMVar:
+			case .isEmptyMVar:
 				fallthrough
-			case .ReturnInt(_):
+			case .returnInt(_):
 				fallthrough
-			case .ReturnBool(_):
+			case .returnBool(_):
 				fallthrough
-			case .IsEmptyMVar:
+			case .isEmptyMVar:
 				return self.delta(b, ac: xs)
-			case .PutMVar(_):
+			case .putMVar(_):
 				fallthrough
-			case .NewMVar(_):
+			case .newMVar(_):
 				return self.delta(false, ac: xs)
-			case .NewEmptyMVar:
+			case .newEmptyMVar:
 				return self.delta(true, ac: xs)
 			}
 		}
@@ -88,7 +88,7 @@ class MVarSpec : XCTestCase {
 
 	// The only thing that couldn't be reproduced.  So take the lazy way out and naïvely unroll the
 	// gist of the generator function.
-	private func actionsGen(e : Bool) -> Gen<ArrayOf<Action>> {
+	private func actionsGen(_ e : Bool) -> Gen<ArrayOf<Action>> {
 		return Gen.sized({ n in
 			var empty = e
 			var result = [Action]()
@@ -97,10 +97,10 @@ class MVarSpec : XCTestCase {
 			}
 			while (arc4random() % UInt32(n)) != 0 {
 				if empty {
-					result = result + [.PutMVar(Int.arbitrary.generate)] + ((arc4random() % 2) == 0 ? [.SwapMVar(Int.arbitrary.generate)] : [.ReadMVar])
+					result = result + [.putMVar(Int.arbitrary.generate)] + ((arc4random() % 2) == 0 ? [.swapMVar(Int.arbitrary.generate)] : [.readMVar])
 					empty = false
 				} else {
-					result = result + [.TakeMVar]
+					result = result + [.takeMVar]
 					empty = true
 				}
 			}
@@ -108,32 +108,32 @@ class MVarSpec : XCTestCase {
 		})
 	}
 
-	private func perform(mv : MVar<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
+	private func perform(_ mv : MVar<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
 			switch x {
-			case .ReturnInt(let v):
+			case .returnInt(let v):
 				let (b, l) = perform(mv, xs)
 				return (b, [v] + l)
-			case .ReturnBool(let v):
+			case .returnBool(let v):
 				let (b, l) = perform(mv, xs)
 				return ([v] + b, l)
-			case .TakeMVar:
+			case .takeMVar:
 				let v = mv.take()
 				let (b, l) = perform(mv, xs)
 				return (b, [v] + l)
-			case .ReadMVar:
+			case .readMVar:
 				let v = mv.read()
 				let (b, l) = perform(mv, xs)
 				return (b, [v] + l)
-			case .PutMVar(let n):
+			case .putMVar(let n):
 				mv.put(n)
 				return perform(mv, xs)
-			case .SwapMVar(let n):
-				mv.swap(n)
+			case .swapMVar(let n):
+				_ = mv.swap(n)
 				return perform(mv, xs)
-			case .IsEmptyMVar:
+			case .isEmptyMVar:
 				let v = mv.isEmpty
 				let (b, l) = perform(mv, xs)
 				return ([v] + b, l)
@@ -144,20 +144,20 @@ class MVarSpec : XCTestCase {
 		return ([], [])
 	}
 
-	private func setupPerformance(ac : [Action]) -> ([Bool], [Int]) {
+	private func setupPerformance(_ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
 			switch x {
-			case .ReturnInt(let v):
+			case .returnInt(let v):
 				let (b, l) = setupPerformance(xs)
 				return (b, [v] + l)
-			case .ReturnBool(let v):
+			case .returnBool(let v):
 				let (b, l) = setupPerformance(xs)
 				return ([v] + b, l)
-			case .NewEmptyMVar:
+			case .newEmptyMVar:
 				return perform(MVar<Int>(), xs)
-			case .NewMVar(let n):
+			case .newMVar(let n):
 				return perform(MVar<Int>(initial: n), xs)
 			default:
 				return error("Fatal: NewMVar or NewEmptyMVar must be the first actions")
@@ -167,7 +167,7 @@ class MVarSpec : XCTestCase {
 	}
 
 
-	private func formulate(c : [Action], _ d : [Action]) -> Property {
+	private func formulate(_ c : [Action], _ d : [Action]) -> Property {
 		return forAll(actionsGen(delta(true, ac: c))) { suff in
 			let (b1, l1) = self.setupPerformance(c + suff.getArray)
 			let (b2, l2) = self.setupPerformance(d + suff.getArray)
