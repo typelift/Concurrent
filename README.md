@@ -150,7 +150,7 @@ Concurrent can be included one of two ways:
 - Click the + and add Concurrent
 - Click the + at the top left corner to add a Copy Files build phase
 - Set the directory to `Frameworks`
-- Click the + and add Concurrent and Swiftz
+- Click the + and add Concurrent
 
 **Framework**
 
