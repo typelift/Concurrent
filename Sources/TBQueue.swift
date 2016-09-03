@@ -15,7 +15,7 @@ public struct TBQueue<A> {
 	let writeNum : TVar<Int>
 	let writeHead : TVar<[A]>
 
-	private init(_ readNum : TVar<Int>, _ readHead : TVar<[A]>, _ writeNum : TVar<Int>, _ writeHead : TVar<[A]>) {
+	fileprivate init(_ readNum : TVar<Int>, _ readHead : TVar<[A]>, _ writeNum : TVar<Int>, _ writeHead : TVar<[A]>) {
 		self.readNum = readNum
 		self.readHead = readHead
 		self.writeNum = writeNum
@@ -32,7 +32,7 @@ public struct TBQueue<A> {
 	}
 
 	/// Uses an atomic transaction to create and initialize a new `TBQueue`.
-	public static func create(n : Int) -> STM<TBQueue<A>> {
+	public static func create(_ n : Int) -> STM<TBQueue<A>> {
 		let read = TVar([] as [A])
 		let write = TVar([] as [A])
 		let rsize = TVar(0)
@@ -43,7 +43,7 @@ public struct TBQueue<A> {
 	/// Uses an atomic transaction to write the given value to the receiver.
 	///
 	/// Blocks if the queue is full.
-	public func write(x : A) -> STM<()> {
+	public func write(_ x : A) -> STM<()> {
 		return self.writeNum.read().flatMap { w in
 			let act : STM<()>
 			if w != 0 {
@@ -77,7 +77,7 @@ public struct TBQueue<A> {
 							if ys.isEmpty {
 								return STM<A>.retry()
 							}
-							let zs = ys.reverse()
+							let zs = ys.reversed()
 							return self.writeHead.write([])
 								.then(self.readHead.write(Array(zs.dropFirst())))
 								.then(STM<A>.pure(ys.first!))
@@ -90,7 +90,7 @@ public struct TBQueue<A> {
 	/// Uses an atomic transaction to read the next value from the receiver
 	/// without blocking or retrying on failure.
 	public func tryRead() -> STM<Optional<A>> {
-		return self.read().fmap(Optional.Some).orElse(STM<A?>.pure(.None))
+		return self.read().fmap(Optional.some).orElse(STM<A?>.pure(.none))
 	}
 
 	/// Uses an atomic transaction to get the next value from the receiver 
@@ -106,10 +106,10 @@ public struct TBQueue<A> {
 	public func tryPeek() -> STM<Optional<A>> {
 		return self.tryRead().flatMap { m in
 			switch m {
-			case let .Some(x):
+			case let .some(x):
 				return self.unGet(x).then(STM<A?>.pure(m))
-			case .None:
-				return STM<A?>.pure(.None)
+			case .none:
+				return STM<A?>.pure(.none)
 			}
 		}
 	}
@@ -118,15 +118,15 @@ public struct TBQueue<A> {
 	/// it will be the next item read.
 	///
 	/// Blocks if the queue is full.
-	public func unGet(x : A) -> STM<()> {
+	public func unGet(_ x : A) -> STM<()> {
 		return self.readNum.read().flatMap { r in
 			return { () -> STM<()> in
 				if r > 0 {
-					return self.readNum.write(r.predecessor())
+					return self.readNum.write((r - 1))
 				}
 				return self.writeNum.read().flatMap { w in
 					if w > 0 {
-						return self.writeNum.write(w.predecessor())
+						return self.writeNum.write((w - 1))
 					}
 					return STM<()>.retry()
 				}

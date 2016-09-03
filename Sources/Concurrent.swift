@@ -13,15 +13,15 @@ public func myTheadID() -> ThreadID {
 }
 
 /// Forks a computation onto a new thread and returns its thread ID.
-public func forkIO(@autoclosure(escaping) io :  () -> ()) -> ThreadID {
-	return CONCRealWorld.forkWithStart({
+public func forkIO( _ io :  @autoclosure @escaping () -> ()) -> ThreadID {
+	return CONCRealWorld.fork(start: {
 		return io()
 	})
 }
 
 /// Forks a computation onto a new thread and returns its thread ID.
-public func forkIO(io :  () -> ()) -> ThreadID {
-	return CONCRealWorld.forkWithStart({
+public func forkIO(_ io :  @escaping () -> ()) -> ThreadID {
+	return CONCRealWorld.fork(start: {
 		return io()
 	})
 }
@@ -30,7 +30,7 @@ public func forkIO(io :  () -> ()) -> ThreadID {
 ///
 /// This function invokes pthread_kill, so all necessary cleanup handlers will fire.  Threads may
 /// not immediately terminate if they are setup improperly or by the user.
-public func killThread(tid : ThreadID) {
+public func killThread(_ tid : ThreadID) {
 	return CONCRealWorld.killThread(tid)
 }
 
@@ -40,8 +40,8 @@ public func yield() {
 }
 
 /// Labels the current thread.
-public func labelThread(name : String) {
-	return name.withCString({ (let str) -> Void in
-		return CONCRealWorld.labelThreadWithName(str)
+public func labelThread(_ name : String) {
+	return name.withCString({ (str) -> Void in
+		return CONCRealWorld.labelThread(withName: str)
 	})
 }

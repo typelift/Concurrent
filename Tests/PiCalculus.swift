@@ -15,18 +15,18 @@ typealias Name = String
 /// power to the Lambda Calculus.
 indirect enum π {
 	/// Run the left and right computations simultaneously
-	case Simultaneously(π, π)
+	case simultaneously(π, π)
 	/// Repeatedly spawn and execute copies of this computation forever.
-	case Rep(π)
+	case rep(π)
 	/// Create a new channel with a given name, then run the next computation.
-	case New(Name, π)
+	case new(Name, π)
 	/// Send a value over the channel with a given name, then run the next computation.
-	case Send(Name, Name, π)
+	case send(Name, Name, π)
 	/// Receive a value on the channel with a given name, bind the result to the name, then run
 	/// the next computation.
-	case Receive(Name, Name, π)
+	case receive(Name, Name, π)
 	/// Terminate the process.
-	case Terminate
+	case terminate
 }
 
 /// An agent in the Pi-Calculus.  Defined recursively.
@@ -40,75 +40,80 @@ struct Mu {
 
 typealias Environment = Dictionary<Name, Mu>
 
-func runπ(inout env : Environment, _ pi : π) -> () {
+func runπ(_ env : Environment, _ pi : π) {
 	switch pi {
-		case .Simultaneously(let ba, let bb):
-			let f = { x in forkIO(runπ(&env, x)) }
-			f(ba)
-			f(bb)
-		case .Rep(let bp):
-			return runπ(&env, π.Rep(bp))
-		case .Terminate:
-			return
-		case .New(let bind, let bp):
-			let c : Chan<Mu> = Chan()
-			let mu = Mu(c)
-			env[bind] = mu
-			return runπ(&env, bp)
-		case .Send(let msg, let dest, let bp):
-			let w = env[dest]
-			w?.c.write(env[msg]!)
-			return runπ(&env, bp)
-		case .Receive(let src, let bind, let bp):
-			let w = env[src]
-			let recv = w?.c.read()
-			env[bind] = recv
-			forkIO(runπ(&env, bp))
+	case .simultaneously(let ba, let bb):
+		_ = forkIO(runπ(env, ba))
+		_ = forkIO(runπ(env, bb))
+	case .rep(let bp):
+		return runπ(env, π.rep(bp))
+	case .terminate:
+		return
+	case .new(let bind, let bp):
+		let c : Chan<Mu> = Chan()
+		let mu = Mu(c)
+		return runπ(env.merge([bind: mu]), bp)
+	case .send(let msg, let dest, let bp):
+		let w = env[dest]
+		w?.c.write(env[msg]!)
+		return runπ(env, bp)
+	case .receive(let src, let bind, let bp):
+		let w = env[src]
+		if let recv = w?.c.read() {
+			_ = forkIO(runπ(env.merge([bind: recv]), bp))
+		}
 	}
 }
 
-func runCompute(pi : π) {
-    var ctx = Environment()
-	return runπ(&ctx, pi)
+extension Dictionary {
+	public func merge(_ right: [Key: Value]) -> [Key: Value] {
+		var leftc = self
+		for (k, v) in right {
+			leftc.updateValue(v, forKey: k)
+		}
+		return leftc
+	}
+}
+
+func runCompute(_ pi : π) {
+	return runπ(Environment(), pi)
 }
 
 
 /// MARK: Mini-DSL
 
-infix operator !|! {
-	associativity left
-}
+infix operator !|!
 
 func !|! (l : π, r : π) -> π {
-	return .Simultaneously(l, r)
+	return .simultaneously(l, r)
 }
 
-func `repeat`(p : π) -> π {
-	return .Rep(p)
+func `repeat`(_ p : π) -> π {
+	return .rep(p)
 }
 
 func terminate() -> π {
-	return .Terminate
+	return .terminate
 }
 
-func newChannel(n : Name, then : π) -> π {
-	return .New(n, then)
+func newChannel(_ n : Name, then : π) -> π {
+	return .new(n, then)
 }
 
-func send(v : Name, on : Name, then : π) -> π {
-	return .Send(v, on, then)
+func send(_ v : Name, on : Name, then : π) -> π {
+	return .send(v, on, then)
 }
 
-func receive(on : Name, v : Name, then : π) -> π {
-	return .Receive(v, on, then)
+func receive(_ on : Name, v : Name, then : π) -> π {
+	return .receive(v, on, then)
 }
 
 class PiCalculusSpec : XCTestCase {
 	func testPi() {
 		let pi = newChannel("x", then:
-					send("x", on: "z", then: terminate())
+					(send("x", on: "z", then: terminate())
 					!|!
-					receive("x", v: "y", then: send("y", on: "x", then: receive("x", v: "y", then: terminate())))
+					receive("x", v: "y", then: send("y", on: "x", then: receive("x", v: "y", then: terminate()))))
 					!|!
 					send("z", on: "v", then: receive("v", v: "v", then: terminate())))
 		runCompute(pi)

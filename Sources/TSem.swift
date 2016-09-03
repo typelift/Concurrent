@@ -19,13 +19,13 @@
 public struct TSem {
 	let tvar : TVar<Int>
 
-	private init(_ tvar : TVar<Int>) {
+	fileprivate init(_ tvar : TVar<Int>) {
 		self.tvar = tvar
 	}
 	
 	/// Uses an STM transaction to atomically create and initialize a new
 	/// transactional semaphore.
-	public func create(i : Int) -> STM<TSem> {
+	public func create(_ i : Int) -> STM<TSem> {
 		let v : TVar<Int> = TVar(i)
 		return STM<TSem>.pure(TSem(v))
 	}
@@ -37,7 +37,7 @@ public struct TSem {
 			if (i <= 0) {
 				return STM.retry()
 			}
-			return self.tvar.write(i.predecessor())
+			return self.tvar.write((i - 1))
 		}
 	}
 	
@@ -45,7 +45,7 @@ public struct TSem {
 	/// semaphore by 1 and signals that a unit has become available.
 	public func signal() -> STM<()> {
 		return self.tvar.read().flatMap { i in
-			return self.tvar.write(i.successor())
+			return self.tvar.write((i + 1))
 		}
 	}
 }

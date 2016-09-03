@@ -12,13 +12,13 @@ import SwiftCheck
 import func Darwin.C.stdlib.arc4random
 
 private enum Action {
-	case NewEmptySVar
-	case NewSVar(Int)
-	case TakeSVar
-	case PutSVar(Int)
-	case IsEmptySVar
-	case ReturnInt(Int)
-	case ReturnBool(Bool)
+	case newEmptySVar
+	case newSVar(Int)
+	case takeSVar
+	case putSVar(Int)
+	case isEmptySVar
+	case returnInt(Int)
+	case returnBool(Bool)
 }
 
 // Here to make the typechecker happy.  Do not invoke these.
@@ -28,49 +28,49 @@ extension Action : Arbitrary {
 
 class SVarSpec : XCTestCase {
 	func testProperties() {
-		property("An empty SVar really is empty") <- self.formulate([.NewEmptySVar, .IsEmptySVar], [.NewEmptySVar, .ReturnBool(true)])
+		property("An empty SVar really is empty") <- self.formulate([.newEmptySVar, .isEmptySVar], [.newEmptySVar, .returnBool(true)])
 
 		property("A filled SVar really is filled") <- forAll { (n : Int) in
-			return self.formulate([.NewSVar(n), .IsEmptySVar], [.NewSVar(n), .ReturnBool(false)])
+			return self.formulate([.newSVar(n), .isEmptySVar], [.newSVar(n), .returnBool(false)])
 		}
 
 		property("A take after filling == A return after an empty") <- forAll { (n : Int) in
-			return self.formulate([.NewSVar(n), .TakeSVar], [.NewEmptySVar, .ReturnInt(n)])
+			return self.formulate([.newSVar(n), .takeSVar], [.newEmptySVar, .returnInt(n)])
 		}
 
 		property("Filling then taking from an empty SVar is the same as an empty SVar") <- forAll { (n : Int) in
-			return self.formulate([.NewEmptySVar, .PutSVar(n), .TakeSVar], [.NewEmptySVar, .ReturnInt(n)])
+			return self.formulate([.newEmptySVar, .putSVar(n), .takeSVar], [.newEmptySVar, .returnInt(n)])
 		}
 
 		property("Taking a new SVar is the same as a full SVar") <- forAll { (n : Int) in
-			return self.formulate([.NewSVar(n), .TakeSVar], [.NewSVar(n), .ReturnInt(n)])
+			return self.formulate([.newSVar(n), .takeSVar], [.newSVar(n), .returnInt(n)])
 		}
 
 		property("Swapping a full SVar is the same as a full SVar with the swapped value") <- forAll { (m : Int, n : Int) in
-			return self.formulate([.NewSVar(m), .PutSVar(n)], [.NewSVar(n)])
+			return self.formulate([.newSVar(m), .putSVar(n)], [.newSVar(n)])
 		}
 	}
 
 	// Returns whether or not a sequence of Actions leaves us with a full or empty SVar.
-	private func delta(b : Bool, ac : [Action]) -> Bool {
+	fileprivate func delta(_ b : Bool, ac : [Action]) -> Bool {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 			switch x {
-			case .TakeSVar:
+			case .takeSVar:
 				return self.delta(b ? error("take on empty SVar") : true, ac: xs)
-			case .IsEmptySVar:
+			case .isEmptySVar:
 				fallthrough
-			case .ReturnInt(_):
+			case .returnInt(_):
 				fallthrough
-			case .ReturnBool(_):
+			case .returnBool(_):
 				fallthrough
-			case .IsEmptySVar:
+			case .isEmptySVar:
 				return self.delta(b, ac: xs)
-			case .PutSVar(_):
+			case .putSVar(_):
 				fallthrough
-			case .NewSVar(_):
+			case .newSVar(_):
 				return self.delta(false, ac: xs)
-			case .NewEmptySVar:
+			case .newEmptySVar:
 				return self.delta(true, ac: xs)
 			}
 		}
@@ -79,7 +79,7 @@ class SVarSpec : XCTestCase {
 
 	// The only thing that couldn't be reproduced.  So take the lazy way out and naïvely unroll the
 	// gist of the generator function.
-	private func actionsGen(e : Bool) -> Gen<ArrayOf<Action>> {
+	fileprivate func actionsGen(_ e : Bool) -> Gen<ArrayOf<Action>> {
 		return Gen.sized({ n in
 			var empty = e
 			var result = [Action]()
@@ -88,10 +88,10 @@ class SVarSpec : XCTestCase {
 			}
 			while (arc4random() % UInt32(n)) != 0 {
 				if empty {
-					result = result + [.PutSVar(Int.arbitrary.generate)]
+					result = result + [.putSVar(Int.arbitrary.generate)]
 					empty = false
 				} else {
-					result = result + [.TakeSVar]
+					result = result + [.takeSVar]
 					empty = true
 				}
 			}
@@ -99,25 +99,25 @@ class SVarSpec : XCTestCase {
 		})
 	}
 
-	private func perform(mv : SVar<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
+	fileprivate func perform(_ mv : SVar<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
 			switch x {
-			case .ReturnInt(let v):
+			case .returnInt(let v):
 				let (b, l) = perform(mv, xs)
 				return (b, [v] + l)
-			case .ReturnBool(let v):
+			case .returnBool(let v):
 				let (b, l) = perform(mv, xs)
 				return ([v] + b, l)
-			case .TakeSVar:
+			case .takeSVar:
 				let v = mv.read()
 				let (b, l) = perform(mv, xs)
 				return (b, [v] + l)
-			case .PutSVar(let n):
+			case .putSVar(let n):
 				mv.write(n)
 				return perform(mv, xs)
-			case .IsEmptySVar:
+			case .isEmptySVar:
 				let v = mv.isEmpty
 				let (b, l) = perform(mv, xs)
 				return ([v] + b, l)
@@ -128,20 +128,20 @@ class SVarSpec : XCTestCase {
 		return ([], [])
 	}
 
-	private func setupPerformance(ac : [Action]) -> ([Bool], [Int]) {
+	fileprivate func setupPerformance(_ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
 			switch x {
-			case .ReturnInt(let v):
+			case .returnInt(let v):
 				let (b, l) = setupPerformance(xs)
 				return (b, [v] + l)
-			case .ReturnBool(let v):
+			case .returnBool(let v):
 				let (b, l) = setupPerformance(xs)
 				return ([v] + b, l)
-			case .NewEmptySVar:
+			case .newEmptySVar:
 				return perform(SVar<Int>(), xs)
-			case .NewSVar(let n):
+			case .newSVar(let n):
 				return perform(SVar<Int>(initial: n), xs)
 			default:
 				return error("Fatal: NewSVar or NewEmptySVar must be the first actions")
@@ -151,7 +151,7 @@ class SVarSpec : XCTestCase {
 	}
 
 
-	private func formulate(c : [Action], _ d : [Action]) -> Property {
+	fileprivate func formulate(_ c : [Action], _ d : [Action]) -> Property {
 		return forAll(actionsGen(delta(true, ac: c))) { suff in
 			let (b1, l1) = self.setupPerformance(c + suff.getArray)
 			let (b2, l2) = self.setupPerformance(d + suff.getArray)

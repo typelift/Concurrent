@@ -18,17 +18,17 @@
 ///
 /// - Writing to a filled 'MVar' causes the writer to block.
 public final class MVar<A> {
-	private var val : A?
-	private let lock : UnsafeMutablePointer<pthread_mutex_t>
-	private let takeCond : UnsafeMutablePointer<pthread_cond_t>
-	private let putCond : UnsafeMutablePointer<pthread_cond_t>
+	fileprivate var val : A?
+	fileprivate let lock : UnsafeMutablePointer<pthread_mutex_t>
+	fileprivate let takeCond : UnsafeMutablePointer<pthread_cond_t>
+	fileprivate let putCond : UnsafeMutablePointer<pthread_cond_t>
 	
 	/// Creates a new empty MVar.
 	public init() {
-		self.val = .None
-		self.lock = UnsafeMutablePointer.alloc(sizeof(pthread_mutex_t))
-		self.takeCond = UnsafeMutablePointer.alloc(sizeof(pthread_cond_t))
-		self.putCond = UnsafeMutablePointer.alloc(sizeof(pthread_cond_t))
+		self.val = .none
+		self.lock = UnsafeMutablePointer.allocate(capacity: MemoryLayout<pthread_mutex_t>.size)
+		self.takeCond = UnsafeMutablePointer.allocate(capacity: MemoryLayout<pthread_cond_t>.size)
+		self.putCond = UnsafeMutablePointer.allocate(capacity: MemoryLayout<pthread_cond_t>.size)
 		
 		pthread_mutex_init(self.lock, nil)
 		pthread_cond_init(self.takeCond, nil)
@@ -51,7 +51,7 @@ public final class MVar<A> {
 			pthread_cond_wait(self.takeCond, self.lock)
 		}
 		let value = self.val!
-		self.val = .None
+		self.val = .none
 		pthread_cond_signal(self.putCond)
 		pthread_mutex_unlock(self.lock)
 		return value
@@ -75,7 +75,7 @@ public final class MVar<A> {
 	/// Puts a value into the receiver.
 	///
 	/// If the MVar is currently full, the function will block until it becomes empty again.
-	public func put(x : A) {
+	public func put(_ x : A) {
 		pthread_mutex_lock(self.lock)
 		while self.val != nil {
 			pthread_cond_wait(self.putCond, self.lock)
@@ -93,10 +93,10 @@ public final class MVar<A> {
 	public func tryTake() -> Optional<A> {
 		pthread_mutex_lock(self.lock)
 		if self.val == nil {
-			return .None
+			return .none
 		}
 		let value = self.val!
-		self.val = .None
+		self.val = .none
 		pthread_cond_signal(self.putCond)
 		pthread_mutex_unlock(self.lock)
 		return value
@@ -106,7 +106,7 @@ public final class MVar<A> {
 	///
 	/// If the MVar is empty, this will immediately returns true.  If the MVar is full, nothing 
 	/// occurs and false is returned.
-	public func tryPut(x : A) -> Bool {
+	public func tryPut(_ x : A) -> Bool {
 		pthread_mutex_lock(self.lock)
 		if self.val != nil {
 			return false
@@ -124,7 +124,7 @@ public final class MVar<A> {
 	public func tryRead() -> Optional<A> {
 		pthread_mutex_lock(self.lock)
 		if self.val == nil {
-			return .None
+			return .none
 		}
 		let value = self.val!
 		pthread_cond_signal(self.putCond)
@@ -143,7 +143,7 @@ public final class MVar<A> {
 	
 	/// Atomically, take a value from the receiver, put a given new value in the receiver, then 
 	/// return the receiver's old value.
-	public func swap(x : A) -> A {
+	public func swap(_ x : A) -> A {
 		let old = self.take()
 		self.put(x)
 		return old
@@ -153,7 +153,7 @@ public final class MVar<A> {
 	///
 	/// On exception, the value previously stored in the MVar is put back into it and the exception
 	/// is rethrown.
-	public func withMVar<B>(f : A throws -> B) throws -> B {
+	public func withMVar<B>(_ f : (A) throws -> B) throws -> B {
 		let a = self.take()
 		do {
 			let b = try f(a)
@@ -169,7 +169,7 @@ public final class MVar<A> {
 	/// the new value of the MVar is returned.
 	///
 	/// On exception, the value previously stored in the MVar is put back into it.
-	public func modify<B>(f : A throws -> (A, B)) throws -> B {
+	public func modify<B>(_ f : (A) throws -> (A, B)) throws -> B {
 		let a = self.take()
 		do {
 			let t = try f(a)
@@ -184,7 +184,7 @@ public final class MVar<A> {
 	/// An exception-safe way to modify the contents of the receiver.
 	///
 	/// On exception, the value previously stored in the MVar is put back into it.
-	public func modify_(f : A throws -> A) {
+	public func modify_(_ f : (A) throws -> A) {
 		let a = self.take()
 		do {
 			let a1 = try f(a)
@@ -195,9 +195,9 @@ public final class MVar<A> {
 	}
 	
 	deinit {
-		self.lock.destroy()
-		self.takeCond.destroy()
-		self.putCond.destroy()
+		self.lock.deinitialize()
+		self.takeCond.deinitialize()
+		self.putCond.deinitialize()
 	}
 }
 

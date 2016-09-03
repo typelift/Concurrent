@@ -17,7 +17,7 @@
 public struct IChan<A> {
 	let ivar : IVar<(A, IChan<A>)>
 
-	private init(_ ivar : IVar<(A, IChan<A>)>) {
+	fileprivate init(_ ivar : IVar<(A, IChan<A>)>) {
 		self.ivar = ivar
 	}
 	
@@ -39,7 +39,7 @@ public struct IChan<A> {
 	/// Writes a single value to the head of the channel and returns a new write head.
 	///
 	/// If the same head has been written to more than once, this function will throw an exception.
-	public func write(x : A) -> IChan<A> {
+	public func write(_ x : A) -> IChan<A> {
 		let ic = IChan()
 		do {
 			try self.ivar.put((x, ic))
@@ -52,8 +52,8 @@ public struct IChan<A> {
 	/// Attempts to write a value to the head of the channel.  If the channel head has already been 
 	/// written to, the result is .None.  If the channel head is empty, the value is written, and a 
 	/// new write head is returned.
-	public func tryWrite(x : A) -> Optional<IChan<A>> {
+	public func tryWrite(_ x : A) -> Optional<IChan<A>> {
 		let ic = IChan()
-		return self.ivar.tryPut((x, ic)) ? .Some(ic) : .None
+		return self.ivar.tryPut((x, ic)) ? .some(ic) : .none
 	}
 }

@@ -12,15 +12,15 @@ import SwiftCheck
 import func Darwin.C.stdlib.arc4random
 
 private enum Action {
-	case NewEmptyTMVar
-	case NewTMVar(Int)
-	case TakeTMVar
-	case ReadTMVar
-	case PutTMVar(Int)
-	case SwapTMVar(Int)
-	case IsEmptyTMVar
-	case ReturnInt(Int)
-	case ReturnBool(Bool)
+	case newEmptyTMVar
+	case newTMVar(Int)
+	case takeTMVar
+	case readTMVar
+	case putTMVar(Int)
+	case swapTMVar(Int)
+	case isEmptyTMVar
+	case returnInt(Int)
+	case returnBool(Bool)
 }
 
 // Here to make the typechecker happy.  Do not invoke these.
@@ -33,53 +33,53 @@ extension Action : Arbitrary {
 /// ~(https://github.com/ghc/ghc/blob/master/libraries/base/tests/Concurrent/TMVar001.hs)
 class TMVarSpec : XCTestCase {
 	func testProperties() {
-		property("An empty TMVar really is empty") <- self.formulate([.NewEmptyTMVar, .IsEmptyTMVar], [.NewEmptyTMVar, .ReturnBool(true)])
+		property("An empty TMVar really is empty") <- self.formulate([.newEmptyTMVar, .isEmptyTMVar], [.newEmptyTMVar, .returnBool(true)])
 
 		property("A filled TMVar really is filled") <- forAll { (n : Int) in
-			return self.formulate([.NewTMVar(n), .IsEmptyTMVar], [.NewTMVar(n), .ReturnBool(false)])
+			return self.formulate([.newTMVar(n), .isEmptyTMVar], [.newTMVar(n), .returnBool(false)])
 		}
 
 		property("A take after filling == A return after an empty") <- forAll { (n : Int) in
-			return self.formulate([.NewTMVar(n), .TakeTMVar], [.NewEmptyTMVar, .ReturnInt(n)])
+			return self.formulate([.newTMVar(n), .takeTMVar], [.newEmptyTMVar, .returnInt(n)])
 		}
 
 		property("Filling then taking from an empty TMVar is the same as an empty TMVar") <- forAll { (n : Int) in
-			return self.formulate([.NewEmptyTMVar, .PutTMVar(n), .TakeTMVar], [.NewEmptyTMVar, .ReturnInt(n)])
+			return self.formulate([.newEmptyTMVar, .putTMVar(n), .takeTMVar], [.newEmptyTMVar, .returnInt(n)])
 		}
 
 		property("Reading a new TMVar is the same as a full TMVar") <- forAll { (n : Int) in
-			return self.formulate([.NewTMVar(n), .ReadTMVar], [.NewTMVar(n), .ReturnInt(n)])
+			return self.formulate([.newTMVar(n), .readTMVar], [.newTMVar(n), .returnInt(n)])
 		}
 
 		property("Swapping a full TMVar is the same as a full TMVar with the swapped value") <- forAll { (m : Int, n : Int) in
-			return self.formulate([.NewTMVar(m), .SwapTMVar(n)], [.NewTMVar(n)])
+			return self.formulate([.newTMVar(m), .swapTMVar(n)], [.newTMVar(n)])
 		}
 	}
 
 	// Returns whether or not a sequence of Actions leaves us with a full or empty TMVar.
-	private func delta(b : Bool, ac : [Action]) -> Bool {
+	fileprivate func delta(_ b : Bool, ac : [Action]) -> Bool {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 			switch x {
-			case .TakeTMVar:
+			case .takeTMVar:
 				return self.delta(b ? error("take on empty TMVar") : true, ac: xs)
-			case .ReadTMVar:
+			case .readTMVar:
 				return self.delta(b ? error("read on empty TMVar") : false, ac: xs)
-			case .SwapTMVar(_):
+			case .swapTMVar(_):
 				return self.delta(b ? error("swap on empty TMVar") : false, ac: xs)
-			case .IsEmptyTMVar:
+			case .isEmptyTMVar:
 				fallthrough
-			case .ReturnInt(_):
+			case .returnInt(_):
 				fallthrough
-			case .ReturnBool(_):
+			case .returnBool(_):
 				fallthrough
-			case .IsEmptyTMVar:
+			case .isEmptyTMVar:
 				return self.delta(b, ac: xs)
-			case .PutTMVar(_):
+			case .putTMVar(_):
 				fallthrough
-			case .NewTMVar(_):
+			case .newTMVar(_):
 				return self.delta(false, ac: xs)
-			case .NewEmptyTMVar:
+			case .newEmptyTMVar:
 				return self.delta(true, ac: xs)
 			}
 		}
@@ -88,7 +88,7 @@ class TMVarSpec : XCTestCase {
 
 	// The only thing that couldn't be reproduced.  So take the lazy way out and naïvely unroll the
 	// gist of the generator function.
-	private func actionsGen(e : Bool) -> Gen<ArrayOf<Action>> {
+	fileprivate func actionsGen(_ e : Bool) -> Gen<ArrayOf<Action>> {
 		return Gen.sized({ n in
 			var empty = e
 			var result = [Action]()
@@ -97,10 +97,10 @@ class TMVarSpec : XCTestCase {
 			}
 			while (arc4random() % UInt32(n)) != 0 {
 				if empty {
-					result = result + [.PutTMVar(Int.arbitrary.generate)] + ((arc4random() % 2) == 0 ? [.SwapTMVar(Int.arbitrary.generate)] : [.ReadTMVar])
+					result = result + [.putTMVar(Int.arbitrary.generate)] + ((arc4random() % 2) == 0 ? [.swapTMVar(Int.arbitrary.generate)] : [.readTMVar])
 					empty = false
 				} else {
-					result = result + [.TakeTMVar]
+					result = result + [.takeTMVar]
 					empty = true
 				}
 			}
@@ -108,36 +108,36 @@ class TMVarSpec : XCTestCase {
 		})
 	}
 
-	private func perform(mv : TMVar<Int>, _ ac : [Action]) -> STM<([Bool], [Int])> {
+	fileprivate func perform(_ mv : TMVar<Int>, _ ac : [Action]) -> STM<([Bool], [Int])> {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
 			switch x {
-			case .ReturnInt(let v):
+			case .returnInt(let v):
 				return perform(mv, xs).flatMap { (b, l) in
 					return STM<([Bool], [Int])>.pure((b, [v] + l))
 				}
-			case .ReturnBool(let v):
+			case .returnBool(let v):
 				return perform(mv, xs).flatMap { (b, l) in
 					return STM<([Bool], [Int])>.pure(([v] + b, l))
 				}
-			case .TakeTMVar:
+			case .takeTMVar:
 				return mv.take().flatMap { v in
 					return self.perform(mv, xs).flatMap { (b, l) in
 						return STM<([Bool], [Int])>.pure((b, [v] + l))
 					}
 				}
-			case .ReadTMVar:
+			case .readTMVar:
 				return mv.read().flatMap { v in
 					return self.perform(mv, xs).flatMap { (b, l) in
 						return STM<([Bool], [Int])>.pure((b, [v] + l))
 					}
 				}
-			case .PutTMVar(let n):
+			case .putTMVar(let n):
 				return mv.put(n).then(perform(mv, xs))
-			case .SwapTMVar(let n):
+			case .swapTMVar(let n):
 				return mv.swap(n).then(perform(mv, xs))
-			case .IsEmptyTMVar:
+			case .isEmptyTMVar:
 				return mv.isEmpty().flatMap { v in
 					return self.perform(mv, xs).flatMap { (b, l) in
 						return STM<([Bool], [Int])>.pure(([v] + b, l))
@@ -150,22 +150,22 @@ class TMVarSpec : XCTestCase {
 		return STM<([Bool], [Int])>.pure(([], []))
 	}
 
-	private func setupPerformance(ac : [Action]) -> STM<([Bool], [Int])> {
+	fileprivate func setupPerformance(_ ac : [Action]) -> STM<([Bool], [Int])> {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
 			switch x {
-			case .ReturnInt(let v):
+			case .returnInt(let v):
 				return setupPerformance(xs).flatMap { (b, l) in
 					return STM<([Bool], [Int])>.pure((b, [v] + l))
 				}
-			case .ReturnBool(let v):
+			case .returnBool(let v):
 				return setupPerformance(xs).flatMap { (b, l) in
 					return STM<([Bool], [Int])>.pure(([v] + b, l))
 				}
-			case .NewEmptyTMVar:
+			case .newEmptyTMVar:
 				return perform(TMVar<Int>(), xs)
-			case .NewTMVar(let n):
+			case .newTMVar(let n):
 				return perform(TMVar<Int>(initial: n), xs)
 			default:
 				return error("Fatal: NewTMVar or NewEmptyTMVar must be the first actions")
@@ -175,7 +175,7 @@ class TMVarSpec : XCTestCase {
 	}
 
 
-	private func formulate(c : [Action], _ d : [Action]) -> Property {
+	fileprivate func formulate(_ c : [Action], _ d : [Action]) -> Property {
 		return forAll(actionsGen(delta(true, ac: c))) { suff in
 			let (b1, l1) = self.setupPerformance(c + suff.getArray).atomically()
 			let (b2, l2) = self.setupPerformance(d + suff.getArray).atomically()

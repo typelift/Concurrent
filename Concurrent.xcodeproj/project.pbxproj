@@ -51,10 +51,6 @@
 		82AA04A01D7B2D7E00DD3037 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */; };
 		82AA04A11D7B2D7E00DD3037 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */; };
 		82AA04A21D7B2D7E00DD3037 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */; };
-		82AA04A31D7B2D7E00DD3037 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047D1D7B2D7D00DD3037 /* Future.swift */; };
-		82AA04A41D7B2D7E00DD3037 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047D1D7B2D7D00DD3037 /* Future.swift */; };
-		82AA04A51D7B2D7E00DD3037 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047D1D7B2D7D00DD3037 /* Future.swift */; };
-		82AA04A61D7B2D7E00DD3037 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047D1D7B2D7D00DD3037 /* Future.swift */; };
 		82AA04A71D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
 		82AA04A81D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
 		82AA04A91D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
@@ -245,7 +241,6 @@
 		82AA047A1D7B2D7D00DD3037 /* Concurrent-ObjCBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Concurrent-ObjCBridge.h"; path = "Sources/Concurrent-ObjCBridge.h"; sourceTree = SOURCE_ROOT; };
 		82AA047B1D7B2D7D00DD3037 /* Concurrent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Concurrent.h; path = Sources/Concurrent.h; sourceTree = SOURCE_ROOT; };
 		82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Concurrent.swift; path = Sources/Concurrent.swift; sourceTree = SOURCE_ROOT; };
-		82AA047D1D7B2D7D00DD3037 /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Future.swift; path = Sources/Future.swift; sourceTree = SOURCE_ROOT; };
 		82AA047E1D7B2D7D00DD3037 /* IChan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IChan.swift; path = Sources/IChan.swift; sourceTree = SOURCE_ROOT; };
 		82AA047F1D7B2D7D00DD3037 /* IVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IVar.swift; path = Sources/IVar.swift; sourceTree = SOURCE_ROOT; };
 		82AA04801D7B2D7D00DD3037 /* MVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MVar.swift; path = Sources/MVar.swift; sourceTree = SOURCE_ROOT; };
@@ -365,7 +360,6 @@
 			children = (
 				82AA04771D7B2D7D00DD3037 /* Chan.swift */,
 				82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */,
-				82AA047D1D7B2D7D00DD3037 /* Future.swift */,
 				82AA047E1D7B2D7D00DD3037 /* IChan.swift */,
 				82AA047F1D7B2D7D00DD3037 /* IVar.swift */,
 				82AA04801D7B2D7D00DD3037 /* MVar.swift */,
@@ -784,7 +778,6 @@
 				82AA04AD1D7B2D7E00DD3037 /* IVar.swift in Sources */,
 				82AA04C11D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
 				82AA04B91D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04A51D7B2D7E00DD3037 /* Future.swift in Sources */,
 				82AA04951D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */,
 				82AA04D51D7B2D7E00DD3037 /* TSem.swift in Sources */,
 				82AA04BD1D7B2D7E00DD3037 /* SVar.swift in Sources */,
@@ -821,7 +814,6 @@
 				82AA04AE1D7B2D7E00DD3037 /* IVar.swift in Sources */,
 				82AA04C21D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
 				82AA04BA1D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04A61D7B2D7E00DD3037 /* Future.swift in Sources */,
 				82AA04961D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */,
 				82AA04D61D7B2D7E00DD3037 /* TSem.swift in Sources */,
 				82AA04BE1D7B2D7E00DD3037 /* SVar.swift in Sources */,
@@ -845,7 +837,6 @@
 				82AA04AB1D7B2D7E00DD3037 /* IVar.swift in Sources */,
 				82AA04BF1D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
 				82AA04B71D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04A31D7B2D7E00DD3037 /* Future.swift in Sources */,
 				82AA04931D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */,
 				82AA04D31D7B2D7E00DD3037 /* TSem.swift in Sources */,
 				82AA04BB1D7B2D7E00DD3037 /* SVar.swift in Sources */,
@@ -882,7 +873,6 @@
 				82AA04AC1D7B2D7E00DD3037 /* IVar.swift in Sources */,
 				82AA04C01D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
 				82AA04B81D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04A41D7B2D7E00DD3037 /* Future.swift in Sources */,
 				82AA04941D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */,
 				82AA04D41D7B2D7E00DD3037 /* TSem.swift in Sources */,
 				82AA04BC1D7B2D7E00DD3037 /* SVar.swift in Sources */,
@@ -960,7 +950,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -986,7 +976,7 @@
 				PRODUCT_NAME = Concurrent;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -1009,7 +999,7 @@
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
@@ -1028,7 +1018,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Concurrent-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1057,7 +1047,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1084,7 +1074,7 @@
 				PRODUCT_NAME = Concurrent;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1201,7 +1191,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1223,7 +1213,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1247,7 +1237,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1266,7 +1256,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1297,7 +1287,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1324,7 +1314,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1354,7 +1344,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1377,7 +1367,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
