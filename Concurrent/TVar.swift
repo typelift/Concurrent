@@ -23,6 +23,12 @@ public struct TVar<T> : Comparable, Hashable {
 	internal var upCast : TVar<Any> {
 		return TVar<Any>(self.value.upCast, self._id)
 	}
+	
+	public func read() -> STM<T>  {
+		return STM { trans in
+			return trans.readTVar(self)
+		}
+	}
 }
 
 extension TVar where T : Equatable {
@@ -30,6 +36,13 @@ extension TVar where T : Equatable {
 		self.value = PreEquatable(t: value)
 		nextId += 1
 		self._id = nextId
+	}
+	
+	public func write(value : T) -> STM<()>  {
+		return STM<T> { (trans : TLog) in
+			trans.writeTVar(self, value: PreEquatable(t: { value }))
+			return value
+		}.then(STM<()>.pure(()))
 	}
 }
 
@@ -39,6 +52,13 @@ extension TVar where T : AnyObject {
 		nextId += 1
 		self._id = nextId
 	}
+	
+	public func write(value : T) -> STM<()>  {
+		return STM<T> { (trans : TLog) in
+			trans.writeTVar(self, value: UnderlyingRef(t: { value }))
+			return value
+		}.then(STM<()>.pure(()))
+	}
 }
 
 extension TVar where T : Any {
@@ -47,10 +67,18 @@ extension TVar where T : Any {
 		nextId += 1
 		self._id = nextId
 	}
+	
+	public func write(value : T) -> STM<()>  {
+		return STM<T> { (trans : TLog) in
+			trans.writeTVar(self, value: Ref(t: { value }))
+			return value
+		}.then(STM<()>.pure(()))
+	}
 }
 
 internal class TVarType<T> : Equatable {
 	var retrieve : T { fatalError() }
+	// HACK: bridge-all-the-things-to-Any makes this a legal transformation.
 	var upCast : TVarType<Any> { fatalError() }
 }
 

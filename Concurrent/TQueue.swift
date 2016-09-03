@@ -10,20 +10,20 @@ public struct TQueue<A> {
 	let readEnd : TVar<[A]>
 	let writeEnd : TVar<[A]>
 
-	init(_ readEnd : TVar<[A]>, _ writeEnd : TVar<[A]>) {
+	private init(_ readEnd : TVar<[A]>, _ writeEnd : TVar<[A]>) {
 		self.readEnd = readEnd
 		self.writeEnd = writeEnd
 	}
-}
-
-public func newTQueue<A>() -> STM<TQueue<A>> {
-	let read = TVar([] as [A])
-	let write = TVar([] as [A])
-	return STM<TQueue<A>>.pure(TQueue(read, write))
-}
-
-public func writeTQueue<A>(q : TQueue<A>, _ val : A) -> STM<()> {
-	return readTVar(q.writeEnd).flatMap { list in
-		return writeTVar(q.writeEnd, value: [val] + list)
+	
+	public func create() -> STM<TQueue<A>> {
+		let read = TVar([] as [A])
+		let write = TVar([] as [A])
+		return STM<TQueue<A>>.pure(TQueue(read, write))
+	}
+	
+	public func write(val : A) -> STM<()> {
+		return self.writeEnd.read().flatMap { list in
+			return self.writeEnd.write([val] + list)
+		}
 	}
 }

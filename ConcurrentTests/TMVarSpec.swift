@@ -122,23 +122,23 @@ class TMVarSpec : XCTestCase {
 					return STM<([Bool], [Int])>.pure(([v] + b, l))
 				}
 			case .TakeTMVar:
-				return takeTMVar(mv).flatMap { v in
+				return mv.take().flatMap { v in
 					return self.perform(mv, xs).flatMap { (b, l) in
 						return STM<([Bool], [Int])>.pure((b, [v] + l))
 					}
 				}
 			case .ReadTMVar:
-				return readTMVar(mv).flatMap { v in
+				return mv.read().flatMap { v in
 					return self.perform(mv, xs).flatMap { (b, l) in
 						return STM<([Bool], [Int])>.pure((b, [v] + l))
 					}
 				}
 			case .PutTMVar(let n):
-				return putTMVar(mv, n).then(perform(mv, xs))
+				return mv.put(n).then(perform(mv, xs))
 			case .SwapTMVar(let n):
-				return swapTMVar(mv, n).then(perform(mv, xs))
+				return mv.swap(n).then(perform(mv, xs))
 			case .IsEmptyTMVar:
-				return isEmptyTMVar(mv).flatMap { v in
+				return mv.isEmpty().flatMap { v in
 					return self.perform(mv, xs).flatMap { (b, l) in
 						return STM<([Bool], [Int])>.pure(([v] + b, l))
 					}

@@ -8,26 +8,60 @@
 // This file is a fairly clean port of FSharpX's implementation 
 // ~(https://github.com/fsprojects/FSharpx.Extras/)
 
-
+/// A monad supporting atomic memory transactions.
 public struct STM<T> {
+	/// Perform a series of STM actions atomically.
 	public func atomically() -> T {
 		do {
 			return try TLog.atomically { try self.unSTM($0) }
 		} catch _ {
-			fatalError()
+			fatalError("Retry should have been caught internally.")
 		}
 	}
 
+	/// Retry execution of the current memory transaction because it has seen 
+	/// values in `TVar`s which mean that it should not continue. 
+	///
+	/// The implementation may block the thread until one of the `TVar`s that it
+	/// has read from has been udpated.
+	public static func retry() -> STM<T>  {
+		return STM { trans in
+			return try trans.retry()
+		}
+	}
+	
+	/// Compose two alternative STM actions (GHC only). 
+	///
+	/// If the first action completes without retrying then it forms the result
+	/// of the `orElse`. Otherwise, if the first action retries, then the second
+	/// action is tried in its place. If both actions retry then the `orElse` as
+	/// a whole retries.
+	public func orElse(b : STM<T>) -> STM<T>  {
+		return STM { trans in
+			do {
+				return try trans.orElse(self.unSTM, q: b.unSTM)
+			} catch _ {
+				fatalError()
+			}
+		}
+	}
+	
 	private let unSTM : TLog throws -> T
+	
+	internal init(_ unSTM : TLog throws -> T) {
+		self.unSTM = unSTM
+	}
 }
 
 extension STM /*: Functor*/ {
+	/// Apply a function to the result of an STM transaction.
 	public func fmap<B>(f : T -> B) -> STM<B> {
 		return self.flatMap { x in STM<B>.pure(f(x)) }
 	}
 }
 
 extension STM /*: Pointed*/ {
+	/// Lift a value into a trivial STM transaction.
 	public static func pure<T>(x : T) -> STM<T> {
 		return STM<T> { _ in
 			return x
@@ -36,18 +70,25 @@ extension STM /*: Pointed*/ {
 }
 
 extension STM /*: Applicative*/ {
+	/// Atomically apply a function to the result of an STM transaction.
 	public func ap<B>(fab : STM<T -> B>) -> STM<B> {
 		return fab.flatMap(self.fmap)
 	}
 }
 
 extension STM /*: Monad*/ {
+	/// Atomically apply a function to the result of an STM transaction that
+	/// yields a continuation transaction to be executed later.
+	///
+	/// This function can be used to implement other atomic primitives.
 	public func flatMap<B>(rest : T -> STM<B>) -> STM<B> {
 		return STM<B> { trans in
 			return try rest(try! self.unSTM(trans)).unSTM(trans)
 		}
 	}
 
+	/// Atomically execute the first action then execute the second action
+	/// immediately after.
 	public func then<B>(then : STM<B>) -> STM<B> {
 		return self.flatMap { _ in
 			return then
@@ -55,54 +96,12 @@ extension STM /*: Monad*/ {
 	}
 }
 
-public func readTVar<T>(ref : TVar<T>) -> STM<T>  {
-	return STM { trans in
-		return trans.readTVar(ref)
-	}
-}
-
-public func writeTVar<T : Equatable>(ref : TVar<T>, value : T) -> STM<()>  {
-	return STM<T> { (trans : TLog) in
-		trans.writeTVar(ref, value: PreEquatable(t: { value }))
-		return value
-	}.then(STM<()>.pure(()))
-}
-
-public func writeTVar<T : AnyObject>(ref : TVar<T>, value : T) -> STM<()>  {
-	return STM<T> { (trans : TLog) in
-		trans.writeTVar(ref, value: UnderlyingRef(t: { value }))
-		return value
-	}.then(STM<()>.pure(()))
-}
-
-public func writeTVar<T : Any>(ref : TVar<T>, value : T) -> STM<()>  {
-	return STM<T> { (trans : TLog) in
-		trans.writeTVar(ref, value: Ref(t: { value }))
-		return value
-	}.then(STM<()>.pure(()))
-}
-
-public func retry<T>() throws -> STM<T>  {
-	return STM { trans in
-		return try trans.retry()
-	}
-}
-
-public func orElse<T>(a : STM<T>, b : STM<T>) -> STM<T>  {
-	return STM { trans in
-		do {
-			return try trans.orElse(a.unSTM, q: b.unSTM)
-		} catch _ {
-			fatalError()
-		}
-	}
-}
-
-private final class Entry<T> {
+internal final class Entry<T> {
 	let oldValue : TVarType<T>
 	var location : TVar<T>
 	var _newValue : TVarType<T>
 	let hasOldValue : Bool
+	
 	var isValid : Bool {
 		return !hasOldValue || location.value == self.oldValue
 	}
@@ -137,6 +136,7 @@ private final class Entry<T> {
 		self.location.value = self._newValue
 	}
 	
+	// HACK: bridge-all-the-things-to-Any makes this a legal transformation.
 	var upCast : Entry<Any> {
 		return Entry<Any>(self.oldValue.upCast, self.location.upCast, self._newValue.upCast, self.hasOldValue)
 	}
@@ -151,12 +151,13 @@ private enum STMError : ErrorType {
 private var _current : Any? = nil
 
 /// A transactional memory log
-private final class TLog {
+internal final class TLog {
 	lazy var locker = UnsafeMutablePointer<pthread_mutex_t>.alloc(sizeof(pthread_mutex_t))
 	lazy var cond = UnsafeMutablePointer<pthread_cond_t>.alloc(sizeof(pthread_mutex_t))
 
 	let outer : TLog?
-	var log : Dictionary<TVar<Any>, Entry<Any>> = Dictionary()
+	var log : Dictionary<TVar<Any>, Entry<Any>> = [:]
+	
 	var isValid : Bool {
 		return self.log.values.reduce(true, combine: { $0 && $1.isValid }) && (outer == nil || outer!.isValid)
 	}
@@ -187,12 +188,12 @@ private final class TLog {
 		}
 	}
 
+	// FIXME: Replace with with an MVar.
 	func lock() {
 		pthread_mutex_lock(self.locker)
 	}
 
 	func block() {
-		print("Block!")
 		guard pthread_mutex_trylock(self.locker) != 0 else {
 			fatalError("thread must be locked in order to wait")
 		}

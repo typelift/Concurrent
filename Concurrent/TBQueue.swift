@@ -26,37 +26,33 @@ public struct TBQueue<A> {
 		let wsize = TVar(n)
 		self.init(rsize, read, wsize, write)
 	}
-}
-
-public func newTBQueue<A>(n : Int) -> STM<TBQueue<A>> {
-	let read = TVar([] as [A])
-	let write = TVar([] as [A])
-	let rsize = TVar(0)
-	let wsize = TVar(n)
-	return STM<TBQueue<A>>.pure(TBQueue(rsize, read, wsize, write))
-}
-
-public func writeTBQueue<A>(q : TBQueue<A>, _ x : A) -> STM<()> {
-	return readTVar(q.writeNum).flatMap { w in
-		let act : STM<()>
-		if w != 0 {
-			act = writeTVar(q.writeNum, value: w - 1)
-		} else {
-			act = readTVar(q.readNum).flatMap { r in
-				if r != 0 {
-					return writeTVar(q.readNum, value: 0).then(writeTVar(q.writeNum, value: r - 1))
-				} else {
-					do {
-						return try retry()
-					} catch _ {
-						fatalError()
+	
+	public static func create(n : Int) -> STM<TBQueue<A>> {
+		let read = TVar([] as [A])
+		let write = TVar([] as [A])
+		let rsize = TVar(0)
+		let wsize = TVar(n)
+		return STM<TBQueue<A>>.pure(TBQueue(rsize, read, wsize, write))
+	}
+	
+	public func write(x : A) -> STM<()> {
+		return self.writeNum.read().flatMap { w in
+			let act : STM<()>
+			if w != 0 {
+				act = self.writeNum.write(w - 1)
+			} else {
+				act = self.readNum.read().flatMap { r in
+					if r != 0 {
+						return self.readNum.write(0).then(self.writeNum.write(r - 1))
+					} else {
+						return STM.retry()
 					}
 				}
 			}
+			
+			return act.then(self.writeHead.read().flatMap { listend in
+				return self.writeHead.write([x] + listend)
+			})
 		}
-
-		return act.then(readTVar(q.writeHead).flatMap { listend in
-			return writeTVar(q.writeHead, value: [x] + listend)
-		})
 	}
 }
