@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "82AA041D1D7B206C00DD3037"
-               BuildableName = "Concurrent-watchOS.framework"
+               BuildableName = "Concurrent.framework"
                BlueprintName = "Concurrent-watchOS"
                ReferencedContainer = "container:Concurrent.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "82AA041D1D7B206C00DD3037"
-            BuildableName = "Concurrent-watchOS.framework"
+            BuildableName = "Concurrent.framework"
             BlueprintName = "Concurrent-watchOS"
             ReferencedContainer = "container:Concurrent.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "82AA041D1D7B206C00DD3037"
-            BuildableName = "Concurrent-watchOS.framework"
+            BuildableName = "Concurrent.framework"
             BlueprintName = "Concurrent-watchOS"
             ReferencedContainer = "container:Concurrent.xcodeproj">
          </BuildableReference>
