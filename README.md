@@ -87,7 +87,7 @@ println(counter.take()) // 3
 
 MVars can also be used purely as a synchronization point between multiple threads:
 
-```Swift
+```swift
 import class Concurrent.MVar
 
 let pingvar : MVar<String> = MVar()
