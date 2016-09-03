@@ -9,6 +9,7 @@
 import Concurrent
 import XCTest
 import SwiftCheck
+import func Darwin.C.stdlib.arc4random
 
 private enum Action {
 	case NewEmptyMVar
@@ -94,9 +95,9 @@ class MVarSpec : XCTestCase {
 			if n == 0 {
 				return Gen.pure(ArrayOf(result))
 			}
-			while (rand() % Int32(n)) != 0 {
+			while (arc4random() % UInt32(n)) != 0 {
 				if empty {
-					result = result + [.PutMVar(Int.arbitrary.generate)] + ((rand() % 2) == 0 ? [.SwapMVar(Int.arbitrary.generate)] : [.ReadMVar])
+					result = result + [.PutMVar(Int.arbitrary.generate)] + ((arc4random() % 2) == 0 ? [.SwapMVar(Int.arbitrary.generate)] : [.ReadMVar])
 					empty = false
 				} else {
 					result = result + [.TakeMVar]
