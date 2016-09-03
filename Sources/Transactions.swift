@@ -269,6 +269,5 @@ internal final class TLog {
 				throw STMError.CommitFailedException
 			}
 		}
-		
 	}
 }
