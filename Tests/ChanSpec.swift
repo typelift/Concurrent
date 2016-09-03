@@ -41,7 +41,7 @@ class ChanSpec : XCTestCase {
 	}
 
 	// Calculates the number of items in the channel at the end of executing the list of actions.
-	fileprivate func delta(_ i : Int, ac : [Action]) -> Int {
+	private func delta(_ i : Int, ac : [Action]) -> Int {
 		if let x = ac.first {
 			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 			switch x {
@@ -65,7 +65,7 @@ class ChanSpec : XCTestCase {
 	}
 
 	// Based on the given number of items, produce an item-neutral sequence of fluff actions.
-	fileprivate func actionsGen(_ emp : Int) -> Gen<ArrayOf<Action>> {
+	private func actionsGen(_ emp : Int) -> Gen<ArrayOf<Action>> {
         var empty = emp
 		if empty == 0 {
 			return Gen.pure(ArrayOf([]))
@@ -86,7 +86,7 @@ class ChanSpec : XCTestCase {
 		return Gen.pure(ArrayOf(result))
 	}
 
-	fileprivate func perform(_ mv : Chan<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
+	private func perform(_ mv : Chan<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
 			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
@@ -115,7 +115,7 @@ class ChanSpec : XCTestCase {
 		return ([], [])
 	}
 
-	fileprivate func setupPerformance(_ ac : [Action]) -> ([Bool], [Int]) {
+	private func setupPerformance(_ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
 			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
@@ -136,7 +136,7 @@ class ChanSpec : XCTestCase {
 	}
 
 
-	fileprivate func formulate(_ c : [Action], _ d : [Action]) -> Property {
+	private func formulate(_ c : [Action], _ d : [Action]) -> Property {
 		return forAll(actionsGen(delta(0, ac: c))) { suff in
 			let (b1, l1) = self.setupPerformance(c + suff.getArray)
 			let (b2, l2) = self.setupPerformance(d + suff.getArray)

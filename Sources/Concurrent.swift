@@ -13,7 +13,7 @@ public func myTheadID() -> ThreadID {
 }
 
 /// Forks a computation onto a new thread and returns its thread ID.
-public func forkIO( _ io :  @autoclosure @escaping () -> ()) -> ThreadID {
+public func forkIO(_ io :  @autoclosure @escaping () -> ()) -> ThreadID {
 	return CONCRealWorld.fork(start: {
 		return io()
 	})

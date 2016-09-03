@@ -95,7 +95,7 @@ internal struct ChItem<A> {
 	let val : () -> A
 	let stream : () -> MVar<ChItem<A>>
 
-	init( _ val : @autoclosure @escaping () -> A, _ stream :  @autoclosure @escaping () -> MVar<ChItem<A>>) {
+	init(_ val : @autoclosure @escaping () -> A, _ stream :  @autoclosure @escaping () -> MVar<ChItem<A>>) {
 		self.val = val
 		self.stream = stream
 	}

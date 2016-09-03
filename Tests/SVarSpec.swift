@@ -52,7 +52,7 @@ class SVarSpec : XCTestCase {
 	}
 
 	// Returns whether or not a sequence of Actions leaves us with a full or empty SVar.
-	fileprivate func delta(_ b : Bool, ac : [Action]) -> Bool {
+	private func delta(_ b : Bool, ac : [Action]) -> Bool {
 		if let x = ac.first {
 			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 			switch x {
@@ -79,7 +79,7 @@ class SVarSpec : XCTestCase {
 
 	// The only thing that couldn't be reproduced.  So take the lazy way out and naïvely unroll the
 	// gist of the generator function.
-	fileprivate func actionsGen(_ e : Bool) -> Gen<ArrayOf<Action>> {
+	private func actionsGen(_ e : Bool) -> Gen<ArrayOf<Action>> {
 		return Gen.sized({ n in
 			var empty = e
 			var result = [Action]()
@@ -99,7 +99,7 @@ class SVarSpec : XCTestCase {
 		})
 	}
 
-	fileprivate func perform(_ mv : SVar<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
+	private func perform(_ mv : SVar<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
 			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
@@ -128,7 +128,7 @@ class SVarSpec : XCTestCase {
 		return ([], [])
 	}
 
-	fileprivate func setupPerformance(_ ac : [Action]) -> ([Bool], [Int]) {
+	private func setupPerformance(_ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
 			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
@@ -151,7 +151,7 @@ class SVarSpec : XCTestCase {
 	}
 
 
-	fileprivate func formulate(_ c : [Action], _ d : [Action]) -> Property {
+	private func formulate(_ c : [Action], _ d : [Action]) -> Property {
 		return forAll(actionsGen(delta(true, ac: c))) { suff in
 			let (b1, l1) = self.setupPerformance(c + suff.getArray)
 			let (b2, l2) = self.setupPerformance(d + suff.getArray)
