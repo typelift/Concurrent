@@ -34,7 +34,7 @@ public struct TVar<T> : Comparable, Hashable {
 }
 
 extension TVar where T : Equatable {
-	public init( _ value : @autoclosure @escaping () -> T) {
+	public init(_ value : @autoclosure @escaping () -> T) {
 		self.value = PreEquatable(t: value)
 		nextId += 1
 		self._id = nextId
@@ -50,7 +50,7 @@ extension TVar where T : Equatable {
 }
 
 extension TVar where T : AnyObject {
-	public init( _ value : @autoclosure @escaping () -> T) {
+	public init(_ value : @autoclosure @escaping () -> T) {
 		self.value = UnderlyingRef(t: value)
 		nextId += 1
 		self._id = nextId
@@ -66,7 +66,7 @@ extension TVar where T : AnyObject {
 }
 
 extension TVar where T : Any {
-	public init( _ value : @autoclosure @escaping () -> T) {
+	public init(_ value : @autoclosure @escaping () -> T) {
 		self.value = Ref(t: value)
 		nextId += 1
 		self._id = nextId

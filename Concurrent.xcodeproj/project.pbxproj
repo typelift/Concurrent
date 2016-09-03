@@ -242,7 +242,7 @@
 		82AA047B1D7B2D7D00DD3037 /* Concurrent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Concurrent.h; path = Sources/Concurrent.h; sourceTree = SOURCE_ROOT; };
 		82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Concurrent.swift; path = Sources/Concurrent.swift; sourceTree = SOURCE_ROOT; };
 		82AA047E1D7B2D7D00DD3037 /* IChan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IChan.swift; path = Sources/IChan.swift; sourceTree = SOURCE_ROOT; };
-		82AA047F1D7B2D7D00DD3037 /* IVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IVar.swift; path = Sources/IVar.swift; sourceTree = SOURCE_ROOT; };
+		82AA047F1D7B2D7D00DD3037 /* IVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IVar.swift; path = Sources/IVar.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		82AA04801D7B2D7D00DD3037 /* MVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MVar.swift; path = Sources/MVar.swift; sourceTree = SOURCE_ROOT; };
 		82AA04811D7B2D7D00DD3037 /* QSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QSem.swift; path = Sources/QSem.swift; sourceTree = SOURCE_ROOT; };
 		82AA04821D7B2D7D00DD3037 /* STM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = STM.swift; path = Sources/STM.swift; sourceTree = SOURCE_ROOT; };
@@ -253,7 +253,7 @@
 		82AA04871D7B2D7E00DD3037 /* TQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TQueue.swift; path = Sources/TQueue.swift; sourceTree = SOURCE_ROOT; };
 		82AA04881D7B2D7E00DD3037 /* Transactions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Transactions.swift; path = Sources/Transactions.swift; sourceTree = SOURCE_ROOT; };
 		82AA04891D7B2D7E00DD3037 /* TSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TSem.swift; path = Sources/TSem.swift; sourceTree = SOURCE_ROOT; };
-		82AA048A1D7B2D7E00DD3037 /* TVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TVar.swift; path = Sources/TVar.swift; sourceTree = SOURCE_ROOT; };
+		82AA048A1D7B2D7E00DD3037 /* TVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = TVar.swift; path = Sources/TVar.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		82AA04DC1D7B2D9700DD3037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
 		8434F98019E9CD76008D9909 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434F98B19E9CD76008D9909 /* ConcurrentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcurrentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
