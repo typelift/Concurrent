@@ -40,35 +40,36 @@ struct Mu {
 
 typealias Environment = Dictionary<Name, Mu>
 
-func runπ(var env : Environment, _ pi : π) -> () {
+func runπ(inout env : Environment, _ pi : π) -> () {
 	switch pi {
 		case .Simultaneously(let ba, let bb):
-			let f = { x in forkIO(runπ(env, x)) }
+			let f = { x in forkIO(runπ(&env, x)) }
 			f(ba)
 			f(bb)
 		case .Rep(let bp):
-			return runπ(env, π.Rep(bp))
+			return runπ(&env, π.Rep(bp))
 		case .Terminate:
 			return
 		case .New(let bind, let bp):
 			let c : Chan<Mu> = Chan()
 			let mu = Mu(c)
 			env[bind] = mu
-			return runπ(env, bp)
+			return runπ(&env, bp)
 		case .Send(let msg, let dest, let bp):
 			let w = env[dest]
 			w?.c.write(env[msg]!)
-			return runπ(env, bp)
+			return runπ(&env, bp)
 		case .Receive(let src, let bind, let bp):
 			let w = env[src]
 			let recv = w?.c.read()
 			env[bind] = recv
-			forkIO(runπ(env, bp))
+			forkIO(runπ(&env, bp))
 	}
 }
 
 func runCompute(pi : π) {
-	return runπ(Dictionary(), pi)
+    var ctx = Environment()
+	return runπ(&ctx, pi)
 }
 
 

@@ -65,14 +65,16 @@ class ChanSpec : XCTestCase {
 	}
 
 	// Based on the given number of items, produce an item-neutral sequence of fluff actions.
-	private func actionsGen(var empty : Int) -> Gen<ArrayOf<Action>> {
+	private func actionsGen(emp : Int) -> Gen<ArrayOf<Action>> {
+        var empty = emp
 		if empty == 0 {
 			return Gen.pure(ArrayOf([]))
 		}
 
 		var result = [Action]()
-		while empty-- != 0 {
-			let branch = rand() % 3
+		while empty != 0 {
+            empty -= 1
+			let branch = arc4random() % 3
 			if branch == 0 {
 				return Gen.pure(ArrayOf(Array(count: empty, repeatedValue: .ReadChan) + result))
 			} else if branch == 1 {

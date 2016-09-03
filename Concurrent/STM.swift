@@ -5,6 +5,9 @@
 //  Created by Robert Widmann on 9/27/15.
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
+// This file is a fairly clean port of FSharpX's implementation 
+// ~(https://github.com/fsprojects/FSharpx.Extras/)
+
 
 public struct STM<T> {
 	public func atomically() -> T {
@@ -15,7 +18,7 @@ public struct STM<T> {
 		}
 	}
 
-	private let unSTM : TLog<T> throws -> T
+	private let unSTM : TLog throws -> T
 }
 
 extension STM /*: Functor*/ {
@@ -39,9 +42,9 @@ extension STM /*: Applicative*/ {
 }
 
 extension STM /*: Monad*/ {
-	public func flatMap<B>(f : T -> STM<B>) -> STM<B> {
+	public func flatMap<B>(rest : T -> STM<B>) -> STM<B> {
 		return STM<B> { trans in
-			return try f(self.unSTM(trans)).unSTM(trans)
+			return try rest(try! self.unSTM(trans)).unSTM(trans)
 		}
 	}
 
@@ -59,21 +62,21 @@ public func readTVar<T>(ref : TVar<T>) -> STM<T>  {
 }
 
 public func writeTVar<T : Equatable>(ref : TVar<T>, value : T) -> STM<()>  {
-	return STM<T> { (trans : TLog<T>) in
-		trans.writeTVar(ref, value: Equity(t: { value }))
+	return STM<T> { (trans : TLog) in
+		trans.writeTVar(ref, value: PreEquatable(t: { value }))
 		return value
 	}.then(STM<()>.pure(()))
 }
 
 public func writeTVar<T : AnyObject>(ref : TVar<T>, value : T) -> STM<()>  {
-	return STM<T> { (trans : TLog<T>) in
+	return STM<T> { (trans : TLog) in
 		trans.writeTVar(ref, value: UnderlyingRef(t: { value }))
 		return value
 	}.then(STM<()>.pure(()))
 }
 
 public func writeTVar<T : Any>(ref : TVar<T>, value : T) -> STM<()>  {
-	return STM<T> { (trans : TLog<T>) in
+	return STM<T> { (trans : TLog) in
 		trans.writeTVar(ref, value: Ref(t: { value }))
 		return value
 	}.then(STM<()>.pure(()))
@@ -95,7 +98,6 @@ public func orElse<T>(a : STM<T>, b : STM<T>) -> STM<T>  {
 	}
 }
 
-
 private final class Entry<T> {
 	let oldValue : TVarType<T>
 	var location : TVar<T>
@@ -106,16 +108,23 @@ private final class Entry<T> {
 	}
 
 	convenience init(_ location : TVar<T>) {
-		self.init(location, location.value, true)
+		self.init(location, location.value, false)
 	}
 
 	convenience init(_ location : TVar<T>, _ value : TVarType<T>) {
-		self.init(location, value, false)
+		self.init(location, value, true)
 	}
 
 	init(_ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
 		self.location = location
 		self.oldValue = location.value
+		self._newValue = value
+		self.hasOldValue = valid
+	}
+	
+	private init(_ oldValue : TVarType<T>, _ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
+		self.location = location
+		self.oldValue = oldValue
 		self._newValue = value
 		self.hasOldValue = valid
 	}
@@ -126,6 +135,10 @@ private final class Entry<T> {
 
 	func commit() {
 		self.location.value = self._newValue
+	}
+	
+	var upCast : Entry<Any> {
+		return Entry<Any>(self.oldValue.upCast, self.location.upCast, self._newValue.upCast, self.hasOldValue)
 	}
 }
 
@@ -138,14 +151,14 @@ private enum STMError : ErrorType {
 private var _current : Any? = nil
 
 /// A transactional memory log
-private final class TLog<T> {
+private final class TLog {
 	lazy var locker = UnsafeMutablePointer<pthread_mutex_t>.alloc(sizeof(pthread_mutex_t))
 	lazy var cond = UnsafeMutablePointer<pthread_cond_t>.alloc(sizeof(pthread_mutex_t))
 
 	let outer : TLog?
-	var log : Dictionary<TVar<T>, Entry<T>> = Dictionary()
+	var log : Dictionary<TVar<Any>, Entry<Any>> = Dictionary()
 	var isValid : Bool {
-		return self.log.values.reduce(true, combine: { $0 && $1.isValid }) && (outer === nil || outer!.isValid)
+		return self.log.values.reduce(true, combine: { $0 && $1.isValid }) && (outer == nil || outer!.isValid)
 	}
 
 	convenience init() {
@@ -158,24 +171,23 @@ private final class TLog<T> {
 		pthread_cond_init(self.cond, nil)
 	}
 
-	static func newTVar(value : T) -> TVar<T> {
+	static func newTVar<T>(value : T) -> TVar<T> {
 		return TVar(value)
 	}
 
-	func readTVar(location : TVar<T>) -> T {
-		if let entry = self.log[location] {
-			return entry._newValue.retrieve
+	func readTVar<T>(location : TVar<T>) -> T {
+		if let entry = self.log[location.upCast] {
+			return entry._newValue.retrieve as! T
 		} else if let out = outer {
 			return out.readTVar(location)
 		} else {
 			let entry = Entry(location)
-			log[location] = entry
+			log[location.upCast] = entry.upCast
 			return entry.oldValue.retrieve
 		}
 	}
 
 	func lock() {
-		print("Locking!")
 		pthread_mutex_lock(self.locker)
 	}
 
@@ -189,21 +201,19 @@ private final class TLog<T> {
 	}
 
 	func signal() {
-		print("Signal!")
 		pthread_cond_broadcast(self.cond)
 	}
 
 	func unlock() {
-		print("Unlocking!")
 		pthread_mutex_unlock(self.locker)
 	}
 
-	func writeTVar(location : TVar<T>, value : TVarType<T>) {
-		if let entry = self.log[location] {
-			entry._newValue = value
+	func writeTVar<T>(location : TVar<T>, value : TVarType<T>) {
+		if let entry = self.log[location.upCast] {
+			entry._newValue = value.upCast
 		} else {
 			let entry = Entry(location)
-			log[location] = entry
+			log[location.upCast] = entry.upCast
 		}
 	}
 
@@ -229,7 +239,7 @@ private final class TLog<T> {
 		}
 	}
 
-	static func atomically(p : TLog<T> throws -> T) throws -> T {
+	static func atomically<T>(p : TLog throws -> T) throws -> T {
 		let trans = TLog()
 		guard _current == nil else {
 			fatalError("Transaction already running on current thread")
@@ -281,11 +291,11 @@ private final class TLog<T> {
 		}
 	}
 
-	func retry() throws -> T {
+	func retry<T>() throws -> T {
 		throw STMError.RetryException
 	}
 
-	func orElse(p : TLog<T> throws -> T, q : TLog<T> throws -> T) throws -> T {
+	func orElse<T>(p : TLog throws -> T, q : TLog throws -> T) throws -> T {
 		let first = TLog(outer: self)
 		do {
 			let result = try p(first)
