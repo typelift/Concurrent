@@ -22,6 +22,4 @@ typedef void(^PARWorkBlock)(void);
 
 + (void)killThread:(pthread_t)thread;
 
-+ (NSUInteger)CPUCount;
-
 @end
