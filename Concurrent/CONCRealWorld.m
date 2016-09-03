@@ -66,17 +66,6 @@
 	pthread_cancel(thread);
 }
 
-+ (NSUInteger)CPUCount {
-	NSUInteger result = 1;
-	struct host_basic_info info;
-	mach_msg_type_number_t infocnt = 12;
-
-	if (host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)&info, &infocnt) == KERN_SUCCESS) {
-		result = info.max_cpus;
-	}
-	return result;
-}
-
 static void *PARStartFork(void *context) {
 	NSCAssert(context != NULL, @"Cannot execute NULL context block.");
 

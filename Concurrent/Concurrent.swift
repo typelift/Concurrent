@@ -26,11 +26,6 @@ public func forkIO(io :  () -> ()) -> ThreadID {
 	})
 }
 
-/// Returns the number of processor the host has.
-public func getNumProcessors() -> UInt {
-	return CONCRealWorld.CPUCount()
-}
-
 /// Kills a given thread.
 ///
 /// This function invokes pthread_kill, so all necessary cleanup handlers will fire.  Threads may
