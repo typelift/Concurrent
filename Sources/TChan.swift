@@ -14,8 +14,8 @@ private indirect enum TList<A> {
 /// Transactional Channels are unbounded FIFO streams of values with a read and write terminals comprised of
 /// TVars.
 public struct TChan<A> {
-	fileprivate let readHead : TVar<TVar<TList<A>>>
-	fileprivate let writeHead : TVar<TVar<TList<A>>>
+	private let readHead : TVar<TVar<TList<A>>>
+	private let writeHead : TVar<TVar<TList<A>>>
 
 	private init(_ readHead : TVar<TVar<TList<A>>>, _ writeHead : TVar<TVar<TList<A>>>) {
 		self.readHead = readHead

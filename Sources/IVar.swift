@@ -9,9 +9,9 @@
 /// IVars are write-once mutable references.  Attempting to write into an already full IVar throws
 /// an exception because the thread will be blocked indefinitely.
 public struct IVar<A> {
-	fileprivate let lock : MVar<()>
-	fileprivate let trans : MVar<A>
-	fileprivate let val : () -> A
+	private let lock : MVar<()>
+	private let trans : MVar<A>
+	private let val : () -> A
 	
 	private init(_ lock : MVar<()>, _ trans : MVar<A>, _ val :  @autoclosure @escaping () -> A) {
 		self.lock = lock

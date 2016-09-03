@@ -18,10 +18,10 @@
 ///
 /// - Writing to a filled 'MVar' causes the writer to block.
 public final class MVar<A> {
-	fileprivate var val : A?
-	fileprivate let lock : UnsafeMutablePointer<pthread_mutex_t>
-	fileprivate let takeCond : UnsafeMutablePointer<pthread_cond_t>
-	fileprivate let putCond : UnsafeMutablePointer<pthread_cond_t>
+	private var val : A?
+	private let lock : UnsafeMutablePointer<pthread_mutex_t>
+	private let takeCond : UnsafeMutablePointer<pthread_cond_t>
+	private let putCond : UnsafeMutablePointer<pthread_cond_t>
 	
 	/// Creates a new empty MVar.
 	public init() {
