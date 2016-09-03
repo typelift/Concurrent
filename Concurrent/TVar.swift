@@ -6,13 +6,21 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-/// A transactional variable
+/// A TVar (read: Transactional Variabe) is a shared memory location that 
+/// supports atomic memory transactions.
 public struct TVar<T> : Comparable, Hashable {
 	internal var value : TVarType<T>
 	let _id : Int
 
 	public var hashValue : Int {
 		return _id
+	}
+	
+	/// Uses an STM transaction to return the current value stored in the receiver.
+	public func read() -> STM<T>  {
+		return STM { trans in
+			return trans.readTVar(self)
+		}
 	}
 	
 	private init(_ value : TVarType<T>, _ id : Int) {
@@ -23,12 +31,6 @@ public struct TVar<T> : Comparable, Hashable {
 	internal var upCast : TVar<Any> {
 		return TVar<Any>(self.value.upCast, self._id)
 	}
-	
-	public func read() -> STM<T>  {
-		return STM { trans in
-			return trans.readTVar(self)
-		}
-	}
 }
 
 extension TVar where T : Equatable {
@@ -38,6 +40,7 @@ extension TVar where T : Equatable {
 		self._id = nextId
 	}
 	
+	/// Uses an STM transaction to write the supplied value into the receiver.
 	public func write(value : T) -> STM<()>  {
 		return STM<T> { (trans : TLog) in
 			trans.writeTVar(self, value: PreEquatable(t: { value }))
@@ -53,6 +56,7 @@ extension TVar where T : AnyObject {
 		self._id = nextId
 	}
 	
+	/// Uses an STM transaction to write the supplied value into the receiver.
 	public func write(value : T) -> STM<()>  {
 		return STM<T> { (trans : TLog) in
 			trans.writeTVar(self, value: UnderlyingRef(t: { value }))
@@ -68,6 +72,7 @@ extension TVar where T : Any {
 		self._id = nextId
 	}
 	
+	/// Uses an STM transaction to write the supplied value into the receiver.
 	public func write(value : T) -> STM<()>  {
 		return STM<T> { (trans : TLog) in
 			trans.writeTVar(self, value: Ref(t: { value }))
