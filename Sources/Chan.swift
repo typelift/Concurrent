@@ -12,7 +12,7 @@ public struct Chan<A> {
 	let readEnd : MVar<MVar<ChItem<A>>>
 	let writeEnd : MVar<MVar<ChItem<A>>>
 	
-	fileprivate init(read : MVar<MVar<ChItem<A>>>, write: MVar<MVar<ChItem<A>>>) {
+	private init(read : MVar<MVar<ChItem<A>>>, write: MVar<MVar<ChItem<A>>>) {
 		self.readEnd = read
 		self.writeEnd = write
 	}

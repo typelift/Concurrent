@@ -17,7 +17,7 @@ public struct TChan<A> {
 	fileprivate let readHead : TVar<TVar<TList<A>>>
 	fileprivate let writeHead : TVar<TVar<TList<A>>>
 
-	fileprivate init(_ readHead : TVar<TVar<TList<A>>>, _ writeHead : TVar<TVar<TList<A>>>) {
+	private init(_ readHead : TVar<TVar<TList<A>>>, _ writeHead : TVar<TVar<TList<A>>>) {
 		self.readHead = readHead
 		self.writeHead = writeHead
 	}

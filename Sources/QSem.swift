@@ -13,7 +13,7 @@
 public struct QSem {
 	let contents : MVar<(UInt, [MVar<()>], [MVar<()>])>
 	
-	fileprivate init(_ c : MVar<(UInt, [MVar<()>], [MVar<()>])>){
+	private init(_ c : MVar<(UInt, [MVar<()>], [MVar<()>])>){
 		self.contents = c
 	}
 	

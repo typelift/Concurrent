@@ -10,7 +10,7 @@ public struct TQueue<A> {
 	let readEnd : TVar<[A]>
 	let writeEnd : TVar<[A]>
 
-	fileprivate init(_ readEnd : TVar<[A]>, _ writeEnd : TVar<[A]>) {
+	private init(_ readEnd : TVar<[A]>, _ writeEnd : TVar<[A]>) {
 		self.readEnd = readEnd
 		self.writeEnd = writeEnd
 	}

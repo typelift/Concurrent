@@ -22,7 +22,7 @@
 public struct SVar<A> {
 	let svar : MVar<(Int, MVar<A>)>
 	
-	fileprivate init(_ svar : MVar<(Int, MVar<A>)>) {
+	private init(_ svar : MVar<(Int, MVar<A>)>) {
 		self.svar = svar
 	}
 	

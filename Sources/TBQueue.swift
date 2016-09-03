@@ -15,7 +15,7 @@ public struct TBQueue<A> {
 	let writeNum : TVar<Int>
 	let writeHead : TVar<[A]>
 
-	fileprivate init(_ readNum : TVar<Int>, _ readHead : TVar<[A]>, _ writeNum : TVar<Int>, _ writeHead : TVar<[A]>) {
+	private init(_ readNum : TVar<Int>, _ readHead : TVar<[A]>, _ writeNum : TVar<Int>, _ writeHead : TVar<[A]>) {
 		self.readNum = readNum
 		self.readHead = readHead
 		self.writeNum = writeNum

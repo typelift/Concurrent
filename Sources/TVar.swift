@@ -23,7 +23,7 @@ public struct TVar<T> : Comparable, Hashable {
 		}
 	}
 	
-	fileprivate init(_ value : TVarType<T>, _ id : Int) {
+	private init(_ value : TVarType<T>, _ id : Int) {
 		self.value = value
 		self._id = id
 	}

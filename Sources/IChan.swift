@@ -17,7 +17,7 @@
 public struct IChan<A> {
 	let ivar : IVar<(A, IChan<A>)>
 
-	fileprivate init(_ ivar : IVar<(A, IChan<A>)>) {
+	private init(_ ivar : IVar<(A, IChan<A>)>) {
 		self.ivar = ivar
 	}
 	

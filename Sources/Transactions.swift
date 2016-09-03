@@ -31,7 +31,7 @@ internal final class Entry<T> {
 		self.hasOldValue = valid
 	}
 	
-	fileprivate init(_ oldValue : TVarType<T>, _ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
+	private init(_ oldValue : TVarType<T>, _ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
 		self.location = location
 		self.oldValue = oldValue
 		self._newValue = value

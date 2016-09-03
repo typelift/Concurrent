@@ -19,7 +19,7 @@
 public struct TSem {
 	let tvar : TVar<Int>
 
-	fileprivate init(_ tvar : TVar<Int>) {
+	private init(_ tvar : TVar<Int>) {
 		self.tvar = tvar
 	}
 	

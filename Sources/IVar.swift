@@ -13,7 +13,7 @@ public struct IVar<A> {
 	fileprivate let trans : MVar<A>
 	fileprivate let val : () -> A
 	
-	fileprivate init(_ lock : MVar<()>, _ trans : MVar<A>, _ val :  @autoclosure @escaping () -> A) {
+	private init(_ lock : MVar<()>, _ trans : MVar<A>, _ val :  @autoclosure @escaping () -> A) {
 		self.lock = lock
 		self.trans = trans
 		self.val = val
