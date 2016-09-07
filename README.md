@@ -136,23 +136,21 @@ System Requirements
 
 Concurrent supports OS X 10.9+ and iOS 7.0+.
 
-Setup
+Installation
 =====
 
-Concurrent can be included one of two ways:
+#### Carthage
+Create a `Cartfile` that lists the framework and run `carthage bootstrap`. Follow the [instructions](https://github.com/Carthage/Carthage#if-youre-building-for-ios) to add `$(SRCROOT)/Carthage/Build/iOS/Concurrent.framework` to an iOS project.
 
-**Using Carthage**
+```
+github "typelift/Concurrent"
+```
 
-- Add Concurrent to your Cartfile
-- Run `carthage update`
-- Drag the relevant copy of Concurrent into your project.
-- Expand the Link Binary With Libraries phase
-- Click the + and add Concurrent
-- Click the + at the top left corner to add a Copy Files build phase
-- Set the directory to `Frameworks`
-- Click the + and add Concurrent
+#### Manually
+1. Download and drop ```/Sources``` folder in your project.  
+2. Congratulations!  
 
-**Framework**
+#### Framework
 
 - Drag Concurrent.xcodeproj or Concurrent-iOS.xcodeproj into your project tree as a subproject
 - Under your project's Build Phases, expand Target Dependencies
