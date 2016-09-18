@@ -18,9 +18,6 @@
 		82AA046B1D7B2D6700DD3037 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04611D7B2D6700DD3037 /* MVarSpec.swift */; };
 		82AA046C1D7B2D6700DD3037 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04611D7B2D6700DD3037 /* MVarSpec.swift */; };
 		82AA046D1D7B2D6700DD3037 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04611D7B2D6700DD3037 /* MVarSpec.swift */; };
-		82AA046E1D7B2D6700DD3037 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04621D7B2D6700DD3037 /* PiCalculus.swift */; };
-		82AA046F1D7B2D6700DD3037 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04621D7B2D6700DD3037 /* PiCalculus.swift */; };
-		82AA04701D7B2D6700DD3037 /* PiCalculus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04621D7B2D6700DD3037 /* PiCalculus.swift */; };
 		82AA04711D7B2D6700DD3037 /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04631D7B2D6700DD3037 /* SVarSpec.swift */; };
 		82AA04721D7B2D6700DD3037 /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04631D7B2D6700DD3037 /* SVarSpec.swift */; };
 		82AA04731D7B2D6700DD3037 /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04631D7B2D6700DD3037 /* SVarSpec.swift */; };
@@ -31,30 +28,10 @@
 		82AA048C1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
 		82AA048D1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
 		82AA048E1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
-		82AA048F1D7B2D7E00DD3037 /* CONCRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA04781D7B2D7D00DD3037 /* CONCRealWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82AA04901D7B2D7E00DD3037 /* CONCRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA04781D7B2D7D00DD3037 /* CONCRealWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82AA04911D7B2D7E00DD3037 /* CONCRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA04781D7B2D7D00DD3037 /* CONCRealWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82AA04921D7B2D7E00DD3037 /* CONCRealWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA04781D7B2D7D00DD3037 /* CONCRealWorld.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82AA04931D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04791D7B2D7D00DD3037 /* CONCRealWorld.m */; };
-		82AA04941D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04791D7B2D7D00DD3037 /* CONCRealWorld.m */; };
-		82AA04951D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04791D7B2D7D00DD3037 /* CONCRealWorld.m */; };
-		82AA04961D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04791D7B2D7D00DD3037 /* CONCRealWorld.m */; };
-		82AA04971D7B2D7E00DD3037 /* Concurrent-ObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047A1D7B2D7D00DD3037 /* Concurrent-ObjCBridge.h */; };
-		82AA04981D7B2D7E00DD3037 /* Concurrent-ObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047A1D7B2D7D00DD3037 /* Concurrent-ObjCBridge.h */; };
-		82AA04991D7B2D7E00DD3037 /* Concurrent-ObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047A1D7B2D7D00DD3037 /* Concurrent-ObjCBridge.h */; };
-		82AA049A1D7B2D7E00DD3037 /* Concurrent-ObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047A1D7B2D7D00DD3037 /* Concurrent-ObjCBridge.h */; };
 		82AA049B1D7B2D7E00DD3037 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047B1D7B2D7D00DD3037 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82AA049C1D7B2D7E00DD3037 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047B1D7B2D7D00DD3037 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82AA049D1D7B2D7E00DD3037 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047B1D7B2D7D00DD3037 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82AA049E1D7B2D7E00DD3037 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047B1D7B2D7D00DD3037 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82AA049F1D7B2D7E00DD3037 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */; };
-		82AA04A01D7B2D7E00DD3037 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */; };
-		82AA04A11D7B2D7E00DD3037 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */; };
-		82AA04A21D7B2D7E00DD3037 /* Concurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */; };
-		82AA04A31D7B2D7E00DD3037 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047D1D7B2D7D00DD3037 /* Future.swift */; };
-		82AA04A41D7B2D7E00DD3037 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047D1D7B2D7D00DD3037 /* Future.swift */; };
-		82AA04A51D7B2D7E00DD3037 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047D1D7B2D7D00DD3037 /* Future.swift */; };
-		82AA04A61D7B2D7E00DD3037 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047D1D7B2D7D00DD3037 /* Future.swift */; };
 		82AA04A71D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
 		82AA04A81D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
 		82AA04A91D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
@@ -230,24 +207,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		821BEE5F1D8EFDA5009F8D58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = SOURCE_ROOT; };
 		82AA03FE1D7B206300DD3037 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AA04061D7B206300DD3037 /* Concurrent-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AA041E1D7B206C00DD3037 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AA045F1D7B2D6700DD3037 /* ChanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChanSpec.swift; path = Tests/ChanSpec.swift; sourceTree = SOURCE_ROOT; };
 		82AA04601D7B2D6700DD3037 /* ConcurrentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConcurrentSpec.swift; path = Tests/ConcurrentSpec.swift; sourceTree = SOURCE_ROOT; };
 		82AA04611D7B2D6700DD3037 /* MVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MVarSpec.swift; path = Tests/MVarSpec.swift; sourceTree = SOURCE_ROOT; };
-		82AA04621D7B2D6700DD3037 /* PiCalculus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PiCalculus.swift; path = Tests/PiCalculus.swift; sourceTree = SOURCE_ROOT; };
 		82AA04631D7B2D6700DD3037 /* SVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SVarSpec.swift; path = Tests/SVarSpec.swift; sourceTree = SOURCE_ROOT; };
 		82AA04641D7B2D6700DD3037 /* TMVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TMVarSpec.swift; path = Tests/TMVarSpec.swift; sourceTree = SOURCE_ROOT; };
 		82AA04771D7B2D7D00DD3037 /* Chan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Chan.swift; path = Sources/Chan.swift; sourceTree = SOURCE_ROOT; };
-		82AA04781D7B2D7D00DD3037 /* CONCRealWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CONCRealWorld.h; path = Sources/CONCRealWorld.h; sourceTree = SOURCE_ROOT; };
-		82AA04791D7B2D7D00DD3037 /* CONCRealWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CONCRealWorld.m; path = Sources/CONCRealWorld.m; sourceTree = SOURCE_ROOT; };
-		82AA047A1D7B2D7D00DD3037 /* Concurrent-ObjCBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Concurrent-ObjCBridge.h"; path = "Sources/Concurrent-ObjCBridge.h"; sourceTree = SOURCE_ROOT; };
 		82AA047B1D7B2D7D00DD3037 /* Concurrent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Concurrent.h; path = Sources/Concurrent.h; sourceTree = SOURCE_ROOT; };
-		82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Concurrent.swift; path = Sources/Concurrent.swift; sourceTree = SOURCE_ROOT; };
-		82AA047D1D7B2D7D00DD3037 /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Future.swift; path = Sources/Future.swift; sourceTree = SOURCE_ROOT; };
 		82AA047E1D7B2D7D00DD3037 /* IChan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IChan.swift; path = Sources/IChan.swift; sourceTree = SOURCE_ROOT; };
-		82AA047F1D7B2D7D00DD3037 /* IVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IVar.swift; path = Sources/IVar.swift; sourceTree = SOURCE_ROOT; };
+		82AA047F1D7B2D7D00DD3037 /* IVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IVar.swift; path = Sources/IVar.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		82AA04801D7B2D7D00DD3037 /* MVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MVar.swift; path = Sources/MVar.swift; sourceTree = SOURCE_ROOT; };
 		82AA04811D7B2D7D00DD3037 /* QSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QSem.swift; path = Sources/QSem.swift; sourceTree = SOURCE_ROOT; };
 		82AA04821D7B2D7D00DD3037 /* STM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = STM.swift; path = Sources/STM.swift; sourceTree = SOURCE_ROOT; };
@@ -258,7 +230,7 @@
 		82AA04871D7B2D7E00DD3037 /* TQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TQueue.swift; path = Sources/TQueue.swift; sourceTree = SOURCE_ROOT; };
 		82AA04881D7B2D7E00DD3037 /* Transactions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Transactions.swift; path = Sources/Transactions.swift; sourceTree = SOURCE_ROOT; };
 		82AA04891D7B2D7E00DD3037 /* TSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TSem.swift; path = Sources/TSem.swift; sourceTree = SOURCE_ROOT; };
-		82AA048A1D7B2D7E00DD3037 /* TVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TVar.swift; path = Sources/TVar.swift; sourceTree = SOURCE_ROOT; };
+		82AA048A1D7B2D7E00DD3037 /* TVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = TVar.swift; path = Sources/TVar.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		82AA04DC1D7B2D9700DD3037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
 		8434F98019E9CD76008D9909 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434F98B19E9CD76008D9909 /* ConcurrentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcurrentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -329,9 +301,7 @@
 		82AA04DB1D7B2D8B00DD3037 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				82AA04781D7B2D7D00DD3037 /* CONCRealWorld.h */,
-				82AA04791D7B2D7D00DD3037 /* CONCRealWorld.m */,
-				82AA047A1D7B2D7D00DD3037 /* Concurrent-ObjCBridge.h */,
+				821BEE5F1D8EFDA5009F8D58 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -364,8 +334,6 @@
 			isa = PBXGroup;
 			children = (
 				82AA04771D7B2D7D00DD3037 /* Chan.swift */,
-				82AA047C1D7B2D7D00DD3037 /* Concurrent.swift */,
-				82AA047D1D7B2D7D00DD3037 /* Future.swift */,
 				82AA047E1D7B2D7D00DD3037 /* IChan.swift */,
 				82AA047F1D7B2D7D00DD3037 /* IVar.swift */,
 				82AA04801D7B2D7D00DD3037 /* MVar.swift */,
@@ -390,7 +358,6 @@
 				82AA045F1D7B2D6700DD3037 /* ChanSpec.swift */,
 				82AA04601D7B2D6700DD3037 /* ConcurrentSpec.swift */,
 				82AA04611D7B2D6700DD3037 /* MVarSpec.swift */,
-				82AA04621D7B2D6700DD3037 /* PiCalculus.swift */,
 				82AA04631D7B2D6700DD3037 /* SVarSpec.swift */,
 				82AA04641D7B2D6700DD3037 /* TMVarSpec.swift */,
 				8434F99019E9CD76008D9909 /* Supporting Files */,
@@ -428,8 +395,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				82AA049D1D7B2D7E00DD3037 /* Concurrent.h in Headers */,
-				82AA04911D7B2D7E00DD3037 /* CONCRealWorld.h in Headers */,
-				82AA04991D7B2D7E00DD3037 /* Concurrent-ObjCBridge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,8 +403,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				82AA049E1D7B2D7E00DD3037 /* Concurrent.h in Headers */,
-				82AA04921D7B2D7E00DD3037 /* CONCRealWorld.h in Headers */,
-				82AA049A1D7B2D7E00DD3037 /* Concurrent-ObjCBridge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,8 +411,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				82AA049B1D7B2D7E00DD3037 /* Concurrent.h in Headers */,
-				82AA048F1D7B2D7E00DD3037 /* CONCRealWorld.h in Headers */,
-				82AA04971D7B2D7E00DD3037 /* Concurrent-ObjCBridge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,8 +419,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				82AA049C1D7B2D7E00DD3037 /* Concurrent.h in Headers */,
-				82AA04901D7B2D7E00DD3037 /* CONCRealWorld.h in Headers */,
-				82AA04981D7B2D7E00DD3037 /* Concurrent-ObjCBridge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,7 +734,6 @@
 				82AA04C51D7B2D7E00DD3037 /* TChan.swift in Sources */,
 				82AA04C91D7B2D7E00DD3037 /* TMVar.swift in Sources */,
 				82AA04A91D7B2D7E00DD3037 /* IChan.swift in Sources */,
-				82AA04A11D7B2D7E00DD3037 /* Concurrent.swift in Sources */,
 				82AA04D91D7B2D7E00DD3037 /* TVar.swift in Sources */,
 				82AA04CD1D7B2D7E00DD3037 /* TQueue.swift in Sources */,
 				82AA048D1D7B2D7E00DD3037 /* Chan.swift in Sources */,
@@ -784,8 +742,6 @@
 				82AA04AD1D7B2D7E00DD3037 /* IVar.swift in Sources */,
 				82AA04C11D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
 				82AA04B91D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04A51D7B2D7E00DD3037 /* Future.swift in Sources */,
-				82AA04951D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */,
 				82AA04D51D7B2D7E00DD3037 /* TSem.swift in Sources */,
 				82AA04BD1D7B2D7E00DD3037 /* SVar.swift in Sources */,
 			);
@@ -795,7 +751,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA04701D7B2D6700DD3037 /* PiCalculus.swift in Sources */,
 				82AA04671D7B2D6700DD3037 /* ChanSpec.swift in Sources */,
 				82AA046D1D7B2D6700DD3037 /* MVarSpec.swift in Sources */,
 				82AA04761D7B2D6700DD3037 /* TMVarSpec.swift in Sources */,
@@ -812,7 +767,6 @@
 				82AA04C61D7B2D7E00DD3037 /* TChan.swift in Sources */,
 				82AA04CA1D7B2D7E00DD3037 /* TMVar.swift in Sources */,
 				82AA04AA1D7B2D7E00DD3037 /* IChan.swift in Sources */,
-				82AA04A21D7B2D7E00DD3037 /* Concurrent.swift in Sources */,
 				82AA04DA1D7B2D7E00DD3037 /* TVar.swift in Sources */,
 				82AA04CE1D7B2D7E00DD3037 /* TQueue.swift in Sources */,
 				82AA048E1D7B2D7E00DD3037 /* Chan.swift in Sources */,
@@ -821,8 +775,6 @@
 				82AA04AE1D7B2D7E00DD3037 /* IVar.swift in Sources */,
 				82AA04C21D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
 				82AA04BA1D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04A61D7B2D7E00DD3037 /* Future.swift in Sources */,
-				82AA04961D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */,
 				82AA04D61D7B2D7E00DD3037 /* TSem.swift in Sources */,
 				82AA04BE1D7B2D7E00DD3037 /* SVar.swift in Sources */,
 			);
@@ -836,7 +788,6 @@
 				82AA04C31D7B2D7E00DD3037 /* TChan.swift in Sources */,
 				82AA04C71D7B2D7E00DD3037 /* TMVar.swift in Sources */,
 				82AA04A71D7B2D7E00DD3037 /* IChan.swift in Sources */,
-				82AA049F1D7B2D7E00DD3037 /* Concurrent.swift in Sources */,
 				82AA04D71D7B2D7E00DD3037 /* TVar.swift in Sources */,
 				82AA04CB1D7B2D7E00DD3037 /* TQueue.swift in Sources */,
 				82AA048B1D7B2D7E00DD3037 /* Chan.swift in Sources */,
@@ -845,8 +796,6 @@
 				82AA04AB1D7B2D7E00DD3037 /* IVar.swift in Sources */,
 				82AA04BF1D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
 				82AA04B71D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04A31D7B2D7E00DD3037 /* Future.swift in Sources */,
-				82AA04931D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */,
 				82AA04D31D7B2D7E00DD3037 /* TSem.swift in Sources */,
 				82AA04BB1D7B2D7E00DD3037 /* SVar.swift in Sources */,
 			);
@@ -856,7 +805,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA046E1D7B2D6700DD3037 /* PiCalculus.swift in Sources */,
 				82AA04651D7B2D6700DD3037 /* ChanSpec.swift in Sources */,
 				82AA046B1D7B2D6700DD3037 /* MVarSpec.swift in Sources */,
 				82AA04741D7B2D6700DD3037 /* TMVarSpec.swift in Sources */,
@@ -873,7 +821,6 @@
 				82AA04C41D7B2D7E00DD3037 /* TChan.swift in Sources */,
 				82AA04C81D7B2D7E00DD3037 /* TMVar.swift in Sources */,
 				82AA04A81D7B2D7E00DD3037 /* IChan.swift in Sources */,
-				82AA04A01D7B2D7E00DD3037 /* Concurrent.swift in Sources */,
 				82AA04D81D7B2D7E00DD3037 /* TVar.swift in Sources */,
 				82AA04CC1D7B2D7E00DD3037 /* TQueue.swift in Sources */,
 				82AA048C1D7B2D7E00DD3037 /* Chan.swift in Sources */,
@@ -882,8 +829,6 @@
 				82AA04AC1D7B2D7E00DD3037 /* IVar.swift in Sources */,
 				82AA04C01D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
 				82AA04B81D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04A41D7B2D7E00DD3037 /* Future.swift in Sources */,
-				82AA04941D7B2D7E00DD3037 /* CONCRealWorld.m in Sources */,
 				82AA04D41D7B2D7E00DD3037 /* TSem.swift in Sources */,
 				82AA04BC1D7B2D7E00DD3037 /* SVar.swift in Sources */,
 			);
@@ -893,7 +838,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA046F1D7B2D6700DD3037 /* PiCalculus.swift in Sources */,
 				82AA04661D7B2D6700DD3037 /* ChanSpec.swift in Sources */,
 				82AA046C1D7B2D6700DD3037 /* MVarSpec.swift in Sources */,
 				82AA04751D7B2D6700DD3037 /* TMVarSpec.swift in Sources */,
@@ -959,8 +903,9 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -986,7 +931,8 @@
 				PRODUCT_NAME = Concurrent;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -1008,8 +954,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
@@ -1028,7 +975,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Concurrent-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 2.3;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1056,8 +1004,9 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1084,7 +1033,8 @@
 				PRODUCT_NAME = Concurrent;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1201,7 +1151,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1223,7 +1173,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1246,8 +1196,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1266,7 +1217,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1297,7 +1249,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1324,7 +1276,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1353,8 +1305,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1377,7 +1330,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 2.3;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

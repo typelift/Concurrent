@@ -11,12 +11,12 @@ import XCTest
 import SwiftCheck
 
 private enum Action {
-	case NewChan
-	case ReadChan
-	case WriteChan(Int)
-	case IsEmptyChan
-	case ReturnInt(Int)
-	case ReturnBool(Bool)
+	case newChan
+	case readChan
+	case writeChan(Int)
+	case isEmptyChan
+	case returnInt(Int)
+	case returnBool(Bool)
 }
 
 // Here to make the typechecker happy.  Do not invoke these.
@@ -29,35 +29,35 @@ extension Action : Arbitrary {
 /// ~(https://github.com/ghc/ghc/blob/master/libraries/base/tests/Concurrent/Chan001.hs)
 class ChanSpec : XCTestCase {
 	func testProperties() {
-		property("New channels start empty") <- self.formulate([.NewChan, .IsEmptyChan], [.NewChan, .ReturnBool(true)])
+		property("New channels start empty") <- self.formulate([.newChan, .isEmptyChan], [.newChan, .returnBool(true)])
 
 		property("Written-to channels are non-empty") <- forAll { (n : Int) in
-			return self.formulate([.NewChan, .WriteChan(n), .IsEmptyChan], [.NewChan, .WriteChan(n), .ReturnBool(false)])
+			return self.formulate([.newChan, .writeChan(n), .isEmptyChan], [.newChan, .writeChan(n), .returnBool(false)])
 		}
 
 		property("Reading from a freshly written chan is the same as the value written") <- forAll { (n : Int) in
-			return self.formulate([.NewChan, .WriteChan(n), .ReadChan], [.NewChan, .ReturnInt(n)])
+			return self.formulate([.newChan, .writeChan(n), .readChan], [.newChan, .returnInt(n)])
 		}
 	}
 
 	// Calculates the number of items in the channel at the end of executing the list of actions.
-	private func delta(i : Int, ac : [Action]) -> Int {
+	private func delta(_ i : Int, ac : [Action]) -> Int {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 			switch x {
-			case .ReadChan:
+			case .readChan:
 				return self.delta((i == 0) ? error("read on empty MVar") : (i - 1), ac: xs)
-			case .IsEmptyChan:
+			case .isEmptyChan:
 				fallthrough
-			case .ReturnInt(_):
+			case .returnInt(_):
 				fallthrough
-			case .ReturnBool(_):
+			case .returnBool(_):
 				fallthrough
-			case .IsEmptyChan:
+			case .isEmptyChan:
 				return self.delta(i, ac: xs)
-			case .WriteChan(_):
+			case .writeChan(_):
 				return self.delta(i+1, ac: xs)
-			case .NewChan:
+			case .newChan:
 				return self.delta(0, ac: xs)
 			}
 		}
@@ -65,7 +65,7 @@ class ChanSpec : XCTestCase {
 	}
 
 	// Based on the given number of items, produce an item-neutral sequence of fluff actions.
-	private func actionsGen(emp : Int) -> Gen<ArrayOf<Action>> {
+	private func actionsGen(_ emp : Int) -> Gen<ArrayOf<Action>> {
         var empty = emp
 		if empty == 0 {
 			return Gen.pure(ArrayOf([]))
@@ -76,35 +76,35 @@ class ChanSpec : XCTestCase {
             empty -= 1
 			let branch = arc4random() % 3
 			if branch == 0 {
-				return Gen.pure(ArrayOf(Array(count: empty, repeatedValue: .ReadChan) + result))
+				return Gen.pure(ArrayOf(Array(repeating: .readChan, count: empty) + result))
 			} else if branch == 1 {
-				result = [.IsEmptyChan] + result + [.ReadChan]
+				result = [.isEmptyChan] + result + [.readChan]
 			} else {
-				result = [.WriteChan(Int.arbitrary.generate)] + result + [.ReadChan]
+				result = [.writeChan(Int.arbitrary.generate)] + result + [.readChan]
 			}
 		}
 		return Gen.pure(ArrayOf(result))
 	}
 
-	private func perform(mv : Chan<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
+	private func perform(_ mv : Chan<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
 			switch x {
-			case .ReturnInt(let v):
+			case .returnInt(let v):
 				let (b, l) = perform(mv, xs)
 				return (b, [v] + l)
-			case .ReturnBool(let v):
+			case .returnBool(let v):
 				let (b, l) = perform(mv, xs)
 				return ([v] + b, l)
-			case .ReadChan:
+			case .readChan:
 				let v = mv.read()
 				let (b, l) = perform(mv, xs)
 				return (b, [v] + l)
-			case .WriteChan(let n):
+			case .writeChan(let n):
 				mv.write(n)
 				return perform(mv, xs)
-			case .IsEmptyChan:
+			case .isEmptyChan:
 				let v = mv.isEmpty
 				let (b, l) = perform(mv, xs)
 				return ([v] + b, l)
@@ -115,18 +115,18 @@ class ChanSpec : XCTestCase {
 		return ([], [])
 	}
 
-	private func setupPerformance(ac : [Action]) -> ([Bool], [Int]) {
+	private func setupPerformance(_ ac : [Action]) -> ([Bool], [Int]) {
 		if let x = ac.first {
-			let xs = [Action](ac[1..<ac.endIndex])
+			let xs = [Action](ac[ac.indices.suffix(from: 1)])
 
 			switch x {
-			case .ReturnInt(let v):
+			case .returnInt(let v):
 				let (b, l) = setupPerformance(xs)
 				return (b, [v] + l)
-			case .ReturnBool(let v):
+			case .returnBool(let v):
 				let (b, l) = setupPerformance(xs)
 				return ([v] + b, l)
-			case .NewChan:
+			case .newChan:
 				return perform(Chan(), xs)
 			default:
 				return error("Fatal: NewChan must be the first action")
@@ -136,7 +136,7 @@ class ChanSpec : XCTestCase {
 	}
 
 
-	private func formulate(c : [Action], _ d : [Action]) -> Property {
+	private func formulate(_ c : [Action], _ d : [Action]) -> Property {
 		return forAll(actionsGen(delta(0, ac: c))) { suff in
 			let (b1, l1) = self.setupPerformance(c + suff.getArray)
 			let (b2, l2) = self.setupPerformance(d + suff.getArray)

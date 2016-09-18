@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-/// Channels are unbounded FIFO streams of values with a read and write terminals comprised of
-/// MVars.
+/// Channels are unbounded FIFO streams of values with a read and write 
+/// terminals comprised of `MVar`s.
 public struct Chan<A> {
-	let readEnd : MVar<MVar<ChItem<A>>>
-	let writeEnd : MVar<MVar<ChItem<A>>>
+	fileprivate let readEnd : MVar<MVar<ChItem<A>>>
+	fileprivate let writeEnd : MVar<MVar<ChItem<A>>>
 	
 	private init(read : MVar<MVar<ChItem<A>>>, write: MVar<MVar<ChItem<A>>>) {
 		self.readEnd = read
@@ -40,7 +40,7 @@ public struct Chan<A> {
 	}
 	
 	/// Writes a value to a channel.
-	public func write(x : A) {
+	public func write(_ x : A) {
 		self.writeEnd.modify_ { old_hole in
 			let new_hole : MVar<ChItem<A>> = MVar()
 			old_hole.put(ChItem(x, new_hole))
@@ -49,7 +49,7 @@ public struct Chan<A> {
 	}
 	
 	/// Writes a list of values to a channel.
-	public func writeList(xs : [A]) {
+	public func writeList(_ xs : [A]) {
 		xs.forEach(self.write)
 	}
 
@@ -91,11 +91,11 @@ public struct Chan<A> {
 	}
 }
 
-internal struct ChItem<A> {
+private struct ChItem<A> {
 	let val : () -> A
 	let stream : () -> MVar<ChItem<A>>
 
-	init(@autoclosure(escaping) _ val : () -> A, @autoclosure(escaping) _ stream :  () -> MVar<ChItem<A>>) {
+	init(_ val : @autoclosure @escaping () -> A, _ stream :  @autoclosure @escaping () -> MVar<ChItem<A>>) {
 		self.val = val
 		self.stream = stream
 	}

@@ -6,14 +6,15 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-/// Multicast unbounded FIFO streams.  IChans differ from regular chans because you are only given
-/// access to a write-once head.  Any attempts to write multiple times to an IChan head will fail
-/// catastrophically.  However, every write operation to an IChan spawns a new write head that you
-/// can use to continue writing values into the stream.
+/// Multicast unbounded FIFO streams.  IChans differ from regular chans because 
+/// you are only given access to a write-once head.  Any attempts to write 
+/// multiple times to an `IChan` head will fail catastrophically.  However, 
+/// every write operation to an IChan spawns a new write head that you can use 
+/// to continue writing values into the stream.
 ///
-/// IChans are multicast channels, meaning there is no such thing as "taking a value out of the
-/// stream" like there is with regular channels.  Multiple readers of the channel will all see the
-/// same values.
+/// `IChan`s are multicast channels, meaning there is no such thing as "taking a
+/// value out of the stream" like there is with regular channels.  Multiple 
+/// readers of the channel will all see the same values.
 public struct IChan<A> {
 	let ivar : IVar<(A, IChan<A>)>
 
@@ -36,24 +37,27 @@ public struct IChan<A> {
 	}
 	
 	
-	/// Writes a single value to the head of the channel and returns a new write head.
+	/// Writes a single value to the head of the channel and returns a new write
+	/// head.
 	///
-	/// If the same head has been written to more than once, this function will throw an exception.
-	public func write(x : A) -> IChan<A> {
+	/// If the same head has been written to more than once, this function will 
+	/// throw an exception.
+	public func write(_ x : A) -> IChan<A> {
 		let ic = IChan()
 		do {
 			try self.ivar.put((x, ic))
 		} catch _ {
-			fatalError("Fatal: Accidentally wrote to the same IChan head twice.")
+			fatalError("Fatal: Accidentally wrote to the same IChan head twice")
 		}
 		return ic
 	}
 
-	/// Attempts to write a value to the head of the channel.  If the channel head has already been 
-	/// written to, the result is .None.  If the channel head is empty, the value is written, and a 
-	/// new write head is returned.
-	public func tryWrite(x : A) -> Optional<IChan<A>> {
+	/// Attempts to write a value to the head of the channel.  If the channel 
+	/// head has already been
+	/// written to, the result is .none.  If the channel head is empty, the 
+	/// value is written, and a new write head is returned.
+	public func tryWrite(_ x : A) -> Optional<IChan<A>> {
 		let ic = IChan()
-		return self.ivar.tryPut((x, ic)) ? .Some(ic) : .None
+		return self.ivar.tryPut((x, ic)) ? .some(ic) : .none
 	}
 }

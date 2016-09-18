@@ -6,11 +6,11 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-/// TSem is a transactional semaphore. It holds a certain number of units, and 
+/// `TSem is a transactional semaphore. It holds a certain number of units, and 
 /// units may be acquired or released by `wait()` and `signal()` respectively. 
 /// When the TSem is empty, `wait()` blocks.
 ///
-/// Note that TSem has no concept of fairness, and there is no guarantee that 
+/// Note that `TSem` has no concept of fairness, and there is no guarantee that
 /// threads blocked in `wait()` will be unblocked in the same order; in fact 
 /// they will all be unblocked at the same time and will fight over the TSem. 
 /// Hence TSem is not suitable if you expect there to be a high number of 
@@ -25,7 +25,7 @@ public struct TSem {
 	
 	/// Uses an STM transaction to atomically create and initialize a new
 	/// transactional semaphore.
-	public func create(i : Int) -> STM<TSem> {
+	public func create(_ i : Int) -> STM<TSem> {
 		let v : TVar<Int> = TVar(i)
 		return STM<TSem>.pure(TSem(v))
 	}
@@ -37,7 +37,7 @@ public struct TSem {
 			if (i <= 0) {
 				return STM.retry()
 			}
-			return self.tvar.write(i.predecessor())
+			return self.tvar.write((i - 1))
 		}
 	}
 	
@@ -45,7 +45,7 @@ public struct TSem {
 	/// semaphore by 1 and signals that a unit has become available.
 	public func signal() -> STM<()> {
 		return self.tvar.read().flatMap { i in
-			return self.tvar.write(i.successor())
+			return self.tvar.write((i + 1))
 		}
 	}
 }

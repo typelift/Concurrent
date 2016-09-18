@@ -6,6 +6,13 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
+/// A `TQueue` is like a `TChan` in that it is a transactional channel however
+/// it does not allow `duplicate()`s or `clone()`s.  Because of this, throughput
+/// per individual operations is much faster.
+///
+/// The implementation is based on the traditional purely-functional queue 
+/// representation that uses two lists to obtain amortised O(1) enqueue and 
+/// dequeue operations.
 public struct TQueue<A> {
 	let readEnd : TVar<[A]>
 	let writeEnd : TVar<[A]>
@@ -15,16 +22,15 @@ public struct TQueue<A> {
 		self.writeEnd = writeEnd
 	}
 	
-	public func create() -> STM<TQueue<A>> {
-		let read = TVar([] as [A])
-		let write = TVar([] as [A])
-		return STM<TQueue<A>>.pure(TQueue(read, write))
+	public init() {
+		self.readEnd = TVar([] as [A])
+		self.writeEnd = TVar([] as [A])
 	}
 
 	/// Uses an atomic transaction to write the given value to the receiver.
 	///
 	/// Blocks if the queue is full.
-	public func write(val : A) -> STM<()> {
+	public func write(_ val : A) -> STM<()> {
 		return self.writeEnd.read().flatMap { list in
 			return self.writeEnd.write([val] + list)
 		}
@@ -41,7 +47,7 @@ public struct TQueue<A> {
 				if ys.isEmpty {
 					return STM<A>.retry()
 				}
-				let zs = ys.reverse()
+				let zs = ys.reversed()
 				if let z = zs.first {
 					return self.writeEnd.write([]).then(self.readEnd.write(Array(zs.dropFirst()))).then(STM<A>.pure(z))
 				}
@@ -53,7 +59,7 @@ public struct TQueue<A> {
 	/// Uses an atomic transaction to read the next value from the receiver
 	/// without blocking or retrying on failure.
 	public func tryRead() -> STM<Optional<A>> {
-		return self.read().fmap(Optional.Some).orElse(STM<A?>.pure(.None))
+		return self.read().fmap(Optional.some).orElse(STM<A?>.pure(.none))
 	}
 
 	/// Uses an atomic transaction to get the next value from the receiver
@@ -69,10 +75,10 @@ public struct TQueue<A> {
 	public func tryPeek() -> STM<Optional<A>> {
 		return self.tryRead().flatMap { m in
 			switch m {
-			case let .Some(x):
+			case let .some(x):
 				return self.unGet(x).then(STM<A?>.pure(m))
-			case .None:
-				return STM<A?>.pure(.None)
+			case .none:
+				return STM<A?>.pure(.none)
 			}
 		}
 	}
@@ -81,7 +87,7 @@ public struct TQueue<A> {
 	/// it will be the next item read.
 	///
 	/// Blocks if the queue is full.
-	public func unGet(x : A) -> STM<()> {
+	public func unGet(_ x : A) -> STM<()> {
 		return self.readEnd.read().flatMap { xs in
 			return self.readEnd.write([x] + xs)
 		}

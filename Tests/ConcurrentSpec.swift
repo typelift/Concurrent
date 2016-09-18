@@ -8,7 +8,7 @@
 
 import XCTest
 
-public func error<A>(x : String) -> A {
+public func error<A>(_ x : String) -> A {
 	XCTFail(x)
 	fatalError(x)
 }

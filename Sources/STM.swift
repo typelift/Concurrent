@@ -5,8 +5,6 @@
 //  Created by Robert Widmann on 9/27/15.
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
-// This file is a fairly clean port of FSharpX's implementation 
-// ~(https://github.com/fsprojects/FSharpx.Extras/)
 
 /// A monad supporting atomic memory transactions.
 public struct STM<T> {
@@ -36,7 +34,7 @@ public struct STM<T> {
 	/// of the `orElse`. Otherwise, if the first action retries, then the second
 	/// action is tried in its place. If both actions retry then the `orElse` as
 	/// a whole retries.
-	public func orElse(b : STM<T>) -> STM<T>  {
+	public func orElse(_ b : STM<T>) -> STM<T>  {
 		return STM { trans in
 			do {
 				return try trans.orElse(self.unSTM, q: b.unSTM)
@@ -46,23 +44,23 @@ public struct STM<T> {
 		}
 	}
 	
-	private let unSTM : TLog throws -> T
+	fileprivate let unSTM : (TLog) throws -> T
 	
-	internal init(_ unSTM : TLog throws -> T) {
+	internal init(_ unSTM : @escaping (TLog) throws -> T) {
 		self.unSTM = unSTM
 	}
 }
 
 extension STM /*: Functor*/ {
 	/// Apply a function to the result of an STM transaction.
-	public func fmap<B>(f : T -> B) -> STM<B> {
+	public func fmap<B>(_ f : @escaping (T) -> B) -> STM<B> {
 		return self.flatMap { x in STM<B>.pure(f(x)) }
 	}
 }
 
 extension STM /*: Pointed*/ {
 	/// Lift a value into a trivial STM transaction.
-	public static func pure<T>(x : T) -> STM<T> {
+	public static func pure<T>(_ x : T) -> STM<T> {
 		return STM<T> { _ in
 			return x
 		}
@@ -71,7 +69,7 @@ extension STM /*: Pointed*/ {
 
 extension STM /*: Applicative*/ {
 	/// Atomically apply a function to the result of an STM transaction.
-	public func ap<B>(fab : STM<T -> B>) -> STM<B> {
+	public func ap<B>(_ fab : STM<(T) -> B>) -> STM<B> {
 		return fab.flatMap(self.fmap)
 	}
 }
@@ -81,7 +79,7 @@ extension STM /*: Monad*/ {
 	/// yields a continuation transaction to be executed later.
 	///
 	/// This function can be used to implement other atomic primitives.
-	public func flatMap<B>(rest : T -> STM<B>) -> STM<B> {
+	public func flatMap<B>(_ rest : @escaping (T) -> STM<B>) -> STM<B> {
 		return STM<B> { trans in
 			return try rest(try! self.unSTM(trans)).unSTM(trans)
 		}
@@ -89,7 +87,7 @@ extension STM /*: Monad*/ {
 
 	/// Atomically execute the first action then execute the second action
 	/// immediately after.
-	public func then<B>(then : STM<B>) -> STM<B> {
+	public func then<B>(_ then : STM<B>) -> STM<B> {
 		return self.flatMap { _ in
 			return then
 		}
