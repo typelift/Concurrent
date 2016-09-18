@@ -5,6 +5,14 @@
 //  Created by Robert Widmann on 9/25/14.
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
+// This file is a fairly clean port of FSharpX's implementation
+// ~(https://github.com/fsprojects/FSharpx.Extras/)
+
+#if os(Linux)
+	import Glibc
+#else
+	import Darwin
+#endif
 
 internal final class Entry<T> {
 	let oldValue : TVarType<T>

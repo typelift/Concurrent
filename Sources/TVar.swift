@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-/// A TVar (read: Transactional Variabe) is a shared memory location that 
+/// A `TVar` (read: Transactional Variabe) is a shared memory location that 
 /// supports atomic memory transactions.
 public struct TVar<T> : Comparable, Hashable {
 	internal var value : TVarType<T>

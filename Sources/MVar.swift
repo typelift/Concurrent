@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-/// `MVar`s (literally "Mutable Variables") are mutable references that are either empty or contain
-/// a value of type A. In this way, they are a form of synchronization primitive that can be used to
-/// make threads wait on a value before proceeding with a computation.
+/// `MVar`s (literally "Mutable Variables") are mutable references that are 
+/// either empty or contain a value of type `A`. In this way, they are a form of
+/// synchronization primitive that can be used to make threads wait on a value before proceeding with a computation.
 ///
 /// - Reading an empty `MVar` causes the reader to block.
 ///
@@ -88,7 +88,7 @@ public final class MVar<A> {
 
 	/// Attempts to return the contents of the receiver without blocking.
 	///
-	/// If the MVar is empty, this will immediately return .None. If the MVar is full, the value is 
+	/// If the MVar is empty, this will immediately return .none. If the MVar is full, the value is 
 	/// returned and the MVar is emptied.
 	public func tryTake() -> Optional<A> {
 		pthread_mutex_lock(self.lock)
@@ -119,8 +119,8 @@ public final class MVar<A> {
 	
 	/// Attempts to read the contents of the receiver without blocking.
 	///
-	/// If the MVar is empty, this function returns .None.  If the MVar is full, this function wraps
-	/// the value in .Some and returns.
+	/// If the MVar is empty, this function returns .none.  If the MVar is full, this function wraps
+	/// the value in .some and returns.
 	public func tryRead() -> Optional<A> {
 		pthread_mutex_lock(self.lock)
 		if self.val == nil {
@@ -218,12 +218,9 @@ public func ==<A : Equatable>(lhs : MVar<A>, rhs : MVar<A>) -> Bool {
 	return lhs.read() == rhs.read()
 }
 
-import typealias Darwin.sys._pthread.pthread_mutex_t
-import typealias Darwin.sys._pthread.pthread_cond_t
-import func Darwin.sys._pthread.pthread_mutex_init
-import func Darwin.sys._pthread.pthread_mutex_lock
-import func Darwin.sys._pthread.pthread_mutex_unlock
-import func Darwin.sys._pthread.pthread_cond_init
-import func Darwin.sys._pthread.pthread_cond_wait
-import func Darwin.sys._pthread.pthread_cond_signal
+#if os(Linux)
+	import Glibc
+#else
+	import Darwin
+#endif
 

@@ -6,6 +6,13 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
+/// A `TQueue` is like a `TChan` in that it is a transactional channel however
+/// it does not allow `duplicate()`s or `clone()`s.  Because of this, throughput
+/// per individual operations is much faster.
+///
+/// The implementation is based on the traditional purely-functional queue 
+/// representation that uses two lists to obtain amortised O(1) enqueue and 
+/// dequeue operations.
 public struct TQueue<A> {
 	let readEnd : TVar<[A]>
 	let writeEnd : TVar<[A]>
@@ -15,10 +22,9 @@ public struct TQueue<A> {
 		self.writeEnd = writeEnd
 	}
 	
-	public func create() -> STM<TQueue<A>> {
-		let read = TVar([] as [A])
-		let write = TVar([] as [A])
-		return STM<TQueue<A>>.pure(TQueue(read, write))
+	public init() {
+		self.readEnd = TVar([] as [A])
+		self.writeEnd = TVar([] as [A])
 	}
 
 	/// Uses an atomic transaction to write the given value to the receiver.
