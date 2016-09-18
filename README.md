@@ -139,6 +139,14 @@ Concurrent supports OS X 10.9+ and iOS 7.0+.
 Installation
 =====
 
+#### Swift Package Manager
+
+- Add SwiftCheck to your `Package.swift` file's dependencies section:
+
+```
+.Package(url: "https://github.com/typelift/Concurrent.git", versions: Version(0,4,0)..<Version(1,0,0))
+```
+
 #### Carthage
 Create a `Cartfile` that lists the framework and run `carthage bootstrap`. Follow the [instructions](https://github.com/Carthage/Carthage#if-youre-building-for-ios) to add `$(SRCROOT)/Carthage/Build/iOS/Concurrent.framework` to an iOS project.
 
@@ -147,7 +155,7 @@ github "typelift/Concurrent"
 ```
 
 #### Manually
-1. Download and drop ```/Sources``` folder in your project.  
+1. Download and drop `/Sources` folder in your project.  
 2. Congratulations!  
 
 #### Framework
