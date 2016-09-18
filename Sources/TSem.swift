@@ -6,11 +6,11 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-/// TSem is a transactional semaphore. It holds a certain number of units, and 
+/// `TSem is a transactional semaphore. It holds a certain number of units, and 
 /// units may be acquired or released by `wait()` and `signal()` respectively. 
 /// When the TSem is empty, `wait()` blocks.
 ///
-/// Note that TSem has no concept of fairness, and there is no guarantee that 
+/// Note that `TSem` has no concept of fairness, and there is no guarantee that
 /// threads blocked in `wait()` will be unblocked in the same order; in fact 
 /// they will all be unblocked at the same time and will fight over the TSem. 
 /// Hence TSem is not suitable if you expect there to be a high number of 

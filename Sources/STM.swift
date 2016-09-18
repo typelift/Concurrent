@@ -5,8 +5,6 @@
 //  Created by Robert Widmann on 9/27/15.
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
-// This file is a fairly clean port of FSharpX's implementation 
-// ~(https://github.com/fsprojects/FSharpx.Extras/)
 
 /// A monad supporting atomic memory transactions.
 public struct STM<T> {

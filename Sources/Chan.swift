@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-/// Channels are unbounded FIFO streams of values with a read and write terminals comprised of
-/// MVars.
+/// Channels are unbounded FIFO streams of values with a read and write 
+/// terminals comprised of `MVar`s.
 public struct Chan<A> {
-	let readEnd : MVar<MVar<ChItem<A>>>
-	let writeEnd : MVar<MVar<ChItem<A>>>
+	fileprivate let readEnd : MVar<MVar<ChItem<A>>>
+	fileprivate let writeEnd : MVar<MVar<ChItem<A>>>
 	
 	private init(read : MVar<MVar<ChItem<A>>>, write: MVar<MVar<ChItem<A>>>) {
 		self.readEnd = read
@@ -91,7 +91,7 @@ public struct Chan<A> {
 	}
 }
 
-internal struct ChItem<A> {
+private struct ChItem<A> {
 	let val : () -> A
 	let stream : () -> MVar<ChItem<A>>
 

@@ -11,8 +11,8 @@ private indirect enum TList<A> {
 	case tCons(A, TVar<TList<A>>)
 }
 
-/// Transactional Channels are unbounded FIFO streams of values with a read and write terminals comprised of
-/// TVars.
+/// Transactional Channels are unbounded FIFO streams of values with a read and 
+/// write terminals comprised of `TVar`s.
 public struct TChan<A> {
 	private let readHead : TVar<TVar<TList<A>>>
 	private let writeHead : TVar<TVar<TList<A>>>

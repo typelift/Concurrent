@@ -6,10 +6,13 @@
 //  Copyright (c) 2014 TypeLift. All rights reserved.
 //
 
-/// QSem is a simple quanitity semaphore (read: counting semaphore) that aquires and releases
-/// resources in increments of 1.  The semaphore keeps track of blocked threads with MVar<()>'s.
-/// When a thread becomes unblocked, the semaphore simply fills the MVar with a ().  Threads can
-/// also unblock themselves by putting () into their MVar.
+/// `QSem` is a simple quanitity semaphore (read: counting semaphore) that 
+/// aquires and releases resources in increments of 1.  The semaphore keeps 
+/// track of blocked threads with MVar<()>'s. 
+///
+/// When a thread becomes unblocked, the semaphore simply fills the `MVar` with
+/// a `()`.  Threads can also unblock themselves by putting `()` into their 
+/// `MVar`.
 public struct QSem {
 	let contents : MVar<(UInt, [MVar<()>], [MVar<()>])>
 	
@@ -24,7 +27,8 @@ public struct QSem {
 		self.init(sem)
 	}
 	
-	/// Decrements the value of the semaphore by 1 and waits for a unit to become available.
+	/// Decrements the value of the semaphore by 1 and waits for a unit to
+	/// become available.
 	public func wait() {
 		let t : (UInt, [MVar<()>], [MVar<()>]) = self.contents.take()
 		if t.0 == 0 {
@@ -38,7 +42,8 @@ public struct QSem {
 		}
 	}
 	
-	/// Increments the value of the semaphore by 1 and signals that a unit has become available.
+	/// Increments the value of the semaphore by 1 and signals that a unit has
+	/// become available.
 	public func signal() {
 		let t = self.contents.take()
 		let r = self.signal(t)
