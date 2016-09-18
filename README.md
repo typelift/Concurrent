@@ -45,7 +45,7 @@ let x2 = chan.read() // Blocks until the dispatch block is executed and the Chan
 Unlike lock-based protection mechanisms, we can wrap mutable variables that must
 be accessed concurrently in an MVar.
 
-```
+```swift
 import class Concurrent.MVar
 
 /// An MVar (Mutable Variable) is a thread-safe synchronizing variable that can be used for 
