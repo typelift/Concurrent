@@ -32,20 +32,24 @@ internal final class Entry {
 	convenience init<T>(_ location : TVar<T>, _ value : TVarType<T>) {
 		self.init(location, value, true)
 	}
-	
+
 	init<T>(_ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
 		self.ident = ObjectIdentifier(T.self)
-		self.location = location.upCast
-		self.oldValue = location.value.upCast
-		self._newValue = value.upCast
+		// HACK: bridge-all-the-things-to-Any makes this a legal transformation.
+		self.location = unsafeBitCast(location, to: TVar<Any>.self)
+		// HACK: TVarType's layout doesn't depend on T.
+		self.oldValue = unsafeBitCast(location.value, to: TVarType<Any>.self)
+		self._newValue = unsafeBitCast(value, to: TVarType<Any>.self)
 		self.hasOldValue = valid
 	}
 	
 	private init<T>(_ ident : ObjectIdentifier, _ oldValue : TVarType<T>, _ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
 		self.ident = ident
-		self.location = location.upCast
-		self.oldValue = oldValue.upCast
-		self._newValue = value.upCast
+		// HACK: bridge-all-the-things-to-Any makes this a legal transformation.
+		self.location = unsafeBitCast(location, to: TVar<Any>.self)
+		// HACK: TVarType's layout doesn't depend on T.
+		self.oldValue = unsafeBitCast(oldValue, to: TVarType<Any>.self)
+		self._newValue = unsafeBitCast(value, to: TVarType<Any>.self)
 		self.hasOldValue = valid
 	}
 	
@@ -64,7 +68,7 @@ private enum STMError : Error {
 	case invalidOperationException
 }
 
-private var _current : Any? = nil
+private var STMCurrentTransaction = MVar<TLog>()
 
 /// A transactional memory log
 internal final class TLog {
@@ -97,13 +101,13 @@ internal final class TLog {
 	func readTVar<T>(_ location : TVar<T>) -> T {
 		if let entry = self.log[location.hashValue] {
 			precondition(ObjectIdentifier.init(T.self) == entry.ident, "Type \(T.self) does not match.")
-			return entry._newValue._val() as! T
+			return entry._newValue._val as! T
 		} else if let out = outer {
 			return out.readTVar(location)
 		} else {
 			let entry = Entry(location)
 			log[location.hashValue] = entry
-			return entry.oldValue._val() as! T
+			return entry.oldValue._val as! T
 		}
 	}
 	
@@ -131,7 +135,8 @@ internal final class TLog {
 	func writeTVar<T>(_ location : TVar<T>, value : TVarType<T>) {
 		if let entry = self.log[location.hashValue] {
 			precondition(ObjectIdentifier(T.self) == entry.ident)
-			entry._newValue = value.upCast
+			// HACK: TVarType's layout doesn't depend on T.
+			entry._newValue = unsafeBitCast(value, to: TVarType<Any>.self)
 		} else {
 			let entry = Entry(location, value)
 			log[location.hashValue] = entry
@@ -162,12 +167,9 @@ internal final class TLog {
 	
 	static func atomically<T>(_ p : (TLog) throws -> T) throws -> T {
 		let trans = TLog()
-		guard _current == nil else {
-			fatalError("Transaction already running on current thread")
-		}
-		_current = trans
+		assert(STMCurrentTransaction.tryPut(trans), "Transaction already running on current thread")
 		defer {
-			_current = nil
+			_ = STMCurrentTransaction.take()
 		}
 		while true {
 			do {
