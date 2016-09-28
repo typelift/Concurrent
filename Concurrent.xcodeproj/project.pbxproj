@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		826B55951D9A1B0500FC5257 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55941D9A1B0500FC5257 /* STMSpec.swift */; };
+		826B55961D9A1B0500FC5257 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55941D9A1B0500FC5257 /* STMSpec.swift */; };
+		826B55971D9A1B0500FC5257 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55941D9A1B0500FC5257 /* STMSpec.swift */; };
 		82AA04071D7B206300DD3037 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03FE1D7B206300DD3037 /* Concurrent.framework */; };
 		82AA04281D7B210700DD3037 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03F41D7B08CB00DD3037 /* SwiftCheck.framework */; };
 		82AA04651D7B2D6700DD3037 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA045F1D7B2D6700DD3037 /* ChanSpec.swift */; };
@@ -208,6 +211,7 @@
 
 /* Begin PBXFileReference section */
 		821BEE5F1D8EFDA5009F8D58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = SOURCE_ROOT; };
+		826B55941D9A1B0500FC5257 /* STMSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = STMSpec.swift; path = Sources/STMSpec.swift; sourceTree = SOURCE_ROOT; };
 		82AA03FE1D7B206300DD3037 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AA04061D7B206300DD3037 /* Concurrent-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AA041E1D7B206C00DD3037 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -360,6 +364,7 @@
 				82AA04611D7B2D6700DD3037 /* MVarSpec.swift */,
 				82AA04631D7B2D6700DD3037 /* SVarSpec.swift */,
 				82AA04641D7B2D6700DD3037 /* TMVarSpec.swift */,
+				826B55941D9A1B0500FC5257 /* STMSpec.swift */,
 				8434F99019E9CD76008D9909 /* Supporting Files */,
 			);
 			path = ConcurrentTests;
@@ -756,6 +761,7 @@
 				82AA04761D7B2D6700DD3037 /* TMVarSpec.swift in Sources */,
 				82AA04731D7B2D6700DD3037 /* SVarSpec.swift in Sources */,
 				82AA046A1D7B2D6700DD3037 /* ConcurrentSpec.swift in Sources */,
+				826B55971D9A1B0500FC5257 /* STMSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,6 +816,7 @@
 				82AA04741D7B2D6700DD3037 /* TMVarSpec.swift in Sources */,
 				82AA04711D7B2D6700DD3037 /* SVarSpec.swift in Sources */,
 				82AA04681D7B2D6700DD3037 /* ConcurrentSpec.swift in Sources */,
+				826B55951D9A1B0500FC5257 /* STMSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,6 +850,7 @@
 				82AA04751D7B2D6700DD3037 /* TMVarSpec.swift in Sources */,
 				82AA04721D7B2D6700DD3037 /* SVarSpec.swift in Sources */,
 				82AA04691D7B2D6700DD3037 /* ConcurrentSpec.swift in Sources */,
+				826B55961D9A1B0500FC5257 /* STMSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -28,19 +28,15 @@ public struct STM<T> {
 		}
 	}
 	
-	/// Compose two alternative STM actions (GHC only). 
+	/// Compose two alternative STM actions. 
 	///
 	/// If the first action completes without retrying then it forms the result
 	/// of the `orElse`. Otherwise, if the first action retries, then the second
 	/// action is tried in its place. If both actions retry then the `orElse` as
 	/// a whole retries.
-	public func orElse(_ b : STM<T>) -> STM<T>  {
+	public func orElse(_ b : STM<T>) throws -> STM<T>  {
 		return STM { trans in
-			do {
-				return try trans.orElse(self.unSTM, q: b.unSTM)
-			} catch _ {
-				fatalError()
-			}
+			return try trans.orElse(self.unSTM, q: b.unSTM)
 		}
 	}
 	
