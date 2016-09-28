@@ -14,49 +14,47 @@
 	import Darwin
 #endif
 
-internal final class Entry<T> {
-	let oldValue : TVarType<T>
-	var location : TVar<T>
-	var _newValue : TVarType<T>
+internal final class Entry {
+	let ident : ObjectIdentifier
+	let oldValue : TVarType<Any>
+	var location : TVar<Any>
+	var _newValue : TVarType<Any>
 	let hasOldValue : Bool
 	
 	var isValid : Bool {
 		return !hasOldValue || location.value == self.oldValue
 	}
 	
-	convenience init(_ location : TVar<T>) {
+	convenience init<T>(_ location : TVar<T>) {
 		self.init(location, location.value, false)
 	}
 	
-	convenience init(_ location : TVar<T>, _ value : TVarType<T>) {
+	convenience init<T>(_ location : TVar<T>, _ value : TVarType<T>) {
 		self.init(location, value, true)
 	}
 	
-	init(_ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
-		self.location = location
-		self.oldValue = location.value
-		self._newValue = value
+	init<T>(_ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
+		self.ident = ObjectIdentifier(T.self)
+		self.location = location.upCast
+		self.oldValue = location.value.upCast
+		self._newValue = value.upCast
 		self.hasOldValue = valid
 	}
 	
-	private init(_ oldValue : TVarType<T>, _ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
-		self.location = location
-		self.oldValue = oldValue
-		self._newValue = value
+	private init<T>(_ ident : ObjectIdentifier, _ oldValue : TVarType<T>, _ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
+		self.ident = ident
+		self.location = location.upCast
+		self.oldValue = oldValue.upCast
+		self._newValue = value.upCast
 		self.hasOldValue = valid
 	}
 	
-	func mergeNested(_ e : Entry<T>) {
+	func mergeNested(_ e : Entry) {
 		e._newValue = self._newValue
 	}
 	
 	func commit() {
 		self.location.value = self._newValue
-	}
-	
-	// HACK: bridge-all-the-things-to-Any makes this a legal transformation.
-	var upCast : Entry<Any> {
-		return Entry<Any>(self.oldValue.upCast, self.location.upCast, self._newValue.upCast, self.hasOldValue)
 	}
 }
 
@@ -72,19 +70,21 @@ private var _current : Any? = nil
 internal final class TLog {
 	lazy var locker = UnsafeMutablePointer<pthread_mutex_t>.allocate(capacity: MemoryLayout<pthread_mutex_t>.size)
 	lazy var cond = UnsafeMutablePointer<pthread_cond_t>.allocate(capacity: MemoryLayout<pthread_mutex_t>.size)
-	
+
 	let outer : TLog?
-	var log : Dictionary<TVar<Any>, Entry<Any>> = [:]
+	var log : Dictionary<Int, Entry> = [:]
 	
 	var isValid : Bool {
 		return self.log.values.reduce(true, { $0 && $1.isValid }) && (outer == nil || outer!.isValid)
 	}
 	
-	convenience init() {
-		self.init(outer: nil)
+	init() {
+		self.outer = nil
+		pthread_mutex_init(self.locker, nil)
+		pthread_cond_init(self.cond, nil)
 	}
 	
-	init(outer : TLog?) {
+	init(outer : TLog) {
 		self.outer = outer
 		pthread_mutex_init(self.locker, nil)
 		pthread_cond_init(self.cond, nil)
@@ -95,14 +95,15 @@ internal final class TLog {
 	}
 	
 	func readTVar<T>(_ location : TVar<T>) -> T {
-		if let entry = self.log[location.upCast] {
-			return entry._newValue.retrieve as! T
+		if let entry = self.log[location.hashValue] {
+			precondition(ObjectIdentifier.init(T.self) == entry.ident, "Type \(T.self) does not match.")
+			return entry._newValue._val() as! T
 		} else if let out = outer {
 			return out.readTVar(location)
 		} else {
 			let entry = Entry(location)
-			log[location.upCast] = entry.upCast
-			return entry.oldValue.retrieve
+			log[location.hashValue] = entry
+			return entry.oldValue._val() as! T
 		}
 	}
 	
@@ -128,21 +129,22 @@ internal final class TLog {
 	}
 	
 	func writeTVar<T>(_ location : TVar<T>, value : TVarType<T>) {
-		if let entry = self.log[location.upCast] {
+		if let entry = self.log[location.hashValue] {
+			precondition(ObjectIdentifier(T.self) == entry.ident)
 			entry._newValue = value.upCast
 		} else {
-			let entry = Entry(location)
-			log[location.upCast] = entry.upCast
+			let entry = Entry(location, value)
+			log[location.hashValue] = entry
 		}
 	}
 	
 	func mergeNested() {
 		if let out = self.outer {
 			for innerEntry in log.values {
-				if let outerE = out.log[innerEntry.location] {
+				if let outerE = out.log[innerEntry.location.hashValue] {
 					innerEntry.mergeNested(outerE)
 				} else {
-					out.log[innerEntry.location] = innerEntry
+					out.log[innerEntry.location.hashValue] = innerEntry
 				}
 			}
 		}
