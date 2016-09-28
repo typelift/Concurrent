@@ -28,7 +28,7 @@ public struct STM<T> {
 		}
 	}
 	
-	/// Compose two alternative STM actions (GHC only). 
+	/// Compose two alternative STM actions. 
 	///
 	/// If the first action completes without retrying then it forms the result
 	/// of the `orElse`. Otherwise, if the first action retries, then the second
