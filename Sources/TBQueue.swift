@@ -90,7 +90,7 @@ public struct TBQueue<A> {
 	/// Uses an atomic transaction to read the next value from the receiver
 	/// without blocking or retrying on failure.
 	public func tryRead() -> STM<Optional<A>> {
-		return self.read().fmap(Optional.some).orElse(STM<A?>.pure(.none))
+		return try! self.read().fmap(Optional.some).orElse(STM<A?>.pure(.none))
 	}
 
 	/// Uses an atomic transaction to get the next value from the receiver 

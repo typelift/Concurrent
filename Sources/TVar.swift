@@ -8,7 +8,7 @@
 
 /// A `TVar` (read: Transactional Variable) is a shared memory location that 
 /// supports atomic memory transactions.
-public struct TVar<T> : Comparable, Hashable {
+public final class TVar<T> : Comparable, Hashable {
 	internal var value : TVarType<T>
 	let _id : Int
 
@@ -23,139 +23,85 @@ public struct TVar<T> : Comparable, Hashable {
 		}
 	}
 	
-	private init(_ value : TVarType<T>, _ id : Int) {
+	fileprivate init(_ value : TVarType<T>, _ id : Int) {
 		self.value = value
 		self._id = id
 	}
-	
-	internal var upCast : TVar<Any> {
-		return TVar<Any>(self.value.upCast, self._id)
+
+	public static func == <T>(l : TVar<T>, r : TVar<T>) -> Bool {
+		return l._id == r._id
+	}
+
+	public static func < <T>(lhs : TVar<T>, rhs : TVar<T>) -> Bool {
+		return lhs._id < rhs._id
+	}
+
+	var upCast : TVar<Any> {
+		return unsafeBitCast(self, to: TVar<Any>.self)
 	}
 }
 
-extension TVar where T : Equatable {
-	public init(_ value : @autoclosure @escaping () -> T) {
-		self.value = PreEquatable(t: value)
+extension TVar where T : Hashable {
+	public convenience init(_ value : @autoclosure @escaping () -> T) {
+		self.init(TVarType<T>(hash: value ), nextId)
 		nextId += 1
-		self._id = nextId
 	}
 	
 	/// Uses an STM transaction to write the supplied value into the receiver.
 	public func write(_ value : T) -> STM<()>  {
-		return STM<T> { (trans : TLog) in
-			trans.writeTVar(self, value: PreEquatable(t: { value }))
+		return STM<T>({ (trans : TLog) in
+			trans.writeTVar(self, value: TVarType(hash: { value }))
 			return value
-		}.then(STM<()>.pure(()))
+		}).then(STM<()>.pure(()))
 	}
 }
 
-extension TVar where T : AnyObject {
-	public init(_ value : @autoclosure @escaping () -> T) {
-		self.value = UnderlyingRef(t: value)
+extension TVar {
+	public convenience init(_ value : @autoclosure @escaping () -> T) {
+		self.init(TVarType<T>(def: value), nextId)
 		nextId += 1
-		self._id = nextId
 	}
 	
 	/// Uses an STM transaction to write the supplied value into the receiver.
 	public func write(_ value : T) -> STM<()>  {
-		return STM<T> { (trans : TLog) in
-			trans.writeTVar(self, value: UnderlyingRef(t: { value }))
+		return STM<T>({ (trans : TLog) in
+			trans.writeTVar(self, value: TVarType<T>(def: { value }))
 			return value
-		}.then(STM<()>.pure(()))
+		}).then(STM<()>.pure(()))
 	}
 }
 
-extension TVar where T : Any {
-	public init(_ value : @autoclosure @escaping () -> T) {
-		self.value = Ref(t: value)
-		nextId += 1
-		self._id = nextId
-	}
-	
-	/// Uses an STM transaction to write the supplied value into the receiver.
-	public func write(_ value : T) -> STM<()>  {
-		return STM<T> { (trans : TLog) in
-			trans.writeTVar(self, value: Ref(t: { value }))
-			return value
-		}.then(STM<()>.pure(()))
-	}
-}
+internal final class TVarType<T> : Hashable {
+	var _fingerprint : Int
+	var _val : () -> Any
 
-internal class TVarType<T> : Equatable {
-	var retrieve : T { fatalError() }
+	var hashValue : Int { return _fingerprint }
 	// HACK: bridge-all-the-things-to-Any makes this a legal transformation.
-	var upCast : TVarType<Any> { fatalError() }
-}
-
-internal func == <T>(l : TVarType<T>, r : TVarType<T>) -> Bool {
-	if let ll = l as? Ref<T>, let rr = r as? Ref<T> {
-		return ll === rr
+	var upCast : TVarType<Any>{
+		return unsafeBitCast(self, to: TVarType<Any>.self)
 	}
-	fatalError()
-}
 
-internal func == <T : AnyObject>(l : TVarType<T>, r : TVarType<T>) -> Bool {
-	if let ll = l as? Ref<T>, let rr = r as? Ref<T> {
-		return ll === rr
-	} else if let ll = l as? UnderlyingRef<T>, let rr = r as? UnderlyingRef<T> {
-		return ll == rr
+	init(_ v : @escaping () -> T, _ fingerprint : Int) {
+		self._fingerprint = fingerprint
+		self._val = v
 	}
-	fatalError()
+
+	static func == (l : TVarType<T>, r : TVarType<T>) -> Bool {
+		return l.hashValue == r.hashValue
+	}
 }
 
-internal class PreEquatable<T : Equatable> : TVarType<T> {
-	let t : () -> T
-
-	override var retrieve : T { return self.t() }
-	override var upCast : TVarType<Any> { return Ref<Any>(t: { (self.retrieve as Any) }) }
-
-	init(t : @escaping () -> T) { self.t = t }
+extension TVarType where T : Hashable {
+	convenience init(hash t : @escaping () -> T) {
+		self.init(t, t().hashValue)
+	}
 }
 
-internal func == <T : Equatable>(l : PreEquatable<T>, r : PreEquatable<T>) -> Bool {
-	return l.retrieve == r.retrieve
-}
-
-internal class Ref<T> : TVarType<T> {
-	let t : () -> T
-
-	override var retrieve : T { return self.t() }
-	override var upCast : TVarType<Any> { return Ref<Any>(t: { (self.retrieve as Any) }) }
-
-	init(t : @escaping () -> T) { self.t = t }
-}
-
-internal func == <T>(l : Ref<T>, r : Ref<T>) -> Bool {
-	return l === r
-}
-
-internal class UnderlyingRef<T : AnyObject> : TVarType<T> {
-	let t : () -> T
-
-	override var retrieve : T { return self.t() }
-	override var upCast : TVarType<Any> { return Ref<Any>(t: { (self.retrieve as Any) }) }
-
-	init(t : @escaping () -> T) { self.t = t }
-}
-
-public func == <T>(l : TVar<T>, r : TVar<T>) -> Bool {
-	return l._id == r._id
-}
-
-public func < <T>(lhs : TVar<T>, rhs : TVar<T>) -> Bool {
-	return lhs._id < rhs._id
-}
-
-public func <= <T>(lhs : TVar<T>, rhs : TVar<T>) -> Bool {
-	return lhs._id <= rhs._id
-}
-
-public func >= <T>(lhs : TVar<T>, rhs : TVar<T>) -> Bool {
-	return lhs._id >= rhs._id
-}
-
-public func > <T>(lhs : TVar<T>, rhs : TVar<T>) -> Bool {
-	return lhs._id > rhs._id
+extension TVarType {
+	convenience init(def t : @escaping () -> T) {
+		self.init(t, 0)
+		self._fingerprint = ObjectIdentifier(self).hashValue
+	}
 }
 
 private var nextId : Int = Int.min
