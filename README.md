@@ -25,7 +25,7 @@ import struct Concurrent.Chan
 
 /// A Channel is an unbounded FIFO stream of values with special semantics
 /// for reads and writes.
-let chan : Chan<Int> = Chan()
+let chan = Chan<Int>()
 
 /// All writes to the Channel always succeed.  The Channel now contains `1`.
 chan.write(1) // happens immediately
@@ -85,7 +85,7 @@ counter.put(0)
 println(counter.take()) // 3
 ```
 
-MVars can also be used purely as a synchronization point between multiple threads:
+`MVar`s can also be used purely as a synchronization point between multiple threads:
 
 ```swift
 import class Concurrent.MVar
@@ -114,21 +114,52 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
 done.take()
 ```
 
-Of course, what concurrency library would be complete without Futures:
+Concurrent also exposes a structure for [Software Transactional
+Memory](https://en.wikipedia.org/wiki/Software_transactional_memory) for
+safe and structured access to shared memory:
 
 ```swift
-/// X will be the number 4 at some point in the future.
-let x : Future<Int> = forkFuture {
-	usleep(1)
-	return 4
-} .then({ res in // attaches an effect to be run when the future completes.
-	println(res)
-})
-		 
-/// Reading the Future for the first time forces its evaluation.  Subsequent
-/// read calls will return a memoized result rather than evaluate the whole
-/// Future again.
-let result = x.read()  // Result.Value(4)
+typealias Account = TVar<UInt>
+
+/// Some atomic operations
+func withdraw(from account : Account, amount : UInt) -> STM<()> { 
+    return account.read().flatMap { balance in
+        if balance > amount {
+            return account.write(balance - amount)
+        }
+        return STM<()>.pure(())
+    } 
+}
+func deposit(into account : Account, amount : UInt) -> STM<()> { 
+    return account.read().flatMap { balance in
+        return account.write(balance + amount)
+    }
+}
+
+func transfer(from : Account, to : Account, amount : UInt) -> STM<()> { 
+    return from.read().flatMap { fromBalance in
+        if fromBalance > amount {
+            return withdraw(from: from, amount: amount)
+                .then(deposit(into: to, amount: amount))
+        }
+        return STM<()>.pure(())
+    }
+}
+
+/// Here are some bank accounts represented as TVars - transactional memory
+/// variables.
+let alice = Account(200)
+let bob = Account(100)
+
+/// All account activity that will be applied in one contiguous transaction.
+/// Either all of the effects of this transaction apply to the accounts or
+/// everything is completely rolled back and it was as if nothing ever happened.
+let finalStatement = 
+    transfer(from: alice, to: bob, 100)
+        .then(transfer(from: bob, to: alice, 20))
+        .then(deposit(into: bob, amount: 1000))
+        .then(transfer(from: bob, to: alice, amount: 500))
+        .atomically()
 ```
 
 System Requirements

@@ -21,7 +21,7 @@ public struct STM<T> {
 	/// values in `TVar`s which mean that it should not continue. 
 	///
 	/// The implementation may block the thread until one of the `TVar`s that it
-	/// has read from has been udpated.
+	/// has read from has been updated.
 	public static func retry() -> STM<T>  {
 		return STM { trans in
 			return try trans.retry()
