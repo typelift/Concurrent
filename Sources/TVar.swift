@@ -8,6 +8,9 @@
 
 /// A `TVar` (read: Transactional Variable) is a shared memory location that
 /// supports atomic memory transactions.
+///
+/// A `TVar` may only be interacted with in the context of a transaction managed
+/// by `STM`.
 public final class TVar<T> : Comparable, Hashable {
 	/// Uses an STM transaction to return the current value stored in the `TVar`.
 	public func read() -> STM<T>  {
