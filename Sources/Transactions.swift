@@ -20,15 +20,15 @@ internal final class Entry {
 	var location : TVar<Any>
 	var _newValue : TVarType<Any>
 	let hasOldValue : Bool
-	
+
 	var isValid : Bool {
 		return !hasOldValue || location.value == self.oldValue
 	}
-	
+
 	convenience init<T>(_ location : TVar<T>) {
 		self.init(location, location.value, false)
 	}
-	
+
 	convenience init<T>(_ location : TVar<T>, _ value : TVarType<T>) {
 		self.init(location, value, true)
 	}
@@ -42,7 +42,7 @@ internal final class Entry {
 		self._newValue = unsafeBitCast(value, to: TVarType<Any>.self)
 		self.hasOldValue = valid
 	}
-	
+
 	private init<T>(_ ident : ObjectIdentifier, _ oldValue : TVarType<T>, _ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
 		self.ident = ident
 		// HACK: bridge-all-the-things-to-Any makes this a legal transformation.
@@ -52,11 +52,11 @@ internal final class Entry {
 		self._newValue = unsafeBitCast(value, to: TVarType<Any>.self)
 		self.hasOldValue = valid
 	}
-	
+
 	func mergeNested(_ e : Entry) {
 		e._newValue = self._newValue
 	}
-	
+
 	func commit() {
 		self.location.value = self._newValue
 	}
@@ -77,27 +77,27 @@ internal final class TLog {
 
 	let outer : TLog?
 	var log : Dictionary<Int, Entry> = [:]
-	
+
 	var isValid : Bool {
 		return self.log.values.reduce(true, { $0 && $1.isValid }) && (outer == nil || outer!.isValid)
 	}
-	
+
 	init() {
 		self.outer = nil
 		pthread_mutex_init(self.locker, nil)
 		pthread_cond_init(self.cond, nil)
 	}
-	
+
 	init(outer : TLog) {
 		self.outer = outer
 		pthread_mutex_init(self.locker, nil)
 		pthread_cond_init(self.cond, nil)
 	}
-	
+
 	static func newTVar<T>(_ value : T) -> TVar<T> {
 		return TVar(value)
 	}
-	
+
 	func readTVar<T>(_ location : TVar<T>) -> T {
 		if let entry = self.log[location.hashValue] {
 			precondition(ObjectIdentifier.init(T.self) == entry.ident, "Type \(T.self) does not match.")
@@ -110,12 +110,12 @@ internal final class TLog {
 			return entry.oldValue._val as! T
 		}
 	}
-	
+
 	// FIXME: Replace with with an MVar.
 	func lock() {
 		pthread_mutex_lock(self.locker)
 	}
-	
+
 	func block() {
 		guard pthread_mutex_trylock(self.locker) != 0 else {
 			fatalError("thread must be locked in order to wait")
@@ -123,15 +123,15 @@ internal final class TLog {
 		pthread_mutex_unlock(self.locker)
 		pthread_cond_wait(self.cond, self.locker)
 	}
-	
+
 	func signal() {
 		pthread_cond_broadcast(self.cond)
 	}
-	
+
 	func unlock() {
 		pthread_mutex_unlock(self.locker)
 	}
-	
+
 	func writeTVar<T>(_ location : TVar<T>, value : TVarType<T>) {
 		if let entry = self.log[location.hashValue] {
 			precondition(ObjectIdentifier(T.self) == entry.ident)
@@ -142,7 +142,7 @@ internal final class TLog {
 			log[location.hashValue] = entry
 		}
 	}
-	
+
 	func mergeNested() {
 		if let out = self.outer {
 			for innerEntry in log.values {
@@ -154,7 +154,7 @@ internal final class TLog {
 			}
 		}
 	}
-	
+
 	func commit() throws {
 		if let _ = self.outer {
 			throw STMError.invalidOperation
@@ -164,7 +164,7 @@ internal final class TLog {
 			}
 		}
 	}
-	
+
 	static func atomically<T>(_ p : (TLog) throws -> T) throws -> T {
 		let trans = TLog()
 		assert(STMCurrentTransaction.tryPut(trans), "Transaction already running on current thread")
@@ -213,11 +213,11 @@ internal final class TLog {
 			}
 		}
 	}
-	
+
 	func retry<T>() throws -> T {
 		throw STMError.retry
 	}
-	
+
 	func orElse<T>(_ p : (TLog) throws -> T, q : (TLog) throws -> T) throws -> T {
 		let first = TLog(outer: self)
 		do {

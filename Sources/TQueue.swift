@@ -10,8 +10,8 @@
 /// it does not allow `duplicate()`s or `clone()`s.  Because of this, throughput
 /// per individual operations is much faster.
 ///
-/// The implementation is based on the traditional purely-functional queue 
-/// representation that uses two lists to obtain amortised O(1) enqueue and 
+/// The implementation is based on the traditional purely-functional queue
+/// representation that uses two lists to obtain amortised O(1) enqueue and
 /// dequeue operations.
 public struct TQueue<A> {
 	let readEnd : TVar<[A]>
@@ -21,7 +21,7 @@ public struct TQueue<A> {
 		self.readEnd = readEnd
 		self.writeEnd = writeEnd
 	}
-	
+
 	public init() {
 		self.readEnd = TVar([] as [A])
 		self.writeEnd = TVar([] as [A])
@@ -55,7 +55,7 @@ public struct TQueue<A> {
 			}
 		}
 	}
-	
+
 	/// Uses an atomic transaction to read the next value from the `TQueue`
 	/// without blocking or retrying on failure.
 	public func tryRead() -> STM<Optional<A>> {

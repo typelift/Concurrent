@@ -7,7 +7,7 @@
 //
 
 /// `TBQueue` is a bounded version of `TQueue`. The queue has a maximum capacity
-/// set when it is created. If the queue already contains the maximum number of 
+/// set when it is created. If the queue already contains the maximum number of
 /// elements, then `write()` blocks until an element is removed from the queue.
 public struct TBQueue<A> {
 	let readNum : TVar<Int>
@@ -57,7 +57,7 @@ public struct TBQueue<A> {
 					}
 				}
 			}
-			
+
 			return act.then(self.writeHead.read().flatMap { listend in
 				return self.writeHead.write([x] + listend)
 			})
@@ -82,7 +82,7 @@ public struct TBQueue<A> {
 								.then(self.readHead.write(Array(zs.dropFirst())))
 								.then(STM<A>.pure(ys.first!))
 						}
-					}())
+						}())
 			}
 		}
 	}
@@ -93,7 +93,7 @@ public struct TBQueue<A> {
 		return try! self.read().fmap(Optional.some).orElse(STM<A?>.pure(.none))
 	}
 
-	/// Uses an atomic transaction to get the next value from the `TBQueue` 
+	/// Uses an atomic transaction to get the next value from the `TBQueue`
 	/// without removing it, retrying if the queue is empty.
 	public func peek() -> STM<A> {
 		return self.read().flatMap { x in
@@ -130,9 +130,9 @@ public struct TBQueue<A> {
 					}
 					return STM<()>.retry()
 				}
-			}().then(self.readHead.read().flatMap { xs in
-				return self.readHead.write([x] + xs)
-			})
+				}().then(self.readHead.read().flatMap { xs in
+					return self.readHead.write([x] + xs)
+				})
 		}
 	}
 

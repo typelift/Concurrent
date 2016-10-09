@@ -6,27 +6,27 @@
 //  Copyright © 2014-2016 TypeLift. All rights reserved.
 //
 
-/// `QSem` is a simple quanitity semaphore (read: counting semaphore) that 
-/// aquires and releases resources in increments of 1.  The semaphore keeps 
-/// track of blocked threads with MVar<()>'s. 
+/// `QSem` is a simple quanitity semaphore (read: counting semaphore) that
+/// aquires and releases resources in increments of 1.  The semaphore keeps
+/// track of blocked threads with MVar<()>'s.
 ///
 /// When a thread becomes unblocked, the semaphore simply fills the `MVar` with
-/// a `()`.  Threads can also unblock themselves by putting `()` into their 
+/// a `()`.  Threads can also unblock themselves by putting `()` into their
 /// `MVar`.
 public struct QSem {
 	let contents : MVar<(UInt, [MVar<()>], [MVar<()>])>
-	
+
 	private init(_ c : MVar<(UInt, [MVar<()>], [MVar<()>])>){
 		self.contents = c
 	}
-	
+
 	/// Creates a new quantity semaphore.
 	public init(initial : UInt) {
 		let t : (UInt, [MVar<()>], [MVar<()>]) = (initial, [], [])
 		let sem = MVar(initial: t)
 		self.init(sem)
 	}
-	
+
 	/// Decrements the value of the semaphore by 1 and waits for a unit to
 	/// become available.
 	public func wait() {
@@ -41,7 +41,7 @@ public struct QSem {
 			self.contents.put(u)
 		}
 	}
-	
+
 	/// Increments the value of the semaphore by 1 and signals that a unit has
 	/// become available.
 	public func signal() {
@@ -49,7 +49,7 @@ public struct QSem {
 		let r = self.signal(t)
 		self.contents.put(r)
 	}
-	
+
 	private func signal(_ t : (UInt, [MVar<()>], [MVar<()>])) -> (UInt, [MVar<()>], [MVar<()>]) {
 		switch t {
 		case (let i, let a1, let a2):
@@ -60,7 +60,7 @@ public struct QSem {
 			return t
 		}
 	}
-	
+
 	private func loop(_ l : [MVar<()>], b2 : [MVar<()>]) -> (UInt, [MVar<()>], [MVar<()>]) {
 		if l.count == 0 && b2.count == 0 {
 			let t : (UInt, [MVar<()>], [MVar<()>]) = (1, [], [])
@@ -68,7 +68,7 @@ public struct QSem {
 		} else if b2.count != 0 {
 			return self.loop(Array(b2.reversed()), b2: [])
 		}
-		
+
 		let b = l[0]
 		let bs = Array<MVar<()>>(l[1 ..< l.count])
 		if b.tryPut(()) {

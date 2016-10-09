@@ -11,7 +11,7 @@ private indirect enum TList<A> {
 	case tCons(A, TVar<TList<A>>)
 }
 
-/// Transactional Channels are unbounded FIFO streams of values with a read and 
+/// Transactional Channels are unbounded FIFO streams of values with a read and
 /// write terminals comprised of `TVar`s.
 public struct TChan<A> {
 	private let readHead : TVar<TVar<TList<A>>>
@@ -29,7 +29,7 @@ public struct TChan<A> {
 		let write = TVar(hole)
 		self = TChan(read, write)
 	}
-	
+
 	/// Creates and returns a new write-only channel.
 	///
 	/// To read from a broadcast transactional channel, `duplicate()` it first.
@@ -39,7 +39,7 @@ public struct TChan<A> {
 		let write = TVar(hole)
 		self = TChan(read, write)
 	}
-	
+
 	/// Uses an STM transaction to atomically create and return a new empty channel.
 	public func newTChan() -> STM<TChan<A>> {
 		let hole : TVar<TList<A>> = TVar(TList.tNil)
@@ -47,17 +47,17 @@ public struct TChan<A> {
 		let write = TVar(hole)
 		return STM<TChan<A>>.pure(TChan(read, write))
 	}
-	
+
 	/// Uses an STM transaction to atomically create and return a new write-only channel.
 	///
-	/// To read from a broadcast transactional channel, `duplicate()` it first. 
+	/// To read from a broadcast transactional channel, `duplicate()` it first.
 	public func newBroadcastTChan() -> STM<TChan<A>> {
 		let hole : TVar<TList<A>> = TVar(TList.tNil)
 		let read : TVar<TVar<TList<A>>> = TVar(undefined())
 		let write = TVar(hole)
 		return STM<TChan<A>>.pure(TChan(read, write))
 	}
-	
+
 	/// Uses an STM transaction to atomically write a value to a channel.
 	public func write(_ val : A) -> STM<()> {
 		return self.writeHead.read().flatMap { l in
@@ -65,7 +65,7 @@ public struct TChan<A> {
 			return l.write(TList.tCons(val, nl)).then(self.writeHead.write(nl))
 		}
 	}
-	
+
 	/// Uses an STM transaction to atomically read a value from the channel.
 	public func read() -> STM<A> {
 		return self.readHead.read().flatMap { hd in
@@ -79,7 +79,7 @@ public struct TChan<A> {
 			}
 		}
 	}
-	
+
 	/// Uses an STM transaction to atomically read a value from the channel
 	/// without retrying on failure.
 	public func tryRead() -> STM<Optional<A>> {
@@ -94,8 +94,8 @@ public struct TChan<A> {
 			}
 		}
 	}
-	
-	/// Uses an STM transaction to atomically get the next value from the 
+
+	/// Uses an STM transaction to atomically get the next value from the
 	/// channel, retrying on failure.
 	public func peek() -> STM<A> {
 		return self.readHead.read().flatMap { hd in
@@ -109,8 +109,8 @@ public struct TChan<A> {
 			}
 		}
 	}
-	
-	/// Uses an STM transaction to atomically get the next value from the 
+
+	/// Uses an STM transaction to atomically get the next value from the
 	/// channel without retrying.
 	public func tryPeek() -> STM<Optional<A>> {
 		return self.readHead.read().flatMap { hd in
@@ -124,7 +124,7 @@ public struct TChan<A> {
 			}
 		}
 	}
-	
+
 	/// Uses an STM transaction to atomically duplicate a channel.
 	///
 	/// The duplicate channel begins empty, but data written to either channel
@@ -136,8 +136,8 @@ public struct TChan<A> {
 			return STM<TChan<A>>.pure(TChan(newread, self.writeHead))
 		}
 	}
-	
-	/// Uses an STM transaction to atomically put a data item back onto a 
+
+	/// Uses an STM transaction to atomically put a data item back onto a
 	/// channel, where it will be the next item read.
 	public func unGet(_ x : A) -> STM<()> {
 		return self.readHead.read().flatMap { hd in
@@ -145,7 +145,7 @@ public struct TChan<A> {
 			return self.readHead.write(newhd)
 		}
 	}
-	
+
 	/// Uses an STM transaction to return whether the channel is empty.
 	public var isEmpty : STM<Bool> {
 		return self.readHead.read().flatMap { hd in
@@ -159,7 +159,7 @@ public struct TChan<A> {
 			}
 		}
 	}
-	
+
 	/// Uses an STM transaction to atomically clone a channel.
 	///
 	/// Similar to `duplicate()`, but the cloned channel starts with the same

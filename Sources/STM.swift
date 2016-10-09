@@ -17,8 +17,8 @@ public struct STM<T> {
 		}
 	}
 
-	/// Retry execution of the current memory transaction because it has seen 
-	/// values in `TVar`s which mean that it should not continue. 
+	/// Retry execution of the current memory transaction because it has seen
+	/// values in `TVar`s which mean that it should not continue.
 	///
 	/// The implementation may block the thread until one of the `TVar`s that it
 	/// has read from has been updated.
@@ -27,8 +27,8 @@ public struct STM<T> {
 			return try trans.retry()
 		}
 	}
-	
-	/// Compose two alternative STM actions. 
+
+	/// Compose two alternative STM actions.
 	///
 	/// If the first action completes without retrying then it forms the result
 	/// of the `orElse`. Otherwise, if the first action retries, then the second
@@ -39,9 +39,9 @@ public struct STM<T> {
 			return try trans.orElse(self.unSTM, q: b.unSTM)
 		}
 	}
-	
+
 	fileprivate let unSTM : (TLog) throws -> T
-	
+
 	internal init(_ unSTM : @escaping (TLog) throws -> T) {
 		self.unSTM = unSTM
 	}
