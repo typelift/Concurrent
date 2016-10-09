@@ -3,30 +3,30 @@
 //  Basis
 //
 //  Created by Robert Widmann on 9/13/14.
-//  Copyright (c) 2014 TypeLift. All rights reserved.
+//  Copyright © 2014-2016 TypeLift. All rights reserved.
 //
 
-/// Channels are unbounded FIFO streams of values with a read and write 
+/// Channels are unbounded FIFO streams of values with a read and write
 /// terminals comprised of `MVar`s.
 public struct Chan<A> {
 	fileprivate let readEnd : MVar<MVar<ChItem<A>>>
 	fileprivate let writeEnd : MVar<MVar<ChItem<A>>>
-	
+
 	private init(read : MVar<MVar<ChItem<A>>>, write: MVar<MVar<ChItem<A>>>) {
 		self.readEnd = read
 		self.writeEnd = write
 	}
-	
+
 	/// Creates and returns a new empty channel.
 	public init() {
 		let hole : MVar<ChItem<A>> = MVar()
 		let readVar = MVar(initial: hole)
 		let writeVar : MVar<MVar<ChItem<A>>> = MVar(initial: hole)
-		
+
 		self.init(read: readVar, write: writeVar)
 	}
-	
-	
+
+
 	/// Reads a value from the channel.
 	public func read() -> A {
 		do {
@@ -38,7 +38,7 @@ public struct Chan<A> {
 			fatalError("Fatal: Could not modify read head.")
 		}
 	}
-	
+
 	/// Writes a value to a channel.
 	public func write(_ x : A) {
 		self.writeEnd.modify_ { old_hole in
@@ -47,7 +47,7 @@ public struct Chan<A> {
 			return new_hole
 		}
 	}
-	
+
 	/// Writes a list of values to a channel.
 	public func writeList(_ xs : [A]) {
 		xs.forEach(self.write)
@@ -55,9 +55,10 @@ public struct Chan<A> {
 
 	/// Returns whether the channel is empty.
 	///
-	/// This function is just a snapshot of the state of the Chan at that point in time.  In heavily
-	/// concurrent computations, this may change out from under you without warning, or even by the
-	/// time it can be acted on.  It is better to use one of the direct actions above.
+	/// This function is just a snapshot of the state of the Chan at that point in
+	/// time.  In heavily concurrent computations, this may change out from under
+	/// you without warning, or even by the time it can be acted on.  It is better
+	/// to use one of the direct actions above.
 	public var isEmpty : Bool {
 		do {
 			return try self.readEnd.withMVar { r in
@@ -68,12 +69,13 @@ public struct Chan<A> {
 			fatalError("Fatal: Could not determine emptiness; read of underlying MVar failed.")
 		}
 	}
-	
+
 	/// Duplicates a channel.
 	///
-	/// The duplicate channel begins empty, but data written to either channel from then on will be 
-	/// available from both. Because both channels share the same write end, data inserted into one
-	/// channel may be read by both channels.
+	/// The duplicate channel begins empty, but data written to either channel
+	/// from then on will be available from both. Because both channels share the
+	/// same write end, data inserted into one channel may be read by both
+	/// channels.
 	public func duplicate() -> Chan<A> {
 		let hole = self.writeEnd.read()
 		let newReadVar = MVar(initial: hole)

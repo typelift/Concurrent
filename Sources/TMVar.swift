@@ -3,7 +3,7 @@
 //  Concurrent
 //
 //  Created by Robert Widmann on 9/27/15.
-//  Copyright © 2015 TypeLift. All rights reserved.
+//  Copyright © 2015-2016 TypeLift. All rights reserved.
 //
 
 /// A `TMVar` is a synchronising variable, used for communication between
@@ -33,11 +33,10 @@ public struct TMVar<A> {
 	public init(initial : A) {
 		self.tvar = TVar<Optional<A>>(.some(initial))
 	}
-	
-	/// Uses an STM transaction to atomically return the contents of the 
-	/// receiver.
+
+	/// Uses an STM transaction to atomically return the contents of the `TMVar`.
 	///
-	/// If the `TMVar` is empty, this will block until a value is put into the 
+	/// If the `TMVar` is empty, this will block until a value is put into the
 	/// `TMVar`.  If the `TMVar` is full, the value is returned and the TMVar is
 	/// emptied.
 	public func take() -> STM<A> {
@@ -50,11 +49,11 @@ public struct TMVar<A> {
 			}
 		}
 	}
-	
-	/// Uses an STM transaction to atomically attempt to return the contents of 
-	/// the receiver without blocking.
+
+	/// Uses an STM transaction to atomically attempt to return the contents of
+	/// the `TMVar` without blocking.
 	///
-	/// If the `TMVar` is empty, this will immediately return `.none`. If the 
+	/// If the `TMVar` is empty, this will immediately return `.none`. If the
 	/// `TMVar` is full, the value is returned and the `TMVar` is emptied.
 	public func tryTake() -> STM<Optional<A>> {
 		return self.tvar.read().flatMap { m in
@@ -66,10 +65,10 @@ public struct TMVar<A> {
 			}
 		}
 	}
-	
-	/// Uses an STM transaction to atomically put a value into the receiver.
+
+	/// Uses an STM transaction to atomically put a value into the `TMVar`.
 	///
-	/// If the `TMVar` is currently full, the function will block until it 
+	/// If the `TMVar` is currently full, the function will block until it
 	/// becomes empty again.
 	public func put(_ val : A) -> STM<()> {
 		return self.tvar.read().flatMap { m in
@@ -81,9 +80,9 @@ public struct TMVar<A> {
 			}
 		}
 	}
-	
-	/// Uses an STM transaction to atomically attempt to put a value into the 
-	/// receiver without blocking.
+
+	/// Uses an STM transaction to atomically attempt to put a value into the
+	/// `TMVar` without blocking.
 	///
 	/// If the `TMVar` is empty, this will immediately returns `true`.  If the
 	/// `TMVar` is full, nothing occurs and `false` is returned.
@@ -98,9 +97,9 @@ public struct TMVar<A> {
 		}
 	}
 
-	/// Uses an STM transaction to atomically read the contents of the receiver.
+	/// Uses an STM transaction to atomically read the contents of the `TMVar`.
 	///
-	/// If the `TMVar` is currently empty, this will block until a value is put 
+	/// If the `TMVar` is currently empty, this will block until a value is put
 	/// into it.  If the `TMVar` is full, the value is returned, but the `TMVar`
 	/// remains full.
 	public func read() -> STM<A> {
@@ -113,18 +112,18 @@ public struct TMVar<A> {
 			}
 		}
 	}
-	
-	/// Uses an STM transaction to atomically attempt to read the contents of 
-	/// the receiver without blocking.
+
+	/// Uses an STM transaction to atomically attempt to read the contents of
+	/// the `TMVar` without blocking.
 	///
-	/// If the `TMVar` is empty, this function returns `.none`.  If the `TMVar` 
+	/// If the `TMVar` is empty, this function returns `.none`.  If the `TMVar`
 	/// is full, this function wraps the value in `.some` and returns.
 	public func tryRead() -> STM<Optional<A>> {
 		return self.tvar.read()
 	}
 
-	/// Uses an STM transaction to atomically, take a value from the receiver, 
-	/// put a given new value in the receiver, then return the receiver's old 
+	/// Uses an STM transaction to atomically, take a value from the `TMVar`,
+	/// put a given new value in the `TMVar`, then return the `TMVar`'s old
 	/// value.
 	public func swap(_ new : A) -> STM<A> {
 		return self.tvar.read().flatMap { m in
@@ -136,8 +135,8 @@ public struct TMVar<A> {
 			}
 		}
 	}
-	
-	/// Uses an STM transaction to atomically return whether the receiver is 
+
+	/// Uses an STM transaction to atomically return whether the `TMVar` is
 	/// empty.
 	public func isEmpty() -> STM<Bool> {
 		return self.tvar.read().flatMap { m in

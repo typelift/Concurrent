@@ -3,15 +3,15 @@
 //  Concurrent
 //
 //  Created by Robert Widmann on 9/27/15.
-//  Copyright © 2015 TypeLift. All rights reserved.
+//  Copyright © 2015-2016 TypeLift. All rights reserved.
 //
 
 /// A `TQueue` is like a `TChan` in that it is a transactional channel however
 /// it does not allow `duplicate()`s or `clone()`s.  Because of this, throughput
 /// per individual operations is much faster.
 ///
-/// The implementation is based on the traditional purely-functional queue 
-/// representation that uses two lists to obtain amortised O(1) enqueue and 
+/// The implementation is based on the traditional purely-functional queue
+/// representation that uses two lists to obtain amortised O(1) enqueue and
 /// dequeue operations.
 public struct TQueue<A> {
 	let readEnd : TVar<[A]>
@@ -21,13 +21,13 @@ public struct TQueue<A> {
 		self.readEnd = readEnd
 		self.writeEnd = writeEnd
 	}
-	
+
 	public init() {
 		self.readEnd = TVar([] as [A])
 		self.writeEnd = TVar([] as [A])
 	}
 
-	/// Uses an atomic transaction to write the given value to the receiver.
+	/// Uses an atomic transaction to write the given value to the `TQueue`.
 	///
 	/// Blocks if the queue is full.
 	public func write(_ val : A) -> STM<()> {
@@ -36,7 +36,7 @@ public struct TQueue<A> {
 		}
 	}
 
-	/// Uses an atomic transaction to read the next value from the receiver.
+	/// Uses an atomic transaction to read the next value from the `TQueue`.
 	public func read() -> STM<A> {
 		return self.readEnd.read().flatMap { xs in
 			if let x = xs.first {
@@ -55,14 +55,14 @@ public struct TQueue<A> {
 			}
 		}
 	}
-	
-	/// Uses an atomic transaction to read the next value from the receiver
+
+	/// Uses an atomic transaction to read the next value from the `TQueue`
 	/// without blocking or retrying on failure.
 	public func tryRead() -> STM<Optional<A>> {
 		return try! self.read().fmap(Optional.some).orElse(STM<A?>.pure(.none))
 	}
 
-	/// Uses an atomic transaction to get the next value from the receiver
+	/// Uses an atomic transaction to get the next value from the `TQueue`
 	/// without removing it, retrying if the queue is empty.
 	public func peek() -> STM<A> {
 		return self.read().flatMap { x in
@@ -70,7 +70,7 @@ public struct TQueue<A> {
 		}
 	}
 
-	/// Uses an atomic transaction to get the next value from the receiver
+	/// Uses an atomic transaction to get the next value from the `TQueue`
 	/// without removing it without retrying if the queue is empty.
 	public func tryPeek() -> STM<Optional<A>> {
 		return self.tryRead().flatMap { m in
