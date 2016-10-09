@@ -3,7 +3,7 @@
 //  Basis
 //
 //  Created by Robert Widmann on 9/13/14.
-//  Copyright (c) 2014 TypeLift. All rights reserved.
+//  Copyright © 2014-2016 TypeLift. All rights reserved.
 //
 
 /// `QSem` is a simple quanitity semaphore (read: counting semaphore) that 

@@ -3,7 +3,7 @@
 //  Parallel-iOS
 //
 //  Created by Robert Widmann on 9/25/14.
-//  Copyright (c) 2014 TypeLift. All rights reserved.
+//  Copyright © 2014-2016 TypeLift. All rights reserved.
 //
 // This file is a fairly clean port of FSharpX's implementation
 // ~(https://github.com/fsprojects/FSharpx.Extras/)
@@ -63,9 +63,9 @@ internal final class Entry {
 }
 
 private enum STMError : Error {
-	case retryException
-	case commitFailedException
-	case invalidOperationException
+	case retry
+	case commitFailed
+	case invalidOperation
 }
 
 private var STMCurrentTransaction = MVar<TLog>()
@@ -157,7 +157,7 @@ internal final class TLog {
 	
 	func commit() throws {
 		if let _ = self.outer {
-			throw STMError.invalidOperationException
+			throw STMError.invalidOperation
 		} else {
 			log.values.forEach {
 				$0.commit()
@@ -187,7 +187,7 @@ internal final class TLog {
 					trans.log.removeAll()
 					continue
 				}
-			} catch STMError.retryException {
+			} catch STMError.retry {
 				trans.lock()
 				let isValid = trans.isValid
 				if isValid {
@@ -199,8 +199,8 @@ internal final class TLog {
 					trans.unlock()
 				}
 				continue
-			} catch STMError.commitFailedException {
-				throw STMError.commitFailedException
+			} catch STMError.commitFailed {
+				throw STMError.commitFailed
 			} catch let l {
 				trans.lock()
 				let isValid = trans.isValid
@@ -215,7 +215,7 @@ internal final class TLog {
 	}
 	
 	func retry<T>() throws -> T {
-		throw STMError.retryException
+		throw STMError.retry
 	}
 	
 	func orElse<T>(_ p : (TLog) throws -> T, q : (TLog) throws -> T) throws -> T {
@@ -229,9 +229,9 @@ internal final class TLog {
 				first.mergeNested()
 				return result
 			} else {
-				throw STMError.commitFailedException
+				throw STMError.commitFailed
 			}
-		} catch STMError.retryException {
+		} catch STMError.retry {
 			let second = TLog(outer: self)
 			do {
 				let result = try q(second)
@@ -242,21 +242,21 @@ internal final class TLog {
 					second.mergeNested()
 					return result
 				} else {
-					throw STMError.commitFailedException
+					throw STMError.commitFailed
 				}
-			} catch STMError.retryException {
+			} catch STMError.retry {
 				self.lock()
 				let isValid = first.isValid && second.isValid && self.isValid
 				self.unlock()
 				if isValid {
 					first.mergeNested()
 					second.mergeNested()
-					throw STMError.retryException
+					throw STMError.retry
 				} else {
-					throw STMError.commitFailedException
+					throw STMError.commitFailed
 				}
-			} catch STMError.commitFailedException {
-				throw STMError.commitFailedException
+			} catch STMError.commitFailed {
+				throw STMError.commitFailed
 			} catch let l {
 				second.lock()
 				let isValid = second.isValid
@@ -265,11 +265,11 @@ internal final class TLog {
 					second.mergeNested()
 					throw l
 				} else {
-					throw STMError.commitFailedException
+					throw STMError.commitFailed
 				}
 			}
-		} catch STMError.commitFailedException {
-			throw STMError.commitFailedException
+		} catch STMError.commitFailed {
+			throw STMError.commitFailed
 		} catch let l {
 			first.lock()
 			let isValid = first.isValid
@@ -278,7 +278,7 @@ internal final class TLog {
 				first.mergeNested()
 				throw l
 			} else {
-				throw STMError.commitFailedException
+				throw STMError.commitFailed
 			}
 		}
 	}

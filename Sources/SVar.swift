@@ -1,5 +1,5 @@
 //
-//  SVar.swift
+//  `SVar`.swift
 //  Concurrent
 //
 //  Created by Robert Widmann on 2/3/15.
@@ -39,9 +39,9 @@ public struct SVar<A> {
 		self.init(MVar(initial: (1, v)))
 	}
 	
-	/// Empties the reciever.
+	/// Empties the `SVar`.
 	///
-	/// If the reciever is currently empty, this function does nothing.
+	/// If the `SVar` is currently empty, this function does nothing.
 	public func empty() {
 		let s = self.svar.take()
 		let (readers, val) = s
@@ -53,14 +53,14 @@ public struct SVar<A> {
 		}
 	}
 	
-	/// Reads a value from the receiver, then empties it.
+	/// Reads a value from the `SVar`, then empties it.
 	public func read() -> A {
 		let (readers, val) = self.svar.take()
 		self.svar.put(((readers - 1), val))
 		return val.take()
 	}
 	
-	/// Writes a value into the receiver, overwriting any previous value that 
+	/// Writes a value into the `SVar`, overwriting any previous value that 
 	/// may currently exist.
 	public func write(_ v : A) {
 		let s = self.svar.take()
@@ -76,9 +76,9 @@ public struct SVar<A> {
 		}
 	}
 	
-	/// Returns whether the receiver is empty.
+	/// Returns whether the `SVar` is empty.
 	///
-	/// This function is just a snapshot of the state of the SVar at that point 
+	/// This function is just a snapshot of the state of the `SVar` at that point 
 	/// in time.  In heavily concurrent computations, this may change out from 
 	/// under you without warning, or even by the time it can be acted on.  It 
 	/// is better to use one of the direct actions above.
@@ -96,7 +96,7 @@ public struct SVar<A> {
 /// compared for equality, one may have already lost its value, or may have had 
 /// its value swapped out from under you.  It is better to `read()` the values 
 /// yourself if you need a stricter equality.
-public func ==<A : Equatable>(lhs : SVar<A>, rhs : SVar<A>) -> Bool {
+public func ==<A : Equatable>(lhs : `SVar`<A>, rhs : `SVar`<A>) -> Bool {
 	if lhs.isEmpty && rhs.isEmpty {
 		return true
 	}

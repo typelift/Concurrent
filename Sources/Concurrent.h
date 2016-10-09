@@ -3,5 +3,5 @@
 //  Concurrent
 //
 //  Created by Robert Widmann on 10/11/14.
-//  Copyright (c) 2014 TypeLift. All rights reserved.
+//  Copyright © 2014-2016 TypeLift. All rights reserved.
 //

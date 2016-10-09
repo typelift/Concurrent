@@ -3,7 +3,7 @@
 //  Basis
 //
 //  Created by Robert Widmann on 9/13/14.
-//  Copyright (c) 2014 TypeLift. All rights reserved.
+//  Copyright © 2014-2016 TypeLift. All rights reserved.
 //
 
 /// Channels are unbounded FIFO streams of values with a read and write 
@@ -55,9 +55,10 @@ public struct Chan<A> {
 
 	/// Returns whether the channel is empty.
 	///
-	/// This function is just a snapshot of the state of the Chan at that point in time.  In heavily
-	/// concurrent computations, this may change out from under you without warning, or even by the
-	/// time it can be acted on.  It is better to use one of the direct actions above.
+	/// This function is just a snapshot of the state of the Chan at that point in
+  /// time.  In heavily concurrent computations, this may change out from under 
+  /// you without warning, or even by the time it can be acted on.  It is better
+  /// to use one of the direct actions above.
 	public var isEmpty : Bool {
 		do {
 			return try self.readEnd.withMVar { r in
@@ -71,9 +72,10 @@ public struct Chan<A> {
 	
 	/// Duplicates a channel.
 	///
-	/// The duplicate channel begins empty, but data written to either channel from then on will be 
-	/// available from both. Because both channels share the same write end, data inserted into one
-	/// channel may be read by both channels.
+	/// The duplicate channel begins empty, but data written to either channel 
+  /// from then on will be available from both. Because both channels share the 
+  /// same write end, data inserted into one channel may be read by both 
+  /// channels.
 	public func duplicate() -> Chan<A> {
 		let hole = self.writeEnd.read()
 		let newReadVar = MVar(initial: hole)

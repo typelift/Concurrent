@@ -3,7 +3,7 @@
 //  Parallel-iOS
 //
 //  Created by Robert Widmann on 9/28/14.
-//  Copyright (c) 2014 TypeLift. All rights reserved.
+//  Copyright © 2014-2016 TypeLift. All rights reserved.
 //
 
 /// Multicast unbounded FIFO streams.  IChans differ from regular chans because 

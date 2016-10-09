@@ -3,13 +3,13 @@
 //  Concurrent
 //
 //  Created by Robert Widmann on 9/27/15.
-//  Copyright © 2015 TypeLift. All rights reserved.
+//  Copyright © 2015-2016 TypeLift. All rights reserved.
 //
 
 /// A `TVar` (read: Transactional Variable) is a shared memory location that 
 /// supports atomic memory transactions.
 public final class TVar<T> : Comparable, Hashable {
-	/// Uses an STM transaction to return the current value stored in the receiver.
+	/// Uses an STM transaction to return the current value stored in the `TVar`.
 	public func read() -> STM<T>  {
 		return STM { trans in
 			return trans.readTVar(self)
@@ -49,7 +49,7 @@ extension TVar where T : Hashable {
 		nextId.modify_ { $0 + 1 }
 	}
 	
-	/// Uses an STM transaction to write the supplied value into the receiver.
+	/// Uses an STM transaction to write the supplied value into the `TVar`.
 	public func write(_ value : T) -> STM<()>  {
 		return STM<T>({ (trans : TLog) in
 			trans.writeTVar(self, value: TVarType(hash: value))
@@ -64,7 +64,7 @@ extension TVar {
 		nextId.modify_ { $0 + 1 }
 	}
 	
-	/// Uses an STM transaction to write the supplied value into the receiver.
+	/// Uses an STM transaction to write the supplied value into the `TVar`.
 	public func write(_ value : T) -> STM<()>  {
 		return STM<T>({ (trans : TLog) in
 			trans.writeTVar(self, value: TVarType<T>(def: value))
