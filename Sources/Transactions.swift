@@ -167,7 +167,8 @@ internal final class TLog {
 
 	static func atomically<T>(_ p : (TLog) throws -> T) throws -> T {
 		let trans = TLog()
-		assert(STMCurrentTransaction.tryPut(trans), "Transaction already running on current thread")
+        let transactionEnterSucceed = STMCurrentTransaction.tryPut(trans)
+        precondition(transactionEnterSucceed, "Transaction already running on current thread")
 		defer {
 			_ = STMCurrentTransaction.take()
 		}
