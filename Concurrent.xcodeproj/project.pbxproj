@@ -7,32 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		826B55A41D9C927500FC5257 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55A31D9C927500FC5257 /* STMSpec.swift */; };
-		826B55A51D9C927500FC5257 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55A31D9C927500FC5257 /* STMSpec.swift */; };
-		826B55A61D9C927500FC5257 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55A31D9C927500FC5257 /* STMSpec.swift */; };
-		826B55A81D9C93B200FC5257 /* IVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55A71D9C93B200FC5257 /* IVarSpec.swift */; };
-		826B55A91D9C93B200FC5257 /* IVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55A71D9C93B200FC5257 /* IVarSpec.swift */; };
-		826B55AA1D9C93B200FC5257 /* IVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55A71D9C93B200FC5257 /* IVarSpec.swift */; };
-		826B55AC1D9C987000FC5257 /* QSemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55AB1D9C987000FC5257 /* QSemSpec.swift */; };
-		826B55AD1D9C987000FC5257 /* QSemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55AB1D9C987000FC5257 /* QSemSpec.swift */; };
-		826B55AE1D9C987000FC5257 /* QSemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826B55AB1D9C987000FC5257 /* QSemSpec.swift */; };
+		8298F03F1E91BC850076D657 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0371E91BC850076D657 /* ChanSpec.swift */; };
+		8298F0401E91BC850076D657 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0371E91BC850076D657 /* ChanSpec.swift */; };
+		8298F0411E91BC850076D657 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0371E91BC850076D657 /* ChanSpec.swift */; };
+		8298F0421E91BC850076D657 /* ConcurrentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0381E91BC850076D657 /* ConcurrentSpec.swift */; };
+		8298F0431E91BC850076D657 /* ConcurrentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0381E91BC850076D657 /* ConcurrentSpec.swift */; };
+		8298F0441E91BC850076D657 /* ConcurrentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0381E91BC850076D657 /* ConcurrentSpec.swift */; };
+		8298F0451E91BC850076D657 /* IVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0391E91BC850076D657 /* IVarSpec.swift */; };
+		8298F0461E91BC850076D657 /* IVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0391E91BC850076D657 /* IVarSpec.swift */; };
+		8298F0471E91BC850076D657 /* IVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0391E91BC850076D657 /* IVarSpec.swift */; };
+		8298F0481E91BC850076D657 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03A1E91BC850076D657 /* MVarSpec.swift */; };
+		8298F0491E91BC850076D657 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03A1E91BC850076D657 /* MVarSpec.swift */; };
+		8298F04A1E91BC850076D657 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03A1E91BC850076D657 /* MVarSpec.swift */; };
+		8298F04B1E91BC850076D657 /* QSemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03B1E91BC850076D657 /* QSemSpec.swift */; };
+		8298F04C1E91BC850076D657 /* QSemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03B1E91BC850076D657 /* QSemSpec.swift */; };
+		8298F04D1E91BC850076D657 /* QSemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03B1E91BC850076D657 /* QSemSpec.swift */; };
+		8298F04E1E91BC850076D657 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03C1E91BC850076D657 /* STMSpec.swift */; };
+		8298F04F1E91BC850076D657 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03C1E91BC850076D657 /* STMSpec.swift */; };
+		8298F0501E91BC850076D657 /* STMSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03C1E91BC850076D657 /* STMSpec.swift */; };
+		8298F0511E91BC850076D657 /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03D1E91BC850076D657 /* SVarSpec.swift */; };
+		8298F0521E91BC850076D657 /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03D1E91BC850076D657 /* SVarSpec.swift */; };
+		8298F0531E91BC850076D657 /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03D1E91BC850076D657 /* SVarSpec.swift */; };
+		8298F0541E91BC850076D657 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03E1E91BC850076D657 /* TMVarSpec.swift */; };
+		8298F0551E91BC850076D657 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03E1E91BC850076D657 /* TMVarSpec.swift */; };
+		8298F0561E91BC850076D657 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03E1E91BC850076D657 /* TMVarSpec.swift */; };
 		82AA04071D7B206300DD3037 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03FE1D7B206300DD3037 /* Concurrent.framework */; };
 		82AA04281D7B210700DD3037 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03F41D7B08CB00DD3037 /* SwiftCheck.framework */; };
-		82AA04651D7B2D6700DD3037 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA045F1D7B2D6700DD3037 /* ChanSpec.swift */; };
-		82AA04661D7B2D6700DD3037 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA045F1D7B2D6700DD3037 /* ChanSpec.swift */; };
-		82AA04671D7B2D6700DD3037 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA045F1D7B2D6700DD3037 /* ChanSpec.swift */; };
-		82AA04681D7B2D6700DD3037 /* ConcurrentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04601D7B2D6700DD3037 /* ConcurrentSpec.swift */; };
-		82AA04691D7B2D6700DD3037 /* ConcurrentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04601D7B2D6700DD3037 /* ConcurrentSpec.swift */; };
-		82AA046A1D7B2D6700DD3037 /* ConcurrentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04601D7B2D6700DD3037 /* ConcurrentSpec.swift */; };
-		82AA046B1D7B2D6700DD3037 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04611D7B2D6700DD3037 /* MVarSpec.swift */; };
-		82AA046C1D7B2D6700DD3037 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04611D7B2D6700DD3037 /* MVarSpec.swift */; };
-		82AA046D1D7B2D6700DD3037 /* MVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04611D7B2D6700DD3037 /* MVarSpec.swift */; };
-		82AA04711D7B2D6700DD3037 /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04631D7B2D6700DD3037 /* SVarSpec.swift */; };
-		82AA04721D7B2D6700DD3037 /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04631D7B2D6700DD3037 /* SVarSpec.swift */; };
-		82AA04731D7B2D6700DD3037 /* SVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04631D7B2D6700DD3037 /* SVarSpec.swift */; };
-		82AA04741D7B2D6700DD3037 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04641D7B2D6700DD3037 /* TMVarSpec.swift */; };
-		82AA04751D7B2D6700DD3037 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04641D7B2D6700DD3037 /* TMVarSpec.swift */; };
-		82AA04761D7B2D6700DD3037 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04641D7B2D6700DD3037 /* TMVarSpec.swift */; };
 		82AA048B1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
 		82AA048C1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
 		82AA048D1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
@@ -217,17 +217,17 @@
 
 /* Begin PBXFileReference section */
 		821BEE5F1D8EFDA5009F8D58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = SOURCE_ROOT; };
-		826B55A31D9C927500FC5257 /* STMSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = STMSpec.swift; path = Tests/STMSpec.swift; sourceTree = SOURCE_ROOT; };
-		826B55A71D9C93B200FC5257 /* IVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IVarSpec.swift; path = Tests/IVarSpec.swift; sourceTree = SOURCE_ROOT; };
-		826B55AB1D9C987000FC5257 /* QSemSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QSemSpec.swift; path = Tests/QSemSpec.swift; sourceTree = SOURCE_ROOT; };
+		8298F0371E91BC850076D657 /* ChanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChanSpec.swift; path = Tests/ConcurrentTests/ChanSpec.swift; sourceTree = SOURCE_ROOT; };
+		8298F0381E91BC850076D657 /* ConcurrentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConcurrentSpec.swift; path = Tests/ConcurrentTests/ConcurrentSpec.swift; sourceTree = SOURCE_ROOT; };
+		8298F0391E91BC850076D657 /* IVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IVarSpec.swift; path = Tests/ConcurrentTests/IVarSpec.swift; sourceTree = SOURCE_ROOT; };
+		8298F03A1E91BC850076D657 /* MVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MVarSpec.swift; path = Tests/ConcurrentTests/MVarSpec.swift; sourceTree = SOURCE_ROOT; };
+		8298F03B1E91BC850076D657 /* QSemSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QSemSpec.swift; path = Tests/ConcurrentTests/QSemSpec.swift; sourceTree = SOURCE_ROOT; };
+		8298F03C1E91BC850076D657 /* STMSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = STMSpec.swift; path = Tests/ConcurrentTests/STMSpec.swift; sourceTree = SOURCE_ROOT; };
+		8298F03D1E91BC850076D657 /* SVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SVarSpec.swift; path = Tests/ConcurrentTests/SVarSpec.swift; sourceTree = SOURCE_ROOT; };
+		8298F03E1E91BC850076D657 /* TMVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TMVarSpec.swift; path = Tests/ConcurrentTests/TMVarSpec.swift; sourceTree = SOURCE_ROOT; };
 		82AA03FE1D7B206300DD3037 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AA04061D7B206300DD3037 /* Concurrent-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AA041E1D7B206C00DD3037 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		82AA045F1D7B2D6700DD3037 /* ChanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChanSpec.swift; path = Tests/ChanSpec.swift; sourceTree = SOURCE_ROOT; };
-		82AA04601D7B2D6700DD3037 /* ConcurrentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConcurrentSpec.swift; path = Tests/ConcurrentSpec.swift; sourceTree = SOURCE_ROOT; };
-		82AA04611D7B2D6700DD3037 /* MVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MVarSpec.swift; path = Tests/MVarSpec.swift; sourceTree = SOURCE_ROOT; };
-		82AA04631D7B2D6700DD3037 /* SVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SVarSpec.swift; path = Tests/SVarSpec.swift; sourceTree = SOURCE_ROOT; };
-		82AA04641D7B2D6700DD3037 /* TMVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TMVarSpec.swift; path = Tests/TMVarSpec.swift; sourceTree = SOURCE_ROOT; };
 		82AA04771D7B2D7D00DD3037 /* Chan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Chan.swift; path = Sources/Chan.swift; sourceTree = SOURCE_ROOT; };
 		82AA047B1D7B2D7D00DD3037 /* Concurrent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Concurrent.h; path = Sources/Concurrent.h; sourceTree = SOURCE_ROOT; };
 		82AA047E1D7B2D7D00DD3037 /* IChan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IChan.swift; path = Sources/IChan.swift; sourceTree = SOURCE_ROOT; };
@@ -367,14 +367,14 @@
 		8434F98F19E9CD76008D9909 /* ConcurrentTests */ = {
 			isa = PBXGroup;
 			children = (
-				82AA045F1D7B2D6700DD3037 /* ChanSpec.swift */,
-				82AA04601D7B2D6700DD3037 /* ConcurrentSpec.swift */,
-				82AA04611D7B2D6700DD3037 /* MVarSpec.swift */,
-				826B55A71D9C93B200FC5257 /* IVarSpec.swift */,
-				826B55AB1D9C987000FC5257 /* QSemSpec.swift */,
-				82AA04631D7B2D6700DD3037 /* SVarSpec.swift */,
-				82AA04641D7B2D6700DD3037 /* TMVarSpec.swift */,
-				826B55A31D9C927500FC5257 /* STMSpec.swift */,
+				8298F0371E91BC850076D657 /* ChanSpec.swift */,
+				8298F0381E91BC850076D657 /* ConcurrentSpec.swift */,
+				8298F0391E91BC850076D657 /* IVarSpec.swift */,
+				8298F03A1E91BC850076D657 /* MVarSpec.swift */,
+				8298F03B1E91BC850076D657 /* QSemSpec.swift */,
+				8298F03C1E91BC850076D657 /* STMSpec.swift */,
+				8298F03D1E91BC850076D657 /* SVarSpec.swift */,
+				8298F03E1E91BC850076D657 /* TMVarSpec.swift */,
 				8434F99019E9CD76008D9909 /* Supporting Files */,
 			);
 			path = ConcurrentTests;
@@ -588,7 +588,7 @@
 					};
 					82AA04051D7B206300DD3037 = {
 						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					82AA041D1D7B206C00DD3037 = {
@@ -602,7 +602,7 @@
 					};
 					8434F98A19E9CD76008D9909 = {
 						CreatedOnToolsVersion = 6.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 					};
 					84A53D391B1A8F1800E8A107 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -610,7 +610,7 @@
 					};
 					84A53D431B1A8F1800E8A107 = {
 						CreatedOnToolsVersion = 6.3.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -766,14 +766,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA04671D7B2D6700DD3037 /* ChanSpec.swift in Sources */,
-				826B55AA1D9C93B200FC5257 /* IVarSpec.swift in Sources */,
-				826B55AE1D9C987000FC5257 /* QSemSpec.swift in Sources */,
-				82AA046D1D7B2D6700DD3037 /* MVarSpec.swift in Sources */,
-				82AA04761D7B2D6700DD3037 /* TMVarSpec.swift in Sources */,
-				82AA04731D7B2D6700DD3037 /* SVarSpec.swift in Sources */,
-				82AA046A1D7B2D6700DD3037 /* ConcurrentSpec.swift in Sources */,
-				826B55A61D9C927500FC5257 /* STMSpec.swift in Sources */,
+				8298F0411E91BC850076D657 /* ChanSpec.swift in Sources */,
+				8298F0441E91BC850076D657 /* ConcurrentSpec.swift in Sources */,
+				8298F0531E91BC850076D657 /* SVarSpec.swift in Sources */,
+				8298F04D1E91BC850076D657 /* QSemSpec.swift in Sources */,
+				8298F04A1E91BC850076D657 /* MVarSpec.swift in Sources */,
+				8298F0471E91BC850076D657 /* IVarSpec.swift in Sources */,
+				8298F0501E91BC850076D657 /* STMSpec.swift in Sources */,
+				8298F0561E91BC850076D657 /* TMVarSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -823,14 +823,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA04651D7B2D6700DD3037 /* ChanSpec.swift in Sources */,
-				826B55A81D9C93B200FC5257 /* IVarSpec.swift in Sources */,
-				826B55AC1D9C987000FC5257 /* QSemSpec.swift in Sources */,
-				82AA046B1D7B2D6700DD3037 /* MVarSpec.swift in Sources */,
-				82AA04741D7B2D6700DD3037 /* TMVarSpec.swift in Sources */,
-				82AA04711D7B2D6700DD3037 /* SVarSpec.swift in Sources */,
-				82AA04681D7B2D6700DD3037 /* ConcurrentSpec.swift in Sources */,
-				826B55A41D9C927500FC5257 /* STMSpec.swift in Sources */,
+				8298F03F1E91BC850076D657 /* ChanSpec.swift in Sources */,
+				8298F0421E91BC850076D657 /* ConcurrentSpec.swift in Sources */,
+				8298F0511E91BC850076D657 /* SVarSpec.swift in Sources */,
+				8298F04B1E91BC850076D657 /* QSemSpec.swift in Sources */,
+				8298F0481E91BC850076D657 /* MVarSpec.swift in Sources */,
+				8298F0451E91BC850076D657 /* IVarSpec.swift in Sources */,
+				8298F04E1E91BC850076D657 /* STMSpec.swift in Sources */,
+				8298F0541E91BC850076D657 /* TMVarSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,14 +859,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA04661D7B2D6700DD3037 /* ChanSpec.swift in Sources */,
-				826B55A91D9C93B200FC5257 /* IVarSpec.swift in Sources */,
-				826B55AD1D9C987000FC5257 /* QSemSpec.swift in Sources */,
-				82AA046C1D7B2D6700DD3037 /* MVarSpec.swift in Sources */,
-				82AA04751D7B2D6700DD3037 /* TMVarSpec.swift in Sources */,
-				82AA04721D7B2D6700DD3037 /* SVarSpec.swift in Sources */,
-				82AA04691D7B2D6700DD3037 /* ConcurrentSpec.swift in Sources */,
-				826B55A51D9C927500FC5257 /* STMSpec.swift in Sources */,
+				8298F0401E91BC850076D657 /* ChanSpec.swift in Sources */,
+				8298F0431E91BC850076D657 /* ConcurrentSpec.swift in Sources */,
+				8298F0521E91BC850076D657 /* SVarSpec.swift in Sources */,
+				8298F04C1E91BC850076D657 /* QSemSpec.swift in Sources */,
+				8298F0491E91BC850076D657 /* MVarSpec.swift in Sources */,
+				8298F0461E91BC850076D657 /* IVarSpec.swift in Sources */,
+				8298F04F1E91BC850076D657 /* STMSpec.swift in Sources */,
+				8298F0551E91BC850076D657 /* TMVarSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
