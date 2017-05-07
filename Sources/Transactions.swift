@@ -14,6 +14,13 @@
 	import Darwin
 #endif
 
+// Here to silence builtin warnings for using unsafeBitCast with reference
+// types.  The layout of all types in the STM is fixed (doesn't depend on the
+// generic parameter), so bit casts are always legal.
+private func transmute<T, U>(_ x: T, to type: U.Type) -> U {
+  return unsafeBitCast(x, to: type)
+}
+
 internal final class Entry {
 	let ident : ObjectIdentifier
 	let oldValue : TVarType<Any>
@@ -36,20 +43,20 @@ internal final class Entry {
 	init<T>(_ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
 		self.ident = ObjectIdentifier(T.self)
 		// HACK: bridge-all-the-things-to-Any makes this a legal transformation.
-		self.location = unsafeBitCast(location, to: TVar<Any>.self)
+		self.location = transmute(location, to: TVar<Any>.self)
 		// HACK: TVarType's layout doesn't depend on T.
-		self.oldValue = unsafeBitCast(location.value, to: TVarType<Any>.self)
-		self._newValue = unsafeBitCast(value, to: TVarType<Any>.self)
+		self.oldValue = transmute(location.value, to: TVarType<Any>.self)
+		self._newValue = transmute(value, to: TVarType<Any>.self)
 		self.hasOldValue = valid
 	}
 
 	private init<T>(_ ident : ObjectIdentifier, _ oldValue : TVarType<T>, _ location : TVar<T>, _ value : TVarType<T>, _ valid : Bool) {
 		self.ident = ident
 		// HACK: bridge-all-the-things-to-Any makes this a legal transformation.
-		self.location = unsafeBitCast(location, to: TVar<Any>.self)
+		self.location = transmute(location, to: TVar<Any>.self)
 		// HACK: TVarType's layout doesn't depend on T.
-		self.oldValue = unsafeBitCast(oldValue, to: TVarType<Any>.self)
-		self._newValue = unsafeBitCast(value, to: TVarType<Any>.self)
+		self.oldValue = transmute(oldValue, to: TVarType<Any>.self)
+		self._newValue = transmute(value, to: TVarType<Any>.self)
 		self.hasOldValue = valid
 	}
 
@@ -136,7 +143,7 @@ internal final class TLog {
 		if let entry = self.log[location.hashValue] {
 			precondition(ObjectIdentifier(T.self) == entry.ident)
 			// HACK: TVarType's layout doesn't depend on T.
-			entry._newValue = unsafeBitCast(value, to: TVarType<Any>.self)
+			entry._newValue = transmute(value, to: TVarType<Any>.self)
 		} else {
 			let entry = Entry(location, value)
 			log[location.hashValue] = entry
