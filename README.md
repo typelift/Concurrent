@@ -34,10 +34,9 @@ chan.write(1) // happens immediately
 let x1 = chan.read()
 
 /// But if we read from an empty Channel the read blocks until we write to the Channel again.
-let time = dispatch_time(DISPATCH_TIME_NOW, 1 * Double(NSEC_PER_SEC))
-dispatch_after(time, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-	chan.write(2) // Causes the read to suceed and unblocks the reading thread.
-})
+DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
+  chan.write(2) // Causes the read to suceed and unblocks the reading thread.
+}
 
 let x2 = chan.read() // Blocks until the dispatch block is executed and the Channel becomes non-empty.
 ```
@@ -48,26 +47,26 @@ be accessed concurrently in an MVar.
 ```swift
 import class Concurrent.MVar
 
-/// An MVar (Mutable Variable) is a thread-safe synchronizing variable that can be used for 
+/// An MVar (Mutable Variable) is a thread-safe synchronizing variable that can be used for
 /// communication between threads.
-/// 
+///
 /// This MVar is currently empty.  Any reads or writes to it will block until it becomes "full".
 let counter : MVar<Int> = MVar()
 
-/// Attempt to increment the counter from 3 different threads.  Because the counter is empty, 
+/// Attempt to increment the counter from 3 different threads.  Because the counter is empty,
 /// all of these writes will block until a value is put into the MVar.
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-	counter.modify_(+1)
-	println("Modifier #1")
-})
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-	counter.modify_(+1)
-	println("Modifier #2")
-})
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-	counter.modify_(+1)
-	println("Modifier #3")
-})
+DispatchQueue.global().async {
+  counter.modify_ { $0 + 1 }
+  print("Modifier #1")
+}
+DispatchQueue.global().async {
+  counter.modify_ { $0 + 1 }
+  print("Modifier #2")
+}
+DispatchQueue.global().async {
+  counter.modify_ { $0 + 1 }
+  print("Modifier #3")
+}
 
 /// All the writes will now proceed and unblock each thread in turn.  The order of writes
 /// is determined by the order in which each thread called `modify(_ :)`.
@@ -82,7 +81,7 @@ counter.put(0)
 ///
 /// Because our take occured after the put, all of the modifications we made before will
 /// complete before we read the final value.
-println(counter.take()) // 3
+print(counter.take()) // 3
 ```
 
 `MVar`s can also be used purely as a synchronization point between multiple threads:
@@ -97,19 +96,19 @@ let done = MVar<()>() // The synchronization point
 /// Puts a value into the now-empty ping variable then blocks waiting for the
 /// pong variable to have a value put into it.  Once we have read the pong variable,
 /// we unblock the done MVar, and in doing so, unblock the main thread.
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-	pingvar.put("ping")
-	let contents = pongvar.take()
-	done.put(())
+DispatchQueue.global().async {
+  pingvar.put("ping")
+  _ = pongvar.take()
+  done.put(())
 }
 
 /// Takes the contents of the ping variable then puts a value into the pong variable
 /// to unblock the take we just performed.
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-	let contents = pingvar.take()
-	pongvar.put("pong")
+DispatchQueue.global().async {
+  _ = pingvar.take()
+  pongvar.put("pong")
 }
-		
+
 /// Blocks until all work has completed.
 done.take()
 ```
@@ -123,27 +122,28 @@ typealias Account = TVar<UInt>
 
 /// Some atomic operations
 func withdraw(from account : Account, amount : UInt) -> STM<()> { 
-    return account.read().flatMap { balance in
-        if balance > amount {
-            return account.write(balance - amount)
-        }
-        return STM<()>.pure(())
-    } 
-}
-func deposit(into account : Account, amount : UInt) -> STM<()> { 
-    return account.read().flatMap { balance in
-        return account.write(balance + amount)
+  return account.read().flatMap { balance in
+    if balance > amount {
+      return account.write(balance - amount)
     }
+    throw TransactionError.insufficientFunds
+  } 
+}
+
+func deposit(into account : Account, amount : UInt) -> STM<()> { 
+  return account.read().flatMap { balance in
+    return account.write(balance + amount)
+  }
 }
 
 func transfer(from : Account, to : Account, amount : UInt) -> STM<()> { 
-    return from.read().flatMap { fromBalance in
-        if fromBalance > amount {
-            return withdraw(from: from, amount: amount)
-                .then(deposit(into: to, amount: amount))
-        }
-        return STM<()>.pure(())
+  return from.read().flatMap { fromBalance in
+    if fromBalance > amount {
+      return withdraw(from: from, amount: amount)
+          .then(deposit(into: to, amount: amount))
     }
+    throw TransactionError.insufficientFunds
+  }
 }
 
 /// Here are some bank accounts represented as TVars - transactional memory
@@ -155,8 +155,8 @@ let bob = Account(100)
 /// Either all of the effects of this transaction apply to the accounts or
 /// everything is completely rolled back and it was as if nothing ever happened.
 let finalStatement = 
-    transfer(from: alice, to: bob, 100)
-        .then(transfer(from: bob, to: alice, 20))
+    transfer(from: alice, to: bob, amount: 100)
+        .then(transfer(from: bob, to: alice, amount: 20))
         .then(deposit(into: bob, amount: 1000))
         .then(transfer(from: bob, to: alice, amount: 500))
         .atomically()
