@@ -67,8 +67,6 @@ class MVarSpec : XCTestCase {
 				return self.delta(b ? error("read on empty MVar") : false, ac: xs)
 			case .swapMVar(_):
 				return self.delta(b ? error("swap on empty MVar") : false, ac: xs)
-			case .isEmptyMVar:
-				fallthrough
 			case .returnInt(_):
 				fallthrough
 			case .returnBool(_):

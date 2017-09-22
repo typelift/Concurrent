@@ -7,6 +7,66 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8235D3C21F75887300207FA1 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8235D3C11F75886700207FA1 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8235D3C31F75887900207FA1 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8235D3C11F75886700207FA1 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8235D3C41F75887C00207FA1 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8235D3C11F75886700207FA1 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8235D3C51F75887E00207FA1 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8235D3C11F75886700207FA1 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8235D3C61F75888400207FA1 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BE1F75884400207FA1 /* Chan.swift */; };
+		8235D3C71F75888400207FA1 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B91F75884300207FA1 /* IChan.swift */; };
+		8235D3C81F75888400207FA1 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B51F75884300207FA1 /* IVar.swift */; };
+		8235D3C91F75888400207FA1 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BD1F75884400207FA1 /* MVar.swift */; };
+		8235D3CA1F75888400207FA1 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BA1F75884300207FA1 /* QSem.swift */; };
+		8235D3CB1F75888400207FA1 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B71F75884300207FA1 /* STM.swift */; };
+		8235D3CC1F75888400207FA1 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B21F75884200207FA1 /* SVar.swift */; };
+		8235D3CD1F75888400207FA1 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B61F75884300207FA1 /* TBQueue.swift */; };
+		8235D3CE1F75888400207FA1 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3C01F75884400207FA1 /* TChan.swift */; };
+		8235D3CF1F75888400207FA1 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B81F75884300207FA1 /* TMVar.swift */; };
+		8235D3D01F75888400207FA1 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BB1F75884300207FA1 /* TQueue.swift */; };
+		8235D3D11F75888400207FA1 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BF1F75884400207FA1 /* Transactions.swift */; };
+		8235D3D21F75888400207FA1 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B31F75884300207FA1 /* TSem.swift */; };
+		8235D3D31F75888400207FA1 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B41F75884300207FA1 /* TVar.swift */; };
+		8235D3D41F75888900207FA1 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BE1F75884400207FA1 /* Chan.swift */; };
+		8235D3D51F75888900207FA1 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B91F75884300207FA1 /* IChan.swift */; };
+		8235D3D61F75888900207FA1 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B51F75884300207FA1 /* IVar.swift */; };
+		8235D3D71F75888900207FA1 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BD1F75884400207FA1 /* MVar.swift */; };
+		8235D3D81F75888900207FA1 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BA1F75884300207FA1 /* QSem.swift */; };
+		8235D3D91F75888900207FA1 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B71F75884300207FA1 /* STM.swift */; };
+		8235D3DA1F75888900207FA1 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B21F75884200207FA1 /* SVar.swift */; };
+		8235D3DB1F75888900207FA1 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B61F75884300207FA1 /* TBQueue.swift */; };
+		8235D3DC1F75888900207FA1 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3C01F75884400207FA1 /* TChan.swift */; };
+		8235D3DD1F75888900207FA1 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B81F75884300207FA1 /* TMVar.swift */; };
+		8235D3DE1F75888900207FA1 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BB1F75884300207FA1 /* TQueue.swift */; };
+		8235D3DF1F75888900207FA1 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BF1F75884400207FA1 /* Transactions.swift */; };
+		8235D3E01F75888900207FA1 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B31F75884300207FA1 /* TSem.swift */; };
+		8235D3E11F75888900207FA1 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B41F75884300207FA1 /* TVar.swift */; };
+		8235D3E21F75889100207FA1 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BE1F75884400207FA1 /* Chan.swift */; };
+		8235D3E31F75889100207FA1 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B91F75884300207FA1 /* IChan.swift */; };
+		8235D3E41F75889100207FA1 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B51F75884300207FA1 /* IVar.swift */; };
+		8235D3E51F75889100207FA1 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BD1F75884400207FA1 /* MVar.swift */; };
+		8235D3E61F75889100207FA1 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BA1F75884300207FA1 /* QSem.swift */; };
+		8235D3E71F75889100207FA1 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B71F75884300207FA1 /* STM.swift */; };
+		8235D3E81F75889100207FA1 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B21F75884200207FA1 /* SVar.swift */; };
+		8235D3E91F75889100207FA1 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B61F75884300207FA1 /* TBQueue.swift */; };
+		8235D3EA1F75889100207FA1 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3C01F75884400207FA1 /* TChan.swift */; };
+		8235D3EB1F75889100207FA1 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B81F75884300207FA1 /* TMVar.swift */; };
+		8235D3EC1F75889100207FA1 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BB1F75884300207FA1 /* TQueue.swift */; };
+		8235D3ED1F75889100207FA1 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BF1F75884400207FA1 /* Transactions.swift */; };
+		8235D3EE1F75889100207FA1 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B31F75884300207FA1 /* TSem.swift */; };
+		8235D3EF1F75889100207FA1 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B41F75884300207FA1 /* TVar.swift */; };
+		8235D3F01F75889600207FA1 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BE1F75884400207FA1 /* Chan.swift */; };
+		8235D3F11F75889600207FA1 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B91F75884300207FA1 /* IChan.swift */; };
+		8235D3F21F75889600207FA1 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B51F75884300207FA1 /* IVar.swift */; };
+		8235D3F31F75889600207FA1 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BD1F75884400207FA1 /* MVar.swift */; };
+		8235D3F41F75889600207FA1 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BA1F75884300207FA1 /* QSem.swift */; };
+		8235D3F51F75889600207FA1 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B71F75884300207FA1 /* STM.swift */; };
+		8235D3F61F75889600207FA1 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B21F75884200207FA1 /* SVar.swift */; };
+		8235D3F71F75889600207FA1 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B61F75884300207FA1 /* TBQueue.swift */; };
+		8235D3F81F75889600207FA1 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3C01F75884400207FA1 /* TChan.swift */; };
+		8235D3F91F75889600207FA1 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B81F75884300207FA1 /* TMVar.swift */; };
+		8235D3FA1F75889600207FA1 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BB1F75884300207FA1 /* TQueue.swift */; };
+		8235D3FB1F75889600207FA1 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BF1F75884400207FA1 /* Transactions.swift */; };
+		8235D3FC1F75889600207FA1 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B31F75884300207FA1 /* TSem.swift */; };
+		8235D3FD1F75889600207FA1 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B41F75884300207FA1 /* TVar.swift */; };
 		8298F03F1E91BC850076D657 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0371E91BC850076D657 /* ChanSpec.swift */; };
 		8298F0401E91BC850076D657 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0371E91BC850076D657 /* ChanSpec.swift */; };
 		8298F0411E91BC850076D657 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0371E91BC850076D657 /* ChanSpec.swift */; };
@@ -33,66 +93,6 @@
 		8298F0561E91BC850076D657 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03E1E91BC850076D657 /* TMVarSpec.swift */; };
 		82AA04071D7B206300DD3037 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03FE1D7B206300DD3037 /* Concurrent.framework */; };
 		82AA04281D7B210700DD3037 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03F41D7B08CB00DD3037 /* SwiftCheck.framework */; };
-		82AA048B1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
-		82AA048C1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
-		82AA048D1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
-		82AA048E1D7B2D7E00DD3037 /* Chan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04771D7B2D7D00DD3037 /* Chan.swift */; };
-		82AA049B1D7B2D7E00DD3037 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047B1D7B2D7D00DD3037 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82AA049C1D7B2D7E00DD3037 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047B1D7B2D7D00DD3037 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82AA049D1D7B2D7E00DD3037 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047B1D7B2D7D00DD3037 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82AA049E1D7B2D7E00DD3037 /* Concurrent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82AA047B1D7B2D7D00DD3037 /* Concurrent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82AA04A71D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
-		82AA04A81D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
-		82AA04A91D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
-		82AA04AA1D7B2D7E00DD3037 /* IChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047E1D7B2D7D00DD3037 /* IChan.swift */; };
-		82AA04AB1D7B2D7E00DD3037 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047F1D7B2D7D00DD3037 /* IVar.swift */; };
-		82AA04AC1D7B2D7E00DD3037 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047F1D7B2D7D00DD3037 /* IVar.swift */; };
-		82AA04AD1D7B2D7E00DD3037 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047F1D7B2D7D00DD3037 /* IVar.swift */; };
-		82AA04AE1D7B2D7E00DD3037 /* IVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA047F1D7B2D7D00DD3037 /* IVar.swift */; };
-		82AA04AF1D7B2D7E00DD3037 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04801D7B2D7D00DD3037 /* MVar.swift */; };
-		82AA04B01D7B2D7E00DD3037 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04801D7B2D7D00DD3037 /* MVar.swift */; };
-		82AA04B11D7B2D7E00DD3037 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04801D7B2D7D00DD3037 /* MVar.swift */; };
-		82AA04B21D7B2D7E00DD3037 /* MVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04801D7B2D7D00DD3037 /* MVar.swift */; };
-		82AA04B31D7B2D7E00DD3037 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04811D7B2D7D00DD3037 /* QSem.swift */; };
-		82AA04B41D7B2D7E00DD3037 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04811D7B2D7D00DD3037 /* QSem.swift */; };
-		82AA04B51D7B2D7E00DD3037 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04811D7B2D7D00DD3037 /* QSem.swift */; };
-		82AA04B61D7B2D7E00DD3037 /* QSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04811D7B2D7D00DD3037 /* QSem.swift */; };
-		82AA04B71D7B2D7E00DD3037 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04821D7B2D7D00DD3037 /* STM.swift */; };
-		82AA04B81D7B2D7E00DD3037 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04821D7B2D7D00DD3037 /* STM.swift */; };
-		82AA04B91D7B2D7E00DD3037 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04821D7B2D7D00DD3037 /* STM.swift */; };
-		82AA04BA1D7B2D7E00DD3037 /* STM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04821D7B2D7D00DD3037 /* STM.swift */; };
-		82AA04BB1D7B2D7E00DD3037 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04831D7B2D7D00DD3037 /* SVar.swift */; };
-		82AA04BC1D7B2D7E00DD3037 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04831D7B2D7D00DD3037 /* SVar.swift */; };
-		82AA04BD1D7B2D7E00DD3037 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04831D7B2D7D00DD3037 /* SVar.swift */; };
-		82AA04BE1D7B2D7E00DD3037 /* SVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04831D7B2D7D00DD3037 /* SVar.swift */; };
-		82AA04BF1D7B2D7E00DD3037 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04841D7B2D7D00DD3037 /* TBQueue.swift */; };
-		82AA04C01D7B2D7E00DD3037 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04841D7B2D7D00DD3037 /* TBQueue.swift */; };
-		82AA04C11D7B2D7E00DD3037 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04841D7B2D7D00DD3037 /* TBQueue.swift */; };
-		82AA04C21D7B2D7E00DD3037 /* TBQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04841D7B2D7D00DD3037 /* TBQueue.swift */; };
-		82AA04C31D7B2D7E00DD3037 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04851D7B2D7E00DD3037 /* TChan.swift */; };
-		82AA04C41D7B2D7E00DD3037 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04851D7B2D7E00DD3037 /* TChan.swift */; };
-		82AA04C51D7B2D7E00DD3037 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04851D7B2D7E00DD3037 /* TChan.swift */; };
-		82AA04C61D7B2D7E00DD3037 /* TChan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04851D7B2D7E00DD3037 /* TChan.swift */; };
-		82AA04C71D7B2D7E00DD3037 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04861D7B2D7E00DD3037 /* TMVar.swift */; };
-		82AA04C81D7B2D7E00DD3037 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04861D7B2D7E00DD3037 /* TMVar.swift */; };
-		82AA04C91D7B2D7E00DD3037 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04861D7B2D7E00DD3037 /* TMVar.swift */; };
-		82AA04CA1D7B2D7E00DD3037 /* TMVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04861D7B2D7E00DD3037 /* TMVar.swift */; };
-		82AA04CB1D7B2D7E00DD3037 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04871D7B2D7E00DD3037 /* TQueue.swift */; };
-		82AA04CC1D7B2D7E00DD3037 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04871D7B2D7E00DD3037 /* TQueue.swift */; };
-		82AA04CD1D7B2D7E00DD3037 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04871D7B2D7E00DD3037 /* TQueue.swift */; };
-		82AA04CE1D7B2D7E00DD3037 /* TQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04871D7B2D7E00DD3037 /* TQueue.swift */; };
-		82AA04CF1D7B2D7E00DD3037 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04881D7B2D7E00DD3037 /* Transactions.swift */; };
-		82AA04D01D7B2D7E00DD3037 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04881D7B2D7E00DD3037 /* Transactions.swift */; };
-		82AA04D11D7B2D7E00DD3037 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04881D7B2D7E00DD3037 /* Transactions.swift */; };
-		82AA04D21D7B2D7E00DD3037 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04881D7B2D7E00DD3037 /* Transactions.swift */; };
-		82AA04D31D7B2D7E00DD3037 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04891D7B2D7E00DD3037 /* TSem.swift */; };
-		82AA04D41D7B2D7E00DD3037 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04891D7B2D7E00DD3037 /* TSem.swift */; };
-		82AA04D51D7B2D7E00DD3037 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04891D7B2D7E00DD3037 /* TSem.swift */; };
-		82AA04D61D7B2D7E00DD3037 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA04891D7B2D7E00DD3037 /* TSem.swift */; };
-		82AA04D71D7B2D7E00DD3037 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA048A1D7B2D7E00DD3037 /* TVar.swift */; };
-		82AA04D81D7B2D7E00DD3037 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA048A1D7B2D7E00DD3037 /* TVar.swift */; };
-		82AA04D91D7B2D7E00DD3037 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA048A1D7B2D7E00DD3037 /* TVar.swift */; };
-		82AA04DA1D7B2D7E00DD3037 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA048A1D7B2D7E00DD3037 /* TVar.swift */; };
 		8410224B1B1A9F9E00E799A0 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53E011B1A9F1900E8A107 /* SwiftCheck.framework */; };
 		8410224F1B1A9FAC00E799A0 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DFD1B1A9F1900E8A107 /* SwiftCheck.framework */; };
 		841022501B1A9FBE00E799A0 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DFD1B1A9F1900E8A107 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -216,7 +216,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		821BEE5F1D8EFDA5009F8D58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = SOURCE_ROOT; };
+		8235D3B21F75884200207FA1 /* SVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SVar.swift; path = Sources/Concurrent/SVar.swift; sourceTree = SOURCE_ROOT; };
+		8235D3B31F75884300207FA1 /* TSem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TSem.swift; path = Sources/Concurrent/TSem.swift; sourceTree = SOURCE_ROOT; };
+		8235D3B41F75884300207FA1 /* TVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TVar.swift; path = Sources/Concurrent/TVar.swift; sourceTree = SOURCE_ROOT; };
+		8235D3B51F75884300207FA1 /* IVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IVar.swift; path = Sources/Concurrent/IVar.swift; sourceTree = SOURCE_ROOT; };
+		8235D3B61F75884300207FA1 /* TBQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TBQueue.swift; path = Sources/Concurrent/TBQueue.swift; sourceTree = SOURCE_ROOT; };
+		8235D3B71F75884300207FA1 /* STM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = STM.swift; path = Sources/Concurrent/STM.swift; sourceTree = SOURCE_ROOT; };
+		8235D3B81F75884300207FA1 /* TMVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMVar.swift; path = Sources/Concurrent/TMVar.swift; sourceTree = SOURCE_ROOT; };
+		8235D3B91F75884300207FA1 /* IChan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IChan.swift; path = Sources/Concurrent/IChan.swift; sourceTree = SOURCE_ROOT; };
+		8235D3BA1F75884300207FA1 /* QSem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QSem.swift; path = Sources/Concurrent/QSem.swift; sourceTree = SOURCE_ROOT; };
+		8235D3BB1F75884300207FA1 /* TQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TQueue.swift; path = Sources/Concurrent/TQueue.swift; sourceTree = SOURCE_ROOT; };
+		8235D3BD1F75884400207FA1 /* MVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MVar.swift; path = Sources/Concurrent/MVar.swift; sourceTree = SOURCE_ROOT; };
+		8235D3BE1F75884400207FA1 /* Chan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Chan.swift; path = Sources/Concurrent/Chan.swift; sourceTree = SOURCE_ROOT; };
+		8235D3BF1F75884400207FA1 /* Transactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Transactions.swift; path = Sources/Concurrent/Transactions.swift; sourceTree = SOURCE_ROOT; };
+		8235D3C01F75884400207FA1 /* TChan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TChan.swift; path = Sources/Concurrent/TChan.swift; sourceTree = SOURCE_ROOT; };
+		8235D3C11F75886700207FA1 /* Concurrent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Concurrent.h; path = Sources/Concurrent.h; sourceTree = "<group>"; };
 		8298F0371E91BC850076D657 /* ChanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChanSpec.swift; path = Tests/ConcurrentTests/ChanSpec.swift; sourceTree = SOURCE_ROOT; };
 		8298F0381E91BC850076D657 /* ConcurrentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConcurrentSpec.swift; path = Tests/ConcurrentTests/ConcurrentSpec.swift; sourceTree = SOURCE_ROOT; };
 		8298F0391E91BC850076D657 /* IVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IVarSpec.swift; path = Tests/ConcurrentTests/IVarSpec.swift; sourceTree = SOURCE_ROOT; };
@@ -228,21 +242,6 @@
 		82AA03FE1D7B206300DD3037 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AA04061D7B206300DD3037 /* Concurrent-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concurrent-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AA041E1D7B206C00DD3037 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		82AA04771D7B2D7D00DD3037 /* Chan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Chan.swift; path = Sources/Chan.swift; sourceTree = SOURCE_ROOT; };
-		82AA047B1D7B2D7D00DD3037 /* Concurrent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Concurrent.h; path = Sources/Concurrent.h; sourceTree = SOURCE_ROOT; };
-		82AA047E1D7B2D7D00DD3037 /* IChan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IChan.swift; path = Sources/IChan.swift; sourceTree = SOURCE_ROOT; };
-		82AA047F1D7B2D7D00DD3037 /* IVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IVar.swift; path = Sources/IVar.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		82AA04801D7B2D7D00DD3037 /* MVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MVar.swift; path = Sources/MVar.swift; sourceTree = SOURCE_ROOT; };
-		82AA04811D7B2D7D00DD3037 /* QSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QSem.swift; path = Sources/QSem.swift; sourceTree = SOURCE_ROOT; };
-		82AA04821D7B2D7D00DD3037 /* STM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = STM.swift; path = Sources/STM.swift; sourceTree = SOURCE_ROOT; };
-		82AA04831D7B2D7D00DD3037 /* SVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SVar.swift; path = Sources/SVar.swift; sourceTree = SOURCE_ROOT; };
-		82AA04841D7B2D7D00DD3037 /* TBQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TBQueue.swift; path = Sources/TBQueue.swift; sourceTree = SOURCE_ROOT; };
-		82AA04851D7B2D7E00DD3037 /* TChan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TChan.swift; path = Sources/TChan.swift; sourceTree = SOURCE_ROOT; };
-		82AA04861D7B2D7E00DD3037 /* TMVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TMVar.swift; path = Sources/TMVar.swift; sourceTree = SOURCE_ROOT; };
-		82AA04871D7B2D7E00DD3037 /* TQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TQueue.swift; path = Sources/TQueue.swift; sourceTree = SOURCE_ROOT; };
-		82AA04881D7B2D7E00DD3037 /* Transactions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Transactions.swift; path = Sources/Transactions.swift; sourceTree = SOURCE_ROOT; };
-		82AA04891D7B2D7E00DD3037 /* TSem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TSem.swift; path = Sources/TSem.swift; sourceTree = SOURCE_ROOT; };
-		82AA048A1D7B2D7E00DD3037 /* TVar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = TVar.swift; path = Sources/TVar.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		82AA04DC1D7B2D9700DD3037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
 		8434F98019E9CD76008D9909 /* Concurrent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Concurrent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434F98B19E9CD76008D9909 /* ConcurrentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcurrentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -310,23 +309,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		82AA04DB1D7B2D8B00DD3037 /* Supporting Files */ = {
+		8235D3B11F75882E00207FA1 /* Concurrent */ = {
 			isa = PBXGroup;
 			children = (
-				821BEE5F1D8EFDA5009F8D58 /* Info.plist */,
+				8235D3BE1F75884400207FA1 /* Chan.swift */,
+				8235D3B91F75884300207FA1 /* IChan.swift */,
+				8235D3B51F75884300207FA1 /* IVar.swift */,
+				8235D3BD1F75884400207FA1 /* MVar.swift */,
+				8235D3BA1F75884300207FA1 /* QSem.swift */,
+				8235D3B71F75884300207FA1 /* STM.swift */,
+				8235D3B21F75884200207FA1 /* SVar.swift */,
+				8235D3B61F75884300207FA1 /* TBQueue.swift */,
+				8235D3C01F75884400207FA1 /* TChan.swift */,
+				8235D3B81F75884300207FA1 /* TMVar.swift */,
+				8235D3BB1F75884300207FA1 /* TQueue.swift */,
+				8235D3BF1F75884400207FA1 /* Transactions.swift */,
+				8235D3B31F75884300207FA1 /* TSem.swift */,
+				8235D3B41F75884300207FA1 /* TVar.swift */,
 			);
-			name = "Supporting Files";
+			path = Concurrent;
 			sourceTree = "<group>";
 		};
 		8434F97619E9CD75008D9909 = {
 			isa = PBXGroup;
 			children = (
-				82AA047B1D7B2D7D00DD3037 /* Concurrent.h */,
-				8434F98219E9CD76008D9909 /* Concurrent */,
+				8235D3C11F75886700207FA1 /* Concurrent.h */,
+				8235D3B11F75882E00207FA1 /* Concurrent */,
 				8434F98F19E9CD76008D9909 /* ConcurrentTests */,
 				8434F98119E9CD76008D9909 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
+			usesTabs = 1;
 		};
 		8434F98119E9CD76008D9909 /* Products */ = {
 			isa = PBXGroup;
@@ -340,28 +355,6 @@
 				82AA041E1D7B206C00DD3037 /* Concurrent.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		8434F98219E9CD76008D9909 /* Concurrent */ = {
-			isa = PBXGroup;
-			children = (
-				82AA04771D7B2D7D00DD3037 /* Chan.swift */,
-				82AA047E1D7B2D7D00DD3037 /* IChan.swift */,
-				82AA047F1D7B2D7D00DD3037 /* IVar.swift */,
-				82AA04801D7B2D7D00DD3037 /* MVar.swift */,
-				82AA04811D7B2D7D00DD3037 /* QSem.swift */,
-				82AA04821D7B2D7D00DD3037 /* STM.swift */,
-				82AA04831D7B2D7D00DD3037 /* SVar.swift */,
-				82AA04841D7B2D7D00DD3037 /* TBQueue.swift */,
-				82AA04851D7B2D7E00DD3037 /* TChan.swift */,
-				82AA04861D7B2D7E00DD3037 /* TMVar.swift */,
-				82AA04871D7B2D7E00DD3037 /* TQueue.swift */,
-				82AA04881D7B2D7E00DD3037 /* Transactions.swift */,
-				82AA04891D7B2D7E00DD3037 /* TSem.swift */,
-				82AA048A1D7B2D7E00DD3037 /* TVar.swift */,
-				82AA04DB1D7B2D8B00DD3037 /* Supporting Files */,
-			);
-			path = Concurrent;
 			sourceTree = "<group>";
 		};
 		8434F98F19E9CD76008D9909 /* ConcurrentTests */ = {
@@ -409,7 +402,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA049D1D7B2D7E00DD3037 /* Concurrent.h in Headers */,
+				8235D3C41F75887C00207FA1 /* Concurrent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,7 +410,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA049E1D7B2D7E00DD3037 /* Concurrent.h in Headers */,
+				8235D3C51F75887E00207FA1 /* Concurrent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,7 +418,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA049B1D7B2D7E00DD3037 /* Concurrent.h in Headers */,
+				8235D3C21F75887300207FA1 /* Concurrent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,7 +426,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA049C1D7B2D7E00DD3037 /* Concurrent.h in Headers */,
+				8235D3C31F75887900207FA1 /* Concurrent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,7 +571,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = TypeLift;
 				TargetAttributes = {
 					82AA03FD1D7B206300DD3037 = {
@@ -745,20 +738,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA04D11D7B2D7E00DD3037 /* Transactions.swift in Sources */,
-				82AA04C51D7B2D7E00DD3037 /* TChan.swift in Sources */,
-				82AA04C91D7B2D7E00DD3037 /* TMVar.swift in Sources */,
-				82AA04A91D7B2D7E00DD3037 /* IChan.swift in Sources */,
-				82AA04D91D7B2D7E00DD3037 /* TVar.swift in Sources */,
-				82AA04CD1D7B2D7E00DD3037 /* TQueue.swift in Sources */,
-				82AA048D1D7B2D7E00DD3037 /* Chan.swift in Sources */,
-				82AA04B51D7B2D7E00DD3037 /* QSem.swift in Sources */,
-				82AA04B11D7B2D7E00DD3037 /* MVar.swift in Sources */,
-				82AA04AD1D7B2D7E00DD3037 /* IVar.swift in Sources */,
-				82AA04C11D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
-				82AA04B91D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04D51D7B2D7E00DD3037 /* TSem.swift in Sources */,
-				82AA04BD1D7B2D7E00DD3037 /* SVar.swift in Sources */,
+				8235D3D41F75888900207FA1 /* Chan.swift in Sources */,
+				8235D3D51F75888900207FA1 /* IChan.swift in Sources */,
+				8235D3D61F75888900207FA1 /* IVar.swift in Sources */,
+				8235D3D71F75888900207FA1 /* MVar.swift in Sources */,
+				8235D3D81F75888900207FA1 /* QSem.swift in Sources */,
+				8235D3D91F75888900207FA1 /* STM.swift in Sources */,
+				8235D3DA1F75888900207FA1 /* SVar.swift in Sources */,
+				8235D3DB1F75888900207FA1 /* TBQueue.swift in Sources */,
+				8235D3DC1F75888900207FA1 /* TChan.swift in Sources */,
+				8235D3DD1F75888900207FA1 /* TMVar.swift in Sources */,
+				8235D3DE1F75888900207FA1 /* TQueue.swift in Sources */,
+				8235D3DF1F75888900207FA1 /* Transactions.swift in Sources */,
+				8235D3E01F75888900207FA1 /* TSem.swift in Sources */,
+				8235D3E11F75888900207FA1 /* TVar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,20 +774,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA04D21D7B2D7E00DD3037 /* Transactions.swift in Sources */,
-				82AA04C61D7B2D7E00DD3037 /* TChan.swift in Sources */,
-				82AA04CA1D7B2D7E00DD3037 /* TMVar.swift in Sources */,
-				82AA04AA1D7B2D7E00DD3037 /* IChan.swift in Sources */,
-				82AA04DA1D7B2D7E00DD3037 /* TVar.swift in Sources */,
-				82AA04CE1D7B2D7E00DD3037 /* TQueue.swift in Sources */,
-				82AA048E1D7B2D7E00DD3037 /* Chan.swift in Sources */,
-				82AA04B61D7B2D7E00DD3037 /* QSem.swift in Sources */,
-				82AA04B21D7B2D7E00DD3037 /* MVar.swift in Sources */,
-				82AA04AE1D7B2D7E00DD3037 /* IVar.swift in Sources */,
-				82AA04C21D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
-				82AA04BA1D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04D61D7B2D7E00DD3037 /* TSem.swift in Sources */,
-				82AA04BE1D7B2D7E00DD3037 /* SVar.swift in Sources */,
+				8235D3C61F75888400207FA1 /* Chan.swift in Sources */,
+				8235D3C71F75888400207FA1 /* IChan.swift in Sources */,
+				8235D3C81F75888400207FA1 /* IVar.swift in Sources */,
+				8235D3C91F75888400207FA1 /* MVar.swift in Sources */,
+				8235D3CA1F75888400207FA1 /* QSem.swift in Sources */,
+				8235D3CB1F75888400207FA1 /* STM.swift in Sources */,
+				8235D3CC1F75888400207FA1 /* SVar.swift in Sources */,
+				8235D3CD1F75888400207FA1 /* TBQueue.swift in Sources */,
+				8235D3CE1F75888400207FA1 /* TChan.swift in Sources */,
+				8235D3CF1F75888400207FA1 /* TMVar.swift in Sources */,
+				8235D3D01F75888400207FA1 /* TQueue.swift in Sources */,
+				8235D3D11F75888400207FA1 /* Transactions.swift in Sources */,
+				8235D3D21F75888400207FA1 /* TSem.swift in Sources */,
+				8235D3D31F75888400207FA1 /* TVar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,20 +795,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA04CF1D7B2D7E00DD3037 /* Transactions.swift in Sources */,
-				82AA04C31D7B2D7E00DD3037 /* TChan.swift in Sources */,
-				82AA04C71D7B2D7E00DD3037 /* TMVar.swift in Sources */,
-				82AA04A71D7B2D7E00DD3037 /* IChan.swift in Sources */,
-				82AA04D71D7B2D7E00DD3037 /* TVar.swift in Sources */,
-				82AA04CB1D7B2D7E00DD3037 /* TQueue.swift in Sources */,
-				82AA048B1D7B2D7E00DD3037 /* Chan.swift in Sources */,
-				82AA04B31D7B2D7E00DD3037 /* QSem.swift in Sources */,
-				82AA04AF1D7B2D7E00DD3037 /* MVar.swift in Sources */,
-				82AA04AB1D7B2D7E00DD3037 /* IVar.swift in Sources */,
-				82AA04BF1D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
-				82AA04B71D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04D31D7B2D7E00DD3037 /* TSem.swift in Sources */,
-				82AA04BB1D7B2D7E00DD3037 /* SVar.swift in Sources */,
+				8235D3F01F75889600207FA1 /* Chan.swift in Sources */,
+				8235D3F11F75889600207FA1 /* IChan.swift in Sources */,
+				8235D3F21F75889600207FA1 /* IVar.swift in Sources */,
+				8235D3F31F75889600207FA1 /* MVar.swift in Sources */,
+				8235D3F41F75889600207FA1 /* QSem.swift in Sources */,
+				8235D3F51F75889600207FA1 /* STM.swift in Sources */,
+				8235D3F61F75889600207FA1 /* SVar.swift in Sources */,
+				8235D3F71F75889600207FA1 /* TBQueue.swift in Sources */,
+				8235D3F81F75889600207FA1 /* TChan.swift in Sources */,
+				8235D3F91F75889600207FA1 /* TMVar.swift in Sources */,
+				8235D3FA1F75889600207FA1 /* TQueue.swift in Sources */,
+				8235D3FB1F75889600207FA1 /* Transactions.swift in Sources */,
+				8235D3FC1F75889600207FA1 /* TSem.swift in Sources */,
+				8235D3FD1F75889600207FA1 /* TVar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,20 +831,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA04D01D7B2D7E00DD3037 /* Transactions.swift in Sources */,
-				82AA04C41D7B2D7E00DD3037 /* TChan.swift in Sources */,
-				82AA04C81D7B2D7E00DD3037 /* TMVar.swift in Sources */,
-				82AA04A81D7B2D7E00DD3037 /* IChan.swift in Sources */,
-				82AA04D81D7B2D7E00DD3037 /* TVar.swift in Sources */,
-				82AA04CC1D7B2D7E00DD3037 /* TQueue.swift in Sources */,
-				82AA048C1D7B2D7E00DD3037 /* Chan.swift in Sources */,
-				82AA04B41D7B2D7E00DD3037 /* QSem.swift in Sources */,
-				82AA04B01D7B2D7E00DD3037 /* MVar.swift in Sources */,
-				82AA04AC1D7B2D7E00DD3037 /* IVar.swift in Sources */,
-				82AA04C01D7B2D7E00DD3037 /* TBQueue.swift in Sources */,
-				82AA04B81D7B2D7E00DD3037 /* STM.swift in Sources */,
-				82AA04D41D7B2D7E00DD3037 /* TSem.swift in Sources */,
-				82AA04BC1D7B2D7E00DD3037 /* SVar.swift in Sources */,
+				8235D3E21F75889100207FA1 /* Chan.swift in Sources */,
+				8235D3E31F75889100207FA1 /* IChan.swift in Sources */,
+				8235D3E41F75889100207FA1 /* IVar.swift in Sources */,
+				8235D3E51F75889100207FA1 /* MVar.swift in Sources */,
+				8235D3E61F75889100207FA1 /* QSem.swift in Sources */,
+				8235D3E71F75889100207FA1 /* STM.swift in Sources */,
+				8235D3E81F75889100207FA1 /* SVar.swift in Sources */,
+				8235D3E91F75889100207FA1 /* TBQueue.swift in Sources */,
+				8235D3EA1F75889100207FA1 /* TChan.swift in Sources */,
+				8235D3EB1F75889100207FA1 /* TMVar.swift in Sources */,
+				8235D3EC1F75889100207FA1 /* TQueue.swift in Sources */,
+				8235D3ED1F75889100207FA1 /* Transactions.swift in Sources */,
+				8235D3EE1F75889100207FA1 /* TSem.swift in Sources */,
+				8235D3EF1F75889100207FA1 /* TVar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1074,14 +1067,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1123,14 +1122,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

@@ -47,8 +47,6 @@ class IVarSpec : XCTestCase {
 			switch x {
 			case .readIVar:
 				return self.delta(b ? error("read on empty IVar") : false, ac: xs)
-			case .isEmptyIVar:
-				fallthrough
 			case .returnInt(_):
 				fallthrough
 			case .returnBool(_):

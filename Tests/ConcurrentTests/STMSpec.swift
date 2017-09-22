@@ -9,7 +9,7 @@
 import Concurrent
 import XCTest
 
-let initTVars = STM<(TVar<Int>, TVar<Int>)>.pure(TVar(0), TVar(0))
+let initTVars = STM<(TVar<Int>, TVar<Int>)>.pure((TVar(0), TVar(0)))
 
 func optionOne(_ v1 : TVar<Int>, _ v2 : TVar<Int>) -> STM<()> {
 	return v1.read().flatMap({ x in

@@ -67,8 +67,6 @@ class TMVarSpec : XCTestCase {
 				return self.delta(b ? error("read on empty TMVar") : false, ac: xs)
 			case .swapTMVar(_):
 				return self.delta(b ? error("swap on empty TMVar") : false, ac: xs)
-			case .isEmptyTMVar:
-				fallthrough
 			case .returnInt(_):
 				fallthrough
 			case .returnBool(_):

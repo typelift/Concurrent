@@ -58,8 +58,6 @@ class SVarSpec : XCTestCase {
 			switch x {
 			case .takeSVar:
 				return self.delta(b ? error("take on empty SVar") : true, ac: xs)
-			case .isEmptySVar:
-				fallthrough
 			case .returnInt(_):
 				fallthrough
 			case .returnBool(_):

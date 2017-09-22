@@ -47,8 +47,6 @@ class ChanSpec : XCTestCase {
 			switch x {
 			case .readChan:
 				return self.delta((i == 0) ? error("read on empty MVar") : (i - 1), ac: xs)
-			case .isEmptyChan:
-				fallthrough
 			case .returnInt(_):
 				fallthrough
 			case .returnBool(_):
