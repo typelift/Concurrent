@@ -72,7 +72,7 @@ class ChanSpec : XCTestCase {
 		var result = [Action]()
 		while empty != 0 {
             empty -= 1
-			let branch = arc4random() % 3
+			let branch = randomInteger() % 3
 			if branch == 0 {
 				return Gen.pure(ArrayOf(Array(repeating: .readChan, count: empty) + result))
 			} else if branch == 1 {
@@ -144,4 +144,10 @@ class ChanSpec : XCTestCase {
 				((l1 == l2) <?> "MVar Values Match")
 		}
 	}
+
+	#if !os(macOS) && !os(iOS) && !os(tvOS)
+	static var allTests = testCase([
+		("testProperties", testProperties),
+	])
+	#endif
 }

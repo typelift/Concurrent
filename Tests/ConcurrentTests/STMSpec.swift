@@ -53,7 +53,6 @@ func snapshot(_ v1 : TVar<Int>, _ v2 : TVar<Int>) -> STM<(Int, Int)> {
 
 class STMSpec : XCTestCase {
 	func testMain() {
-
 		let (sv1, sv2) = initTVars.atomically()
 
 		_ = elseTestA(sv1, sv2).atomically()
@@ -91,4 +90,10 @@ class STMSpec : XCTestCase {
 			XCTAssert(vs.1 == 50)
 		}()
 	}
+
+	#if !os(macOS) && !os(iOS) && !os(tvOS)
+	static var allTests = testCase([
+		("testMain", testMain),
+	])
+	#endif
 }

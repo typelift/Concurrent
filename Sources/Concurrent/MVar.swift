@@ -148,8 +148,10 @@ public final class MVar<A> {
 		return (self.val == nil)
 	}
 
-	/// Atomically, take a value from the `MVar`, put a given new value in the
+	/// Take a value from the `MVar`, put a given new value in the
 	/// `MVar`, then return the `MVar`'s old value.
+	///
+	/// This operation is atomic only if no writes occur during its execution.
 	public func swap(_ x : A) -> A {
 		let old = self.take()
 		self.put(x)
