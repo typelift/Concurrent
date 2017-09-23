@@ -10,7 +10,6 @@ import Foundation
 import Concurrent
 import XCTest
 import SwiftCheck
-import func Darwin.C.stdlib.arc4random
 
 private enum Action {
 	case newEmptyIVar
@@ -47,8 +46,6 @@ class IVarSpec : XCTestCase {
 			switch x {
 			case .readIVar:
 				return self.delta(b ? error("read on empty IVar") : false, ac: xs)
-			case .isEmptyIVar:
-				fallthrough
 			case .returnInt(_):
 				fallthrough
 			case .returnBool(_):
@@ -75,7 +72,7 @@ class IVarSpec : XCTestCase {
 			if n == 0 {
 				return Gen.pure(ArrayOf(result))
 			}
-			while (arc4random() % UInt32(n)) != 0 {
+			while (randomInteger() % UInt32(n)) != 0 {
 				if empty {
 					result = result + [.putIVar(Int.arbitrary.generate), .readIVar]
 					empty = false
@@ -149,4 +146,10 @@ class IVarSpec : XCTestCase {
 				((l1 == l2) <?> "IVar Values Match")
 		}
 	}
+
+	#if !os(macOS) && !os(iOS) && !os(tvOS)
+	static var allTests = testCase([
+		("testProperties", testProperties),
+	])
+	#endif
 }

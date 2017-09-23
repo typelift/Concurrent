@@ -10,7 +10,6 @@ import Foundation
 import Concurrent
 import XCTest
 import SwiftCheck
-import func Darwin.C.stdlib.arc4random
 
 private enum Action {
 	case newQSem(UInt)
@@ -62,7 +61,7 @@ class QSemSpec : XCTestCase {
 			if n == 0 {
 				return Gen.pure(ArrayOf(result))
 			}
-			while (arc4random() % UInt32(n)) != 0 {
+			while (randomInteger() % UInt32(n)) != 0 {
 				if quantity <= 0 {
 					result.append(.signalQSem)
 					quantity += 1
@@ -116,4 +115,10 @@ class QSemSpec : XCTestCase {
 				self.setupPerformance(d + suff.getArray)
 		}
 	}
+
+	#if !os(macOS) && !os(iOS) && !os(tvOS)
+	static var allTests = testCase([
+		("testProperties", testProperties),
+	])
+	#endif
 }

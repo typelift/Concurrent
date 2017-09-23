@@ -9,7 +9,6 @@
 import Concurrent
 import XCTest
 import SwiftCheck
-import func Darwin.C.stdlib.arc4random
 
 private enum Action {
 	case newEmptyTMVar
@@ -67,8 +66,6 @@ class TMVarSpec : XCTestCase {
 				return self.delta(b ? error("read on empty TMVar") : false, ac: xs)
 			case .swapTMVar(_):
 				return self.delta(b ? error("swap on empty TMVar") : false, ac: xs)
-			case .isEmptyTMVar:
-				fallthrough
 			case .returnInt(_):
 				fallthrough
 			case .returnBool(_):
@@ -95,9 +92,9 @@ class TMVarSpec : XCTestCase {
 			if n == 0 {
 				return Gen.pure(ArrayOf(result))
 			}
-			while (arc4random() % UInt32(n)) != 0 {
+			while (randomInteger() % UInt32(n)) != 0 {
 				if empty {
-					result = result + [.putTMVar(Int.arbitrary.generate)] + ((arc4random() % 2) == 0 ? [.swapTMVar(Int.arbitrary.generate)] : [.readTMVar])
+					result = result + [.putTMVar(Int.arbitrary.generate)] + ((randomInteger() % 2) == 0 ? [.swapTMVar(Int.arbitrary.generate)] : [.readTMVar])
 					empty = false
 				} else {
 					result = result + [.takeTMVar]
@@ -185,4 +182,10 @@ class TMVarSpec : XCTestCase {
 				((l1 == l2) <?> "TMVar Values Match")
 		}
 	}
+
+	#if !os(macOS) && !os(iOS) && !os(tvOS)
+	static var allTests = testCase([
+		("testProperties", testProperties),
+	])
+	#endif
 }

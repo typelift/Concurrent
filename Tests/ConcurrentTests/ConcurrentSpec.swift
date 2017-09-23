@@ -11,6 +11,19 @@ import Concurrent
 @testable import SwiftCheck
 import Dispatch
 
+#if os(Linux)
+	import Glibc
+	public func randomInteger() -> UInt32 {
+		return UInt32(rand())
+	}
+#else
+	import Darwin
+
+	public func randomInteger() -> UInt32 {
+		return arc4random()
+	}
+#endif
+
 public func error<A>(_ x : String) -> A {
 	XCTFail(x)
 	fatalError(x)

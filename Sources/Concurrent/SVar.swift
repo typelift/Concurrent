@@ -47,7 +47,7 @@ public struct SVar<A> {
 		let (readers, val) = s
 		if readers > 0 {
 			let _ = val.take()
-			self.svar.put((Int.allZeros, val))
+			self.svar.put((0, val))
 		} else {
 			self.svar.put(s)
 		}
