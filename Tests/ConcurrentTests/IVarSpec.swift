@@ -65,12 +65,12 @@ class IVarSpec : XCTestCase {
 
 	// The only thing that couldn't be reproduced.  So take the lazy way out and naïvely unroll the
 	// gist of the generator function.
-	private func actionsGen(_ e : Bool) -> Gen<ArrayOf<Action>> {
+	private func actionsGen(_ e : Bool) -> Gen<[Action]> {
 		return Gen.sized({ n in
 			var empty = e
 			var result = [Action]()
 			if n == 0 {
-				return Gen.pure(ArrayOf(result))
+				return Gen.pure(result)
 			}
 			while (randomInteger() % UInt32(n)) != 0 {
 				if empty {
@@ -80,7 +80,7 @@ class IVarSpec : XCTestCase {
 					result = result + [.readIVar]
 				}
 			}
-			return Gen.pure(ArrayOf(result))
+			return Gen.pure(result)
 		})
 	}
 
@@ -138,8 +138,8 @@ class IVarSpec : XCTestCase {
 
 	private func formulate(_ c : [Action], _ d : [Action]) -> Property {
 		return forAll(actionsGen(delta(true, ac: c))) { suff in
-			let (b1, l1) = self.setupPerformance(c + suff.getArray)
-			let (b2, l2) = self.setupPerformance(d + suff.getArray)
+			let (b1, l1) = self.setupPerformance(c + suff)
+			let (b2, l2) = self.setupPerformance(d + suff)
 			return
 				((b1 == b2) <?> "Boolean Values Match")
 				^&&^

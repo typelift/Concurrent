@@ -54,12 +54,12 @@ class QSemSpec : XCTestCase {
 
 	// The only thing that couldn't be reproduced.  So take the lazy way out and naïvely unroll the
 	// gist of the generator function.
-	private func actionsGen(_ i : UInt) -> Gen<ArrayOf<Action>> {
+	private func actionsGen(_ i : UInt) -> Gen<[Action]> {
 		return Gen.sized({ n in
 			var quantity = i
 			var result = [Action]()
 			if n == 0 {
-				return Gen.pure(ArrayOf(result))
+				return Gen.pure(result)
 			}
 			while (randomInteger() % UInt32(n)) != 0 {
 				if quantity <= 0 {
@@ -70,7 +70,7 @@ class QSemSpec : XCTestCase {
 					quantity -= 1
 				}
 			}
-			return Gen.pure(ArrayOf(result))
+			return Gen.pure(result)
 		})
 	}
 
@@ -110,9 +110,9 @@ class QSemSpec : XCTestCase {
 	private func formulate(_ c : [Action], _ d : [Action]) -> Property {
 		return forAll(actionsGen(delta(0, ac: c))) { suff in
 			return
-				self.setupPerformance(c + suff.getArray)
+				self.setupPerformance(c + suff)
 				==
-				self.setupPerformance(d + suff.getArray)
+				self.setupPerformance(d + suff)
 		}
 	}
 
