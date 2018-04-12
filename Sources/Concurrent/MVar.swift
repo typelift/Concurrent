@@ -204,9 +204,9 @@ public final class MVar<A> {
 	}
 
 	deinit {
-		self.lock.deinitialize()
-		self.takeCond.deinitialize()
-		self.putCond.deinitialize()
+		self.lock.deallocate()
+		self.takeCond.deallocate()
+		self.putCond.deallocate()
 	}
 }
 

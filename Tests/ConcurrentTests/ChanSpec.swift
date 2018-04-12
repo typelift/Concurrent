@@ -63,10 +63,10 @@ class ChanSpec : XCTestCase {
 	}
 
 	// Based on the given number of items, produce an item-neutral sequence of fluff actions.
-	private func actionsGen(_ emp : Int) -> Gen<ArrayOf<Action>> {
+	private func actionsGen(_ emp : Int) -> Gen<[Action]> {
         var empty = emp
 		if empty == 0 {
-			return Gen.pure(ArrayOf([]))
+			return Gen.pure([])
 		}
 
 		var result = [Action]()
@@ -74,14 +74,14 @@ class ChanSpec : XCTestCase {
             empty -= 1
 			let branch = randomInteger() % 3
 			if branch == 0 {
-				return Gen.pure(ArrayOf(Array(repeating: .readChan, count: empty) + result))
+				return Gen.pure(Array(repeating: .readChan, count: empty) + result)
 			} else if branch == 1 {
 				result = [.isEmptyChan] + result + [.readChan]
 			} else {
 				result = [.writeChan(Int.arbitrary.generate)] + result + [.readChan]
 			}
 		}
-		return Gen.pure(ArrayOf(result))
+		return Gen.pure(result)
 	}
 
 	private func perform(_ mv : Chan<Int>, _ ac : [Action]) -> ([Bool], [Int]) {
@@ -136,8 +136,8 @@ class ChanSpec : XCTestCase {
 
 	private func formulate(_ c : [Action], _ d : [Action]) -> Property {
 		return forAll(actionsGen(delta(0, ac: c))) { suff in
-			let (b1, l1) = self.setupPerformance(c + suff.getArray)
-			let (b2, l2) = self.setupPerformance(d + suff.getArray)
+			let (b1, l1) = self.setupPerformance(c + suff)
+			let (b2, l2) = self.setupPerformance(d + suff)
 			return
 				((b1 == b2) <?> "Boolean Values Match")
 				^&&^
