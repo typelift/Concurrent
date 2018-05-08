@@ -172,7 +172,7 @@ Installation
 
 #### Swift Package Manager
 
-- Add SwiftCheck to your `Package.swift` file's dependencies section:
+- Add Concurrent to your `Package.swift` file's dependencies section:
 
 ```
 .Package(url: "https://github.com/typelift/Concurrent.git", versions: Version(0,4,0)..<Version(1,0,0))
