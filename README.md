@@ -175,7 +175,7 @@ Installation
 - Add Concurrent to your `Package.swift` file's dependencies section:
 
 ```
-.Package(url: "https://github.com/typelift/Concurrent.git", versions: Version(0,4,0)..<Version(1,0,0))
+.package(url: "https://github.com/typelift/Concurrent.git", "0.4.0"..<"1.0.0")
 ```
 
 #### Carthage
