@@ -29,7 +29,7 @@ public struct IVar<A> {
 	/// Creates a new `IVar` containing the supplied value.
 	public init(initial :  @autoclosure @escaping () -> A) {
 		let lock = MVar<()>()
-		self.init(lock, MVar(initial: initial()), initial)
+		self.init(lock, MVar(initial: initial()), initial())
 	}
 
 	/// Returns the contents of the `IVar`.

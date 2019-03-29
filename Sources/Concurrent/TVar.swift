@@ -32,8 +32,8 @@ public final class TVar<T> : Comparable, Hashable {
 	}
 
 	/// The hash value uniquely identifying this `TVar`.
-	public var hashValue : Int {
-		return _id
+	public func hash(into hasher: inout Hasher) {
+		self._id.hash(into: &hasher)
 	}
 
 	internal var value : TVarType<T>
@@ -86,7 +86,9 @@ internal final class TVarType<T> : Hashable {
 	var _fingerprint : Int
 	var _val : Any
 
-	var hashValue : Int { return _fingerprint }
+	func hash(into hasher: inout Hasher) {
+		self._fingerprint.hash(into: &hasher)
+	}
 
 	init(_ v : T, _ fingerprint : Int) {
 		self._fingerprint = fingerprint
