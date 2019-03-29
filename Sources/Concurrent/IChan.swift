@@ -28,14 +28,17 @@ public struct IChan<A> {
 		self.init(v)
 	}
 
-	/// Reads all the values from a channel into a list.
+	/// Reads all the values from a channel into a lazy sequence.
 	///
-	/// This computation may block on empty IVars.
-	public func read() -> [A] {
-		let (a, ic) = self.ivar.read()
-		return [a] + ic.read()
+	/// Though the returned sequence is lazy, this computation may block
+	/// on reads of empty IVars.
+	public func read() -> LazySequence<UnfoldSequence<A, IChan<A>>> {
+		return sequence(state: self, next: { (ichan) -> A in
+			let (a, ic) = ichan.ivar.read()
+			defer { ichan = ic }
+			return a
+		}).lazy
 	}
-
 
 	/// Writes a single value to the head of the channel and returns a new write
 	/// head.

@@ -67,6 +67,10 @@
 		8235D3FB1F75889600207FA1 /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3BF1F75884400207FA1 /* Transactions.swift */; };
 		8235D3FC1F75889600207FA1 /* TSem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B31F75884300207FA1 /* TSem.swift */; };
 		8235D3FD1F75889600207FA1 /* TVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235D3B41F75884300207FA1 /* TVar.swift */; };
+		826F9C28224E562800FA5106 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03FE1D7B206300DD3037 /* Concurrent.framework */; };
+		826F9C29224E562800FA5106 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03F41D7B08CB00DD3037 /* SwiftCheck.framework */; };
+		826F9C2E224E566800FA5106 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */; };
+		826F9C30224E566800FA5106 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826F9C2F224E566800FA5106 /* SwiftCheck.framework */; };
 		8298F03F1E91BC850076D657 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0371E91BC850076D657 /* ChanSpec.swift */; };
 		8298F0401E91BC850076D657 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0371E91BC850076D657 /* ChanSpec.swift */; };
 		8298F0411E91BC850076D657 /* ChanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F0371E91BC850076D657 /* ChanSpec.swift */; };
@@ -91,19 +95,29 @@
 		8298F0541E91BC850076D657 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03E1E91BC850076D657 /* TMVarSpec.swift */; };
 		8298F0551E91BC850076D657 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03E1E91BC850076D657 /* TMVarSpec.swift */; };
 		8298F0561E91BC850076D657 /* TMVarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F03E1E91BC850076D657 /* TMVarSpec.swift */; };
-		82AA04071D7B206300DD3037 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03FE1D7B206300DD3037 /* Concurrent.framework */; };
-		82AA04281D7B210700DD3037 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AA03F41D7B08CB00DD3037 /* SwiftCheck.framework */; };
-		8410224B1B1A9F9E00E799A0 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53E011B1A9F1900E8A107 /* SwiftCheck.framework */; };
 		8410224F1B1A9FAC00E799A0 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53DFD1B1A9F1900E8A107 /* SwiftCheck.framework */; };
 		841022501B1A9FBE00E799A0 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53DFD1B1A9F1900E8A107 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8434F98C19E9CD76008D9909 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434F98019E9CD76008D9909 /* Concurrent.framework */; };
 		849AA3AF1A09850400472F08 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8434F98019E9CD76008D9909 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		84A53D451B1A8F1800E8A107 /* Concurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */; };
 		84A53D6B1B1A8F8B00E8A107 /* Concurrent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53D3A1B1A8F1800E8A107 /* Concurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84A53E081B1A9F2C00E8A107 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84A53E011B1A9F1900E8A107 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		826F9C2A224E564800FA5106 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8434F97719E9CD76008D9909 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84A53D391B1A8F1800E8A107;
+			remoteInfo = "Concurrent-iOS";
+		};
+		826F9C2C224E564800FA5106 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A53DF51B1A9F1800E8A107 /* SwiftCheck.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 84DF75F71B0BD54600C912B0;
+			remoteInfo = "SwiftCheck-iOS";
+		};
 		82AA03F31D7B08CB00DD3037 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84A53DF51B1A9F1800E8A107 /* SwiftCheck.xcodeproj */;
@@ -132,13 +146,6 @@
 			remoteGlobalIDString = 8240CCB01C3A123600EF4D29;
 			remoteInfo = "SwiftCheck-tvOS";
 		};
-		841022491B1A9F8E00E799A0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84A53DF51B1A9F1800E8A107 /* SwiftCheck.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 84DF75F71B0BD54600C912B0;
-			remoteInfo = "SwiftCheck-iOS";
-		};
 		8410224C1B1A9FA300E799A0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84A53DF51B1A9F1800E8A107 /* SwiftCheck.xcodeproj */;
@@ -152,13 +159,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8434F97F19E9CD76008D9909;
 			remoteInfo = Concurrent;
-		};
-		84A53D461B1A8F1800E8A107 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8434F97719E9CD76008D9909 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 84A53D391B1A8F1800E8A107;
-			remoteInfo = "Concurrent-iOS";
 		};
 		84A53DFC1B1A9F1900E8A107 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -231,6 +231,7 @@
 		8235D3BF1F75884400207FA1 /* Transactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Transactions.swift; path = Sources/Concurrent/Transactions.swift; sourceTree = SOURCE_ROOT; };
 		8235D3C01F75884400207FA1 /* TChan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TChan.swift; path = Sources/Concurrent/TChan.swift; sourceTree = SOURCE_ROOT; };
 		8235D3C11F75886700207FA1 /* Concurrent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Concurrent.h; path = Sources/Concurrent.h; sourceTree = "<group>"; };
+		826F9C2F224E566800FA5106 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = "../../Library/Developer/Xcode/DerivedData/Concurrent-hfrnpnqijrrcxndgiovoegcocbfi/Build/Products/Debug-iphonesimulator/SwiftCheck.framework"; sourceTree = "<group>"; };
 		8298F0371E91BC850076D657 /* ChanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChanSpec.swift; path = Tests/ConcurrentTests/ChanSpec.swift; sourceTree = SOURCE_ROOT; };
 		8298F0381E91BC850076D657 /* ConcurrentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConcurrentSpec.swift; path = Tests/ConcurrentTests/ConcurrentSpec.swift; sourceTree = SOURCE_ROOT; };
 		8298F0391E91BC850076D657 /* IVarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IVarSpec.swift; path = Tests/ConcurrentTests/IVarSpec.swift; sourceTree = SOURCE_ROOT; };
@@ -262,8 +263,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82AA04281D7B210700DD3037 /* SwiftCheck.framework in Frameworks */,
-				82AA04071D7B206300DD3037 /* Concurrent.framework in Frameworks */,
+				826F9C28224E562800FA5106 /* Concurrent.framework in Frameworks */,
+				826F9C29224E562800FA5106 /* SwiftCheck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,8 +302,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84A53D451B1A8F1800E8A107 /* Concurrent.framework in Frameworks */,
-				8410224B1B1A9F9E00E799A0 /* SwiftCheck.framework in Frameworks */,
+				826F9C30224E566800FA5106 /* SwiftCheck.framework in Frameworks */,
+				826F9C2E224E566800FA5106 /* Concurrent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +331,14 @@
 			path = Concurrent;
 			sourceTree = "<group>";
 		};
+		826F9C27224E562800FA5106 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				826F9C2F224E566800FA5106 /* SwiftCheck.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8434F97619E9CD75008D9909 = {
 			isa = PBXGroup;
 			children = (
@@ -337,6 +346,7 @@
 				8235D3B11F75882E00207FA1 /* Concurrent */,
 				8434F98F19E9CD76008D9909 /* ConcurrentTests */,
 				8434F98119E9CD76008D9909 /* Products */,
+				826F9C27224E562800FA5106 /* Frameworks */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -556,8 +566,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				8410224A1B1A9F8E00E799A0 /* PBXTargetDependency */,
-				84A53D471B1A8F1800E8A107 /* PBXTargetDependency */,
+				826F9C2B224E564800FA5106 /* PBXTargetDependency */,
+				826F9C2D224E564800FA5106 /* PBXTargetDependency */,
 			);
 			name = "Concurrent-iOSTests";
 			productName = "Concurrent-iOSTests";
@@ -571,17 +581,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = TypeLift;
 				TargetAttributes = {
 					82AA03FD1D7B206300DD3037 = {
 						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					82AA04051D7B206300DD3037 = {
 						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					82AA041D1D7B206C00DD3037 = {
@@ -591,28 +601,29 @@
 					};
 					8434F97F19E9CD76008D9909 = {
 						CreatedOnToolsVersion = 6.1;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1020;
 					};
 					8434F98A19E9CD76008D9909 = {
 						CreatedOnToolsVersion = 6.1;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1020;
 					};
 					84A53D391B1A8F1800E8A107 = {
 						CreatedOnToolsVersion = 6.3.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1020;
 					};
 					84A53D431B1A8F1800E8A107 = {
 						CreatedOnToolsVersion = 6.3.2;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
 			buildConfigurationList = 8434F97A19E9CD76008D9909 /* Build configuration list for PBXProject "Concurrent" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 8434F97619E9CD75008D9909;
 			productRefGroup = 8434F98119E9CD76008D9909 /* Products */;
@@ -866,6 +877,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		826F9C2B224E564800FA5106 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84A53D391B1A8F1800E8A107 /* Concurrent-iOS */;
+			targetProxy = 826F9C2A224E564800FA5106 /* PBXContainerItemProxy */;
+		};
+		826F9C2D224E564800FA5106 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftCheck-iOS";
+			targetProxy = 826F9C2C224E564800FA5106 /* PBXContainerItemProxy */;
+		};
 		82AA04091D7B206300DD3037 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 82AA03FD1D7B206300DD3037 /* Concurrent-tvOS */;
@@ -876,11 +897,6 @@
 			name = "SwiftCheck-tvOS";
 			targetProxy = 82AA04261D7B210300DD3037 /* PBXContainerItemProxy */;
 		};
-		8410224A1B1A9F8E00E799A0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "SwiftCheck-iOS";
-			targetProxy = 841022491B1A9F8E00E799A0 /* PBXContainerItemProxy */;
-		};
 		8410224D1B1A9FA300E799A0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftCheck;
@@ -890,11 +906,6 @@
 			isa = PBXTargetDependency;
 			target = 8434F97F19E9CD76008D9909 /* Concurrent */;
 			targetProxy = 8434F98D19E9CD76008D9909 /* PBXContainerItemProxy */;
-		};
-		84A53D471B1A8F1800E8A107 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 84A53D391B1A8F1800E8A107 /* Concurrent-iOS */;
-			targetProxy = 84A53D461B1A8F1800E8A107 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -922,8 +933,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -950,8 +960,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -975,8 +984,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
@@ -996,8 +1004,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1069,6 +1076,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1126,6 +1134,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1190,8 +1199,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1213,8 +1221,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1239,8 +1246,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1260,8 +1266,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1292,8 +1297,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1320,8 +1324,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1352,8 +1355,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1377,8 +1379,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
